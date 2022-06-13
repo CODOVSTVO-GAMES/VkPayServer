@@ -1,5 +1,9 @@
 package ru.codovstvo.srvadmin.entitys;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,7 +38,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    private Long date;
+    private Long vkDate;
+
+    private LocalTime localTime;
 
 
     public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus) {
@@ -44,6 +50,7 @@ public class Order {
         this.userId = userId;
         this.receiverId = receiverId;
         this.orderStatus = orderStatus;
+        this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
     }
 
     public Order() {}

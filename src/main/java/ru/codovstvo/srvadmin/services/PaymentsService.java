@@ -43,11 +43,11 @@ public class PaymentsService {
         }
     }
 
-    public Object OrderExecuted(Long orderVkId, Long date) {
+    public Object OrderExecuted(Long orderVkId, Long vkDate) {
         Order order = orderRepo.findByOrderVkId(orderVkId);
         if (!order.equals(null)) {
             order.setOrderStatus(OrderStatus.EXECUTED);
-            order.setDate(date);
+            order.setVkDate(vkDate);
             orderRepo.save(order);
             
             Map response = new HashMap<>();

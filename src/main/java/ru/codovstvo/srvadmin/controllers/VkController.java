@@ -27,7 +27,7 @@ public class VkController {
                                 @RequestParam(name = "version", required=false) String version,
                                 @RequestParam(name = "lang", required=false) String lang,
                                 @RequestParam(name = "sig", required=false) String sig,
-                                @RequestParam(name = "date", required=false) Long date,
+                                @RequestParam(name = "date", required=false) Long vkDate,
                                 @RequestParam(name = "status", required=false) String status,
                                 @RequestParam(name = "item_id", required=false) Long item_id,
                                 @RequestParam(name = "item_title", required=false) String item_title,
@@ -39,7 +39,7 @@ public class VkController {
             return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
         
         } else if(notification_type.equals("order_status_change_test")) {
-            return paymentsService.OrderExecuted(order_Vk_id, date);
+            return paymentsService.OrderExecuted(order_Vk_id, vkDate);
 
         } else {
             return paymentsService.error(1);
