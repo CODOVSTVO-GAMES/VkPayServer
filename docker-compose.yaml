@@ -9,7 +9,7 @@ services:
     depends_on:
       - psqldb
     networks:
-      back:
+      - back
   psqldb:
     image: postgres:13
     restart: always
@@ -20,7 +20,17 @@ services:
       POSTGRES_USER: keshox
       POSTGRES_DB: spring
     networks:
-      back:
+      - back
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.codovstvo
+      PGADMIN_DEFAULT_PASSWORD: egor
+    ports:
+      - "5050:8013"
+    networks:
+      - back
 
 networks:
   back:
