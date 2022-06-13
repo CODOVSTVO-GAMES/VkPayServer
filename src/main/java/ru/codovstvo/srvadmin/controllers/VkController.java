@@ -32,8 +32,8 @@ public class VkController {
                                 @RequestParam(name = "item_id", required=false) Long item_id,
                                 @RequestParam(name = "item_title", required=false) String item_title,
                                 @RequestParam(name = "item_photo_url", required=false) String item_photo_url,
-                                @RequestParam(name = "item_price", required=false) int item_price,
-                                @RequestParam(name = "item_discount", required=false) int item_discount
+                                @RequestParam(name = "item_price", required=false) Long item_price,
+                                @RequestParam(name = "item_discount", required=false) Long item_discount
                                 ) {
         if (notification_type.equals("get_item_test")) {
             return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id, date);
