@@ -34,18 +34,16 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    private Long initDate;
+    private Long date;
 
-    private Long executeDate;
 
-    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus, Long initDate) {
+    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus) {
         this.orderVkId  = orderVkId;
         this.appId = appId;
         this.item = item;
         this.userId = userId;
         this.receiverId = receiverId;
         this.orderStatus = orderStatus;
-        this.initDate = initDate;
     }
 
     public Order() {}

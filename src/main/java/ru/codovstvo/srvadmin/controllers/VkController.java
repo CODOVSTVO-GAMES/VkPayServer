@@ -36,7 +36,7 @@ public class VkController {
                                 @RequestParam(name = "item_discount", required=false) Long item_discount
                                 ) {
         if (notification_type.equals("get_item_test")) {
-            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id, date);
+            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
         
         } else if(notification_type.equals("order_status_change_test")) {
             return paymentsService.OrderExecuted(order_Vk_id, date);

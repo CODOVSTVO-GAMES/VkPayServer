@@ -23,11 +23,11 @@ public class PaymentsService {
     @Autowired
     private OrderRepo orderRepo;
 
-    public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId, Long initDate) {
+    public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
         Item item = itemRepo.findByTitle(itemTitle);
 
         if (!item.equals(null) ) {
-            Order order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED, initDate);
+            Order order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
             orderRepo.save(order);
 
             Map response = new HashMap<>();
@@ -43,12 +43,13 @@ public class PaymentsService {
         }
     }
 
-    public Object OrderExecuted(Long orderVkId, Long executeDate) {
+    public Object OrderExecuted(Long orderVkId, Long date) {
         Order order = orderRepo.findByOrderVkId(orderVkId);
         if (!order.equals(null)) {
             order.setOrderStatus(OrderStatus.EXECUTED);
-            order.setExecuteDate(executeDate);
-
+            order.setDate(date);
+            orderRepo.save(order);
+            
             Map response = new HashMap<>();
             response.put("order_id", order.getOrderVkId());
             response.put("app_order_id", order.getOrderId());
