@@ -34,7 +34,7 @@ public class PaymentsService {
             response.put("title", item.getTitle());
             response.put("price", item.getPrice());
             response.put("photo_url", item.getPhotoUrl());
-            response.put("discount", 0);
+            response.put("discount", item.getDiscount());
             response.put("item_id", item.getItemId());
             response.put("expiration", 0);
             return response(response);
