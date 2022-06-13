@@ -1,5 +1,6 @@
 package ru.codovstvo.srvadmin.entitys;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -42,6 +43,8 @@ public class Order {
 
     private LocalTime localTime;
 
+    private LocalDate date;
+
 
     public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus) {
         this.orderVkId  = orderVkId;
@@ -51,6 +54,7 @@ public class Order {
         this.receiverId = receiverId;
         this.orderStatus = orderStatus;
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
+        this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
     }
 
     public Order() {}
