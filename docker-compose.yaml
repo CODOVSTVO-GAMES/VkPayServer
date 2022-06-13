@@ -26,9 +26,9 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.codovstvo
-      PGADMIN_DEFAULT_PASSWORD: egor
+      PGADMIN_DEFAULT_PASSWORD: 
     ports:
-      - "5050:8013"
+      - "8013:80"
     networks:
       - back
 
