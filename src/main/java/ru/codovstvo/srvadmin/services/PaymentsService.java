@@ -25,10 +25,10 @@ public class PaymentsService {
     private OrderRepo orderRepo;
 
     public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
-
+        Order order = null;
         try {
             Item item = itemRepo.findByTitle(itemTitle);
-            Order order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
+            order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
             orderRepo.save(order);
 
             Map response = new HashMap<>();
@@ -40,8 +40,11 @@ public class PaymentsService {
             response.put("expiration", 0);
             return response(response);
         } catch (Exception e) {
+            order = orderRepo.findByOrderVkId(orderVkId);
+            order.setOrderStatus(OrderStatus.ERROR);
+            orderRepo.save(order);
             return error(20);
-        }     
+        }
     }
 
     public Object OrderExecuted(Long orderVkId, Long vkDate) {
