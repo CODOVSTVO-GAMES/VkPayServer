@@ -25,9 +25,9 @@ public class PaymentsService {
 
     public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
         Item item = itemRepo.findByTitle(itemTitle);
-
-        try{
-            item = itemRepo.findByTitle(itemTitle);
+        System.out.println(item.toString());
+        
+        if (item.equals(null)) {
             Order order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
             orderRepo.save(order);
 
@@ -39,8 +39,8 @@ public class PaymentsService {
             response.put("item_id", item.getItemId());
             response.put("expiration", 0);
             return response(response);
-        } catch (Exception e) {
-            return error(20); // возвращает нул
+        } else {
+            return error(20);
         }
     }
 
@@ -86,6 +86,7 @@ public class PaymentsService {
             response.put("error_msg", "Order not found");
             response.put("critical", true);
         }
+        errorTransfer.setError(response);
         return errorTransfer;
     }
 }
