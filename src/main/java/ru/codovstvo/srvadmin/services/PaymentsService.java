@@ -2,6 +2,7 @@ package ru.codovstvo.srvadmin.services;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,9 @@ public class PaymentsService {
     private OrderRepo orderRepo;
 
     public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
-        Item item = itemRepo.findByTitle(itemTitle);
-        System.out.println(item.toString());
-        
-        if (item.equals(null)) {
+
+        try {
+            Item item = itemRepo.findByTitle(itemTitle);
             Order order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
             orderRepo.save(order);
 
@@ -39,9 +39,9 @@ public class PaymentsService {
             response.put("item_id", item.getItemId());
             response.put("expiration", 0);
             return response(response);
-        } else {
+        } catch (Exception e) {
             return error(20);
-        }
+        }     
     }
 
     public Object OrderExecuted(Long orderVkId, Long vkDate) {
@@ -73,17 +73,17 @@ public class PaymentsService {
             response.put("error_code", "1");
             response.put("error_msg", "Event is not processed by the server");
             response.put("critical", true);
-        } else if (errorCode == 404) {
-            response.put("error_code", "404");
-            response.put("error_msg", "Not found");
+        }else if (errorCode == 11) {
+            response.put("error_code", "11");
+            response.put("error_msg", "Order not found");
             response.put("critical", true);
         } else if (errorCode == 20) {
             response.put("error_code", "20");
             response.put("error_msg", "Item not found");
             response.put("critical", true);
-        } else if (errorCode == 11) {
-            response.put("error_code", "11");
-            response.put("error_msg", "Order not found");
+        } else if (errorCode == 404) {
+            response.put("error_code", "404");
+            response.put("error_msg", "Not found");
             response.put("critical", true);
         }
         errorTransfer.setError(response);
