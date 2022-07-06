@@ -13,7 +13,7 @@ import ru.codovstvo.srvadmin.dto.*;
 @RestController
 @RequestMapping(value = "testpay")
 public class VkTestController {
-    
+
     @PostMapping
     public Object VkNotification(@RequestParam String notification_type,
                                     @RequestParam String app_id,
