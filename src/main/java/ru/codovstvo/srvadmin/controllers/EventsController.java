@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
+import ru.codovstvo.srvadmin.repo.EventRepo;
 
 @RestController
 @RequestMapping(value = "back/events")
 public class EventsController {
+
+    @Autowired
+    private EventRepo eventRepo;
 
     @PostMapping
     public void newEvent(@RequestParam int key,
@@ -22,6 +26,7 @@ public class EventsController {
                         ) {
         if (key/3-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event);
+            eventRepo.save(evvent);
         }
         else
         {
