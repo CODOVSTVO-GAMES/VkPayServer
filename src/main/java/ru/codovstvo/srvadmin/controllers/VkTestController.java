@@ -11,7 +11,7 @@ import java.util.Map;
 import ru.codovstvo.srvadmin.dto.*;
 
 @RestController
-@RequestMapping(value = "testpay")
+@RequestMapping(value = "back/testpay")
 public class VkTestController {
 
     @PostMapping

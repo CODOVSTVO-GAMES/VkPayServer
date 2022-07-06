@@ -10,7 +10,7 @@ import ru.codovstvo.srvadmin.services.PaymentsService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping(value = "payments")
+@RequestMapping(value = "back/payments")
 public class VkController {
 
     @Autowired
@@ -37,14 +37,14 @@ public class VkController {
                                 ) {
         if (notification_type.equals("get_item_test")) {
             return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
-        
+
         } else if(notification_type.equals("order_status_change_test")) {
             return paymentsService.OrderExecuted(order_Vk_id, vkDate);
 
         } else {
             return paymentsService.error(1);
-            
-        }       
+
+        }
     }
-    
+
 }

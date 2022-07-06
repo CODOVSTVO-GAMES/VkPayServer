@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping(value = "events")
+@RequestMapping(value = "back/events")
 public class EventsController {
 
     @PostMapping
