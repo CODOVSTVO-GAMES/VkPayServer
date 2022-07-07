@@ -1,10 +1,14 @@
 package ru.codovstvo.srvadmin.entitys;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import org.springframework.lang.Nullable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -27,14 +31,26 @@ public class Event {
 
     private String eventName;
 
+    private String language;
+
+    private String referrer;
+
+    private LocalTime localTime;
+
+    private LocalDate date;
+
     public Event(){}
 
-    public Event(int userId, String version, String platform, String deviceType, String eventName) {
+    public Event(int userId, String version, String platform, String deviceType, String eventName, String language, String referrer) {
         this.userId = userId;
         this.version = version;
         this.platform = platform;
         this.deviceType = deviceType;
         this.eventName = eventName;
+        this.language = language;
+        this.referrer = referrer;
+        this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
+        this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
     }
 
 }

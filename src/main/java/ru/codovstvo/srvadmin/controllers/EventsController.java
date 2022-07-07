@@ -22,15 +22,17 @@ public class EventsController {
                         @RequestParam String version,
                         @RequestParam String platform,
                         @RequestParam String deviceType,
-                        @RequestParam String event
+                        @RequestParam String event,
+                        @RequestParam(name = "lang", required=false, defaultValue="") String lang,
+                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
                         ) {
         if (key/3-8180902 == userId) {
-            Event evvent = new Event(userId, version, platform, deviceType, event);
+            Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
         }
         else
         {
-            System.out.println("Чота тут не так");
+            System.out.println("Подпись неверна");
             System.out.println(key);
             System.out.println(userId);
         }
