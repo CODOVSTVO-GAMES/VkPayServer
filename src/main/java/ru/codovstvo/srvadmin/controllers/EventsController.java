@@ -26,7 +26,7 @@ public class EventsController {
                         @RequestParam(name = "lang", required=false, defaultValue="") String lang,
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
                         ) {
-        if (key/3-8180902 == userId) {
+        if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
         }
