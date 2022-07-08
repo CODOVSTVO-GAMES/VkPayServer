@@ -3,6 +3,7 @@ package ru.codovstvo.srvadmin.controllers;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -79,10 +80,11 @@ public class EventsController {
 
     public static void encode(String key, String data) throws Exception {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         sha256_HMAC.init(secret_key);
-        System.out.println(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
-        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8"))));
+
+        
+        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8))));
         // return Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
     }
 
