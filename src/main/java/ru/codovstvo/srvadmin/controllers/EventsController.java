@@ -35,12 +35,15 @@ public class EventsController {
 
         String[] uriRef = header.get("referer").toString().replace("https://codovstvo.ru/games/Merge3/index.html?", "").split("&");
         for(String para : uriRef){
-            String[] keyValue = para.split("=");
-            System.out.println(keyValue[0]);
-
-            parameters.put(keyValue[0], keyValue[1]);
+            try{
+                String[] keyValue = para.split("=");
+                parameters.put(keyValue[0], keyValue[1]);
+            }catch (Exception e){
+                parameters.put(para.replace("=", ""), "");
+            }
         }
-        System.out.println(parameters.get("api_url"));
+        System.out.println(parameters.get("sign"));
+        System.out.println(parameters.get("sign_keys"));
 
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
