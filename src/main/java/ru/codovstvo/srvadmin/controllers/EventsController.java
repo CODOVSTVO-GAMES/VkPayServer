@@ -28,10 +28,10 @@ public class EventsController {
                         @RequestParam String event,
                         @RequestParam(name = "lang", required=false, defaultValue="") String lang,
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
-                        @RequestHeader("Referer") Map ref
+                        @RequestHeader Map header
                         ) {
-        System.out.println(ref);
-        System.out.println(ref.get("sign_keys"));
+        System.out.println(header);
+        System.out.println(header.get("referer"));
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
