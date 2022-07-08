@@ -33,7 +33,7 @@ public class EventsController {
                         ) {
         Map<String, String> parameters =  new HashMap<>();
 
-        String[] uriRef = header.get("referer").toString().replace("", " https://codovstvo.ru/games/Merge3/index.html?").split("&");
+        String[] uriRef = header.get("referer").toString().replace("https://codovstvo.ru/games/Merge3/index.html?", "").split("&");
         for(String para : uriRef){
             String[] keyValue = para.split("=");
             System.out.println(keyValue[0]);
