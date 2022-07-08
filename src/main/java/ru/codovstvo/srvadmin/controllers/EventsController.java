@@ -2,11 +2,10 @@ package ru.codovstvo.srvadmin.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +79,11 @@ public class EventsController {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
+        byte[] hash = sha256_HMAC.doFinal(data.getBytes());
+        DatatypeConverter.printBase64Binary(hash);
 
-        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes())));
+        System.out.println(DatatypeConverter.printBase64Binary(hash));
+        // Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes()))
     }
 
 }
