@@ -32,8 +32,8 @@ public class EventsController {
                         @RequestHeader Map header
                         ) {
         Map<String, String> parameters =  new HashMap<>();
-
         String[] uriRef = header.get("referer").toString().replace("https://codovstvo.ru/games/Merge3/index.html?", "").split("&");
+        
         for(String para : uriRef){
             try{
                 String[] keyValue = para.split("=");
@@ -42,8 +42,17 @@ public class EventsController {
                 parameters.put(para.replace("=", ""), "");
             }
         }
+
+        String signDoHash = "";
+        String[] signKeys = parameters.get("sign_keys").split(",");
+
+        for (String parameter : signKeys){
+            signDoHash = signDoHash + parameter + "=" + parameters.get(parameter);
+        }
+        
         System.out.println(parameters.get("sign"));
         System.out.println(parameters.get("sign_keys"));
+        System.out.println(signDoHash);
 
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
