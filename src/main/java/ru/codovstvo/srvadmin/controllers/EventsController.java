@@ -1,5 +1,6 @@
 package ru.codovstvo.srvadmin.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,15 @@ public class EventsController {
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
                         @RequestHeader Map header
                         ) {
-        Map<String, String> parameters;
+        Map<String, String> parameters =  new HashMap<>();
 
         String[] uriRef = header.get("referer").toString().replace("", " https://codovstvo.ru/games/Merge3/index.html?").split("&");
         for(String para : uriRef){
             String[] keyValue = para.split("=");
-            parameters.put(keyValue[0], keyValue[1])
+            parameters.put(keyValue[0], keyValue[1]);
         }
         System.out.println(parameters.get("sign"));
-        
+
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
