@@ -30,10 +30,15 @@ public class EventsController {
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
                         @RequestHeader Map header
                         ) {
-        // System.out.println(header);
-        System.out.println(header.get("referer"));
-        String uriRef = header.get("referer").toString();
-        System.out.println(uriRef);
+        Map<String, String> parameters;
+
+        String[] uriRef = header.get("referer").toString().replace("", " https://codovstvo.ru/games/Merge3/index.html?").split("&");
+        for(String para : uriRef){
+            String[] keyValue = para.split("=");
+            parameters.put(keyValue[0], keyValue[1])
+        }
+        System.out.println(parameters.get("sign"));
+        
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
