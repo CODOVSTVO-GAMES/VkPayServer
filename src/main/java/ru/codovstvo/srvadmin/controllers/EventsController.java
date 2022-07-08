@@ -31,7 +31,7 @@ public class EventsController {
                         @RequestHeader("Referer") String ref,
                         @RequestHeader Map header
                         ) {
-        System.out.println(re);
+        System.out.println(ref);
         System.out.println(header.get("sign_keys"));
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
