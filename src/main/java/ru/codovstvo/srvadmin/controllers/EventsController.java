@@ -2,7 +2,12 @@ package ru.codovstvo.srvadmin.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.io.*;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +35,7 @@ public class EventsController {
                         @RequestParam(name = "lang", required=false, defaultValue="") String lang,
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
                         @RequestHeader Map header
-                        ) {
+                        ) throws Exception{
         Map<String, String> parameters =  new HashMap<>();
         String[] uriRef = header.get("referer").toString().replace("https://codovstvo.ru/games/Merge3/index.html?", "").split("&");
         
@@ -49,11 +54,16 @@ public class EventsController {
         for (String parameter : signKeys){
             signDoHash = signDoHash + parameter + "=" + parameters.get(parameter) + "&";
         }
+
         signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
+
+        
+
         
         System.out.println(parameters.get("sign"));
         System.out.println(parameters.get("sign_keys"));
         System.out.println(signDoHash);
+        encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
@@ -65,6 +75,14 @@ public class EventsController {
             System.out.println(key);
             System.out.println(userId);
         }
+    }
+
+    public static void encode(String key, String data) throws Exception {
+        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+        sha256_HMAC.init(secret_key);
+        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8"))));
+        // return Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
     }
 
 }
