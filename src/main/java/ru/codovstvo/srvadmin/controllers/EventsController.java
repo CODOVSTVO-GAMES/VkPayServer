@@ -47,8 +47,9 @@ public class EventsController {
         String[] signKeys = parameters.get("sign_keys").split(",");
 
         for (String parameter : signKeys){
-            signDoHash = signDoHash + parameter + "=" + parameters.get(parameter);
+            signDoHash = signDoHash + parameter + "=" + parameters.get(parameter) + "&";
         }
+        signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
         
         System.out.println(parameters.get("sign"));
         System.out.println(parameters.get("sign_keys"));
