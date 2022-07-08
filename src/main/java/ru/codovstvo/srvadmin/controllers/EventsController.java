@@ -32,7 +32,7 @@ public class EventsController {
                         ) {
         // System.out.println(header);
         System.out.println(header.get("referer"));
-        String uriRef = header.get("referer").Replace(" https://codovstvo.ru/games/Merge3/index.html?", "");
+        // String uriRef = header.get("referer").Replace(" https://codovstvo.ru/games/Merge3/index.html?", "");
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
             eventRepo.save(evvent);
