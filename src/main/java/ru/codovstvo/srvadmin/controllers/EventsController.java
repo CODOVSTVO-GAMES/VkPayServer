@@ -81,6 +81,7 @@ public class EventsController {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
         sha256_HMAC.init(secret_key);
+        System.out.println(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
         System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8"))));
         // return Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
     }
