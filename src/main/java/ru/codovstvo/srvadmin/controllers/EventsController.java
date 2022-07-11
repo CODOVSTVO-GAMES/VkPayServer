@@ -51,23 +51,15 @@ public class EventsController {
         String signDoHash = "";
         String[] signKeys = parameters.get("sign_keys").split(",");
 
-        Map doStringParametrs = new HashMap<String, String>();
-
         for (String parameter : signKeys){
-            doStringParametrs.put(parameter, parameters.get(parameter));
             signDoHash = signDoHash + parameter + "=" + parameters.get(parameter) + "&";
         }
 
-        // signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
-        String signDoHashhhh = doStringParametrs.toString().replace("{", "").replace("}", "").replace(", ", "&");
-        signDoHash = signDoHash.substring(0, signDoHash.length() - 1);
+        signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
         
         System.out.println(parameters.get("sign"));
-        
-        System.out.println(signDoHashhhh);
         System.out.println(signDoHash);
 
-        encode("7xg1eGa5YiRS3MdMwPhl", signDoHashhhh);
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
         if (key/7-8180902 == userId) {
@@ -89,9 +81,7 @@ public class EventsController {
         
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
         DatatypeConverter.printBase64Binary(hash);
-        System.out.println("----------");
         System.out.println(DatatypeConverter.printBase64Binary(hash));
-        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes())));
     }
 
 }
