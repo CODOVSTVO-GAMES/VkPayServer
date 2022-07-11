@@ -62,13 +62,10 @@ public class EventsController {
         String signDoHashhhh = doStringParametrs.toString().replace("{", "").replace("}", "").replace(", ", "&")
         
         
-
-        
-        System.out.println(parameters.get("sign"));
-        System.out.println(parameters.get("sign_keys"));
         System.out.println(signDoHashhhh);
         System.out.println(signDoHash);
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
+        encode("7xg1eGa5YiRS3MdMwPhl", signDoHashhhh);
 
         if (key/7-8180902 == userId) {
             Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
