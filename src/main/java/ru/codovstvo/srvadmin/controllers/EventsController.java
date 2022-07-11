@@ -61,6 +61,7 @@ public class EventsController {
         // signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
         String signDoHashhhh = doStringParametrs.toString().replace("{", "").replace("}", "").replace(", ", "&");
         
+        System.out.println(parameters.get("sign"));
         
         System.out.println(signDoHashhhh);
         System.out.println(signDoHash);
