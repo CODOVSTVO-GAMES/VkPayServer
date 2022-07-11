@@ -51,15 +51,19 @@ public class EventsController {
         String signDoHash = "";
         String[] signKeys = parameters.get("sign_keys").split(",");
 
+        Map doStringParametrs = new HashMap<String, String>();
+
         for (String parameter : signKeys){
+            doStringParametrs.put(parameter, parameters.get(parameter));
             signDoHash = signDoHash + parameter + "=" + parameters.get(parameter) + "&";
         }
 
-        signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));        
+        signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
 
         
         System.out.println(parameters.get("sign"));
         System.out.println(parameters.get("sign_keys"));
+        System.out.println(doStringParametrs.toString());
         System.out.println(signDoHash);
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
@@ -79,6 +83,7 @@ public class EventsController {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
+        
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
         DatatypeConverter.printBase64Binary(hash);
 
