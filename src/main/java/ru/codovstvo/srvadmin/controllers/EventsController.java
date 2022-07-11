@@ -58,12 +58,15 @@ public class EventsController {
             signDoHash = signDoHash + parameter + "=" + parameters.get(parameter) + "&";
         }
 
-        signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
+        // signDoHash = signDoHash.substring(0, signDoHash.lastIndexOf("&"));
+        String signDoHashhhh = doStringParametrs.toString().replace("{", "").replace("}", "").replace(", ", "&")
+        
+        
 
         
         System.out.println(parameters.get("sign"));
         System.out.println(parameters.get("sign_keys"));
-        System.out.println(doStringParametrs.toString());
+        System.out.println(signDoHashhhh);
         System.out.println(signDoHash);
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
