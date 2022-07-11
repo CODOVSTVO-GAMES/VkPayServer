@@ -59,6 +59,7 @@ public class EventsController {
         
         System.out.println(parameters.get("sign"));
         System.out.println(signDoHash);
+        System.out.println(parameters.toString());
 
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
