@@ -91,8 +91,7 @@ public class EventsController {
         DatatypeConverter.printBase64Binary(hash);
         System.out.println("----------");
         System.out.println(DatatypeConverter.printBase64Binary(hash));
-        System.out.println(new String(hash));
-        // Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes()))
+        System.out.println(Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes())));
     }
 
 }
