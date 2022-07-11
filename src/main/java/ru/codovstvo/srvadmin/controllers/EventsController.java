@@ -66,7 +66,7 @@ public class EventsController {
         
         System.out.println(signDoHashhhh);
         System.out.println(signDoHash);
-        
+
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHashhhh);
         encode("7xg1eGa5YiRS3MdMwPhl", signDoHash);
 
@@ -89,8 +89,9 @@ public class EventsController {
         
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
         DatatypeConverter.printBase64Binary(hash);
-
-        System.out.println(DatatypeConverter.printBase64Binary(hash).replace("=", "").replace("/", "").replace("+", ""));
+        System.out.println("----------");
+        System.out.println(DatatypeConverter.printBase64Binary(hash));
+        System.out.println(new String(hash));
         // Base64.encodeBase64String(sha256_HMAC.doFinal(data.getBytes()))
     }
 
