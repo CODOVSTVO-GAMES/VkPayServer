@@ -39,9 +39,11 @@ public class Event {
 
     private LocalDate date;
 
+    private String loadTime;
+
     public Event(){}
 
-    public Event(int userId, String version, String platform, String deviceType, String eventName, String language, String referrer) {
+    public Event(int userId, String version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
         this.userId = userId;
         this.version = version;
         this.platform = platform;
@@ -49,6 +51,7 @@ public class Event {
         this.eventName = eventName;
         this.language = language;
         this.referrer = referrer;
+        this.loadTime = loadTime;
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
     }

@@ -33,22 +33,20 @@ public class EventsController {
                         @RequestParam String deviceType,
                         @RequestParam String event,
                         @RequestParam(name = "lang", required=false, defaultValue="") String lang,
-                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
-                        ) throws Exception{
-        
-        System.out.println(type);
+                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
+                        @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime
+                        ) throws Exception {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&type=start";
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
         }
         else if(type.equals("ordinary")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
         }
-        System.out.println(parameters);
-
+        
         if(encodeHmac256(parameters).equals(hash)){
-            Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
+            Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
         }else{
             System.out.println("Подпись неверна");
