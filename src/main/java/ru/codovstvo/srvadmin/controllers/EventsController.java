@@ -44,6 +44,9 @@ public class EventsController {
         else if(type.equals("ordinary")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
         }
+        else if(type.equals("firstload")){
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=firstload";
+        }
         
         if(encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
