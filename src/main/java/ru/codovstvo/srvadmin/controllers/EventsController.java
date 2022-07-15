@@ -64,7 +64,7 @@ public class EventsController {
         sha256_HMAC.init(secret_key);
 
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
-        return DatatypeConverter.printBase64Binary(hash);
+        return DatatypeConverter.printBase64Binary(hash).replace("=", "").replace("/", "").replace("+", "");
     }
 
 }
