@@ -24,44 +24,47 @@ public class EventsController {
     @Autowired
     private EventRepo eventRepo;
 
-    // @PostMapping
-    // public void newEvent(@RequestParam int key,
-    //                     @RequestParam int userId,
-    //                     @RequestParam String version,
-    //                     @RequestParam String platform,
-    //                     @RequestParam String deviceType,
-    //                     @RequestParam String event,
-    //                     @RequestParam(name = "lang", required=false, defaultValue="") String lang,
-    //                     @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
-    //                     ) {
-
-
-    //     if (key/7-8180902 == userId) {
-    //         Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
-    //         eventRepo.save(evvent);
-    //     }
-    //     else
-    //     {
-    //         System.out.println("Подпись неверна");
-    //         System.out.println(key);
-    //         System.out.println(userId);
-    //     }
-    // }
     @PostMapping
-    public void newEvent(@RequestParam String hash) throws Exception{
-        System.out.println(hash);
-        encode(hash);
+    public void newEvent(@RequestParam String hash,
+                        @RequestParam String type,
+                        @RequestParam int userId,
+                        @RequestParam String version,
+                        @RequestParam String platform,
+                        @RequestParam String deviceType,
+                        @RequestParam String event,
+                        @RequestParam(name = "lang", required=false, defaultValue="") String lang,
+                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
+                        ) throws Exception{
+        
+        System.out.println(type);
+        String parameters = new String();
+
+        if(type.equals("start")){
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&type=start";
+        }
+        else if(type.equals("ordinary")){
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
+        }
+        System.out.println(parameters);
+
+        if(encodeHmac256(parameters).equals(hash)){
+            Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
+            eventRepo.save(evvvent);
+        }else{
+            System.out.println("Подпись неверна");
+            System.out.println("hash: " + hash);
+            System.out.println("encode: " + encodeHmac256(parameters));
+        }
     }
 
-    public static void encode(String data) throws Exception {
+    public static String encodeHmac256(String data) throws Exception {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         String key = "programmistika";
         SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
 
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
-        DatatypeConverter.printBase64Binary(hash);
-        System.out.println(DatatypeConverter.printBase64Binary(hash));
+        return DatatypeConverter.printBase64Binary(hash);
     }
 
 }
