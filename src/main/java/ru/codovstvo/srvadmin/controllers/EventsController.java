@@ -24,28 +24,44 @@ public class EventsController {
     @Autowired
     private EventRepo eventRepo;
 
+    // @PostMapping
+    // public void newEvent(@RequestParam int key,
+    //                     @RequestParam int userId,
+    //                     @RequestParam String version,
+    //                     @RequestParam String platform,
+    //                     @RequestParam String deviceType,
+    //                     @RequestParam String event,
+    //                     @RequestParam(name = "lang", required=false, defaultValue="") String lang,
+    //                     @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
+    //                     ) {
+
+
+    //     if (key/7-8180902 == userId) {
+    //         Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
+    //         eventRepo.save(evvent);
+    //     }
+    //     else
+    //     {
+    //         System.out.println("Подпись неверна");
+    //         System.out.println(key);
+    //         System.out.println(userId);
+    //     }
+    // }
     @PostMapping
-    public void newEvent(@RequestParam int key,
-                        @RequestParam int userId,
-                        @RequestParam String version,
-                        @RequestParam String platform,
-                        @RequestParam String deviceType,
-                        @RequestParam String event,
-                        @RequestParam(name = "lang", required=false, defaultValue="") String lang,
-                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer
-                        ) {
+    public void newEvent(@RequestParam String hash) throws Exception{
+        System.out.println(hash);
+        encode(hash);
+    }
 
+    public static void encode(String data) throws Exception {
+        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+        String key = "programmistika";
+        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+        sha256_HMAC.init(secret_key);
 
-        if (key/7-8180902 == userId) {
-            Event evvent = new Event(userId, version, platform, deviceType, event, lang, referrer);
-            eventRepo.save(evvent);
-        }
-        else
-        {
-            System.out.println("Подпись неверна");
-            System.out.println(key);
-            System.out.println(userId);
-        }
+        byte[] hash = sha256_HMAC.doFinal(data.getBytes());
+        DatatypeConverter.printBase64Binary(hash);
+        System.out.println(DatatypeConverter.printBase64Binary(hash));
     }
 
 }
