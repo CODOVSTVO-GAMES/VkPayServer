@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,9 +24,13 @@ public class StatController {
     @Autowired
     private EventRepo eventRepo;
 
-    // public int getAverageLoadime(@RequestParam(name = "version", required=false, defaultValue="") String version){
-    //     return 0;
-    // }
+    @GetMapping("averageLoadTime")
+    public List getAverageLoadime(@RequestParam(name = "version", required=false, defaultValue="") String version){
+        if(version.equals("")){
+            return eventRepo.findAllLoadTime();
+        }
+        return eventRepo.findAllLoadTime();
+    }
     
     @GetMapping("funnel")
     public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version){
