@@ -3,19 +3,15 @@ package ru.codovstvo.srvadmin.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.services.EventsService;
 
 @RestController
 @RequestMapping(value = "back/events")
@@ -23,6 +19,9 @@ public class EventsController {
 
     @Autowired
     private EventRepo eventRepo;
+
+    @Autowired
+    EventsService eventsService;
 
     @PostMapping
     public void newEvent(@RequestParam String hash,
@@ -48,24 +47,14 @@ public class EventsController {
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=firstload";
         }
         
-        if(encodeHmac256(parameters).equals(hash)){
+        if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
         }else{
             System.out.println("Подпись неверна");
             System.out.println("hash: " + hash);
-            System.out.println("encode: " + encodeHmac256(parameters));
+            System.out.println("encode: " + eventsService.encodeHmac256(parameters));
         }
-    }
-
-    public static String encodeHmac256(String data) throws Exception {
-        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        String key = "programmistika";
-        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-        sha256_HMAC.init(secret_key);
-
-        byte[] hash = sha256_HMAC.doFinal(data.getBytes());
-        return DatatypeConverter.printBase64Binary(hash).replace("=", "").replace("/", "").replace("+", "");
     }
 
 }

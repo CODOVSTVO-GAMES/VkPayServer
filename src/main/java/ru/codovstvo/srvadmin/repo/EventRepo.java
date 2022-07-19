@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import ru.codovstvo.srvadmin.entitys.Event;
 
 public interface EventRepo extends CrudRepository<Event, Long> {
+    long countByEventName(String eventName);
 }
