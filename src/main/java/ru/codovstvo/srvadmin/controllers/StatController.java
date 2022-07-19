@@ -3,6 +3,7 @@ package ru.codovstvo.srvadmin.controllers;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class StatController {
                                                                 "first_click_in_chest","first_click_in_chest_open",
                                                                 "quest_open_6","dialogue_cat_close_5")); 
 
-        Map responce = new HashMap<>();
+        Map responce = new LinkedHashMap<>();
         if (version.equals("")){
             for(Object object : eventsName){
                 String event = (String) object;
