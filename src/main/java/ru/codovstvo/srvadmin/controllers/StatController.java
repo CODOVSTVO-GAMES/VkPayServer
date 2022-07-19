@@ -3,6 +3,7 @@ package ru.codovstvo.srvadmin.controllers;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class StatController {
     
     @GetMapping("funnel")
     public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new HashSet<String>(Arrays.asList("first_load","started_game",
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load","started_game",
                                                                 "dialogue_marya_close_0","merge_marya",
                                                                 "dialogue_marya_close_1","merge_stebel",
                                                                 "dialogue_marya_close_2","merge_bloom_tree",
