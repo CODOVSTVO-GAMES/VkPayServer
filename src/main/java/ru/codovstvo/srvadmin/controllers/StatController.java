@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 
 @RestController
@@ -25,11 +26,30 @@ public class StatController {
     private EventRepo eventRepo;
 
     @GetMapping("averageLoadTime")
-    public List getAverageLoadime(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        if(version.equals("")){
-            return eventRepo.findAllLoadTime();
+    public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place){
+        long counter = 0;
+        long allTime = 0;
+        if(place.equals("start")){
+            Set<Event> allEvents = eventRepo.findAllByEventName("started_game");
+            for(Event event : allEvents){
+                allTime += Long.parseLong(event.getLoadTime());
+                counter++;
+            }
+        }else if(place.equals("first")){
+            Set<Event> allEvents = eventRepo.findAllByEventName("first_load");
+            for(Event event : allEvents){
+                allTime += Long.parseLong(event.getLoadTime());
+                counter++;
+            }
+        }else{
+            Set<Event> allEvents = eventRepo.findAllByEventName("started_game");
+            allEvents.addAll(eventRepo.findAllByEventName("first_load"));
+            for(Event event : allEvents){
+                allTime += Long.parseLong(event.getLoadTime());
+                counter++;
+            }
         }
-        return eventRepo.findAllLoadTime();
+        return allTime / counter;
     }
     
     @GetMapping("funnel")
