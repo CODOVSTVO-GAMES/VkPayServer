@@ -11,4 +11,5 @@ public interface EventRepo extends CrudRepository<Event, Long> {
     long countByEventName(String eventName);
     long countByEventNameAndVersion(String eventName, String version);
     Set<Event> findAllByEventName(String eventName);
+    Set<Event> findAllByEventNameAndVersion(String eventName, String version);
 }

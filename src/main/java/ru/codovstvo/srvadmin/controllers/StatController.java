@@ -26,28 +26,34 @@ public class StatController {
     private EventRepo eventRepo;
 
     @GetMapping("averageLoadTime")
-    public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place){
+    public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
+                                @RequestParam(name = "version", required=false, defaultValue = "") String version){
         long counter = 0;
         long allTime = 0;
-        if(place.equals("start")){
-            Set<Event> allEvents = eventRepo.findAllByEventName("started_game");
-            for(Event event : allEvents){
-                allTime += Long.parseLong(event.getLoadTime());
-                counter++;
-            }
-        }else if(place.equals("first")){
-            Set<Event> allEvents = eventRepo.findAllByEventName("first_load");
-            for(Event event : allEvents){
-                allTime += Long.parseLong(event.getLoadTime());
-                counter++;
+        Set<Event> allEvents = new HashSet<>();
+        if(version.equals("")){
+            if(place.equals("start")){
+                allEvents = eventRepo.findAllByEventName("started_game");
+            }else if(place.equals("first")){
+                allEvents = eventRepo.findAllByEventName("first_load");
+
+            }else{
+                allEvents = eventRepo.findAllByEventName("started_game");
+                allEvents.addAll(eventRepo.findAllByEventName("first_load"));
             }
         }else{
-            Set<Event> allEvents = eventRepo.findAllByEventName("started_game");
-            allEvents.addAll(eventRepo.findAllByEventName("first_load"));
-            for(Event event : allEvents){
-                allTime += Long.parseLong(event.getLoadTime());
-                counter++;
+            if(place.equals("start")){
+                allEvents = eventRepo.findAllByEventNameAndVersion("started_game", version);
+            }else if(place.equals("first")){
+                allEvents = eventRepo.findAllByEventNameAndVersion("first_load", version);
+            }else{
+                allEvents = eventRepo.findAllByEventNameAndVersion("started_game", version);
+                allEvents.addAll(eventRepo.findAllByEventNameAndVersion("first_load", version));
             }
+        }
+        for(Event event : allEvents){
+            allTime += Long.parseLong(event.getLoadTime());
+            counter++;
         }
         return allTime / counter;
     }
