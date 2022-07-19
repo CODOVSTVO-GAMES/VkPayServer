@@ -47,10 +47,16 @@ public class StatController {
                                                                 "quest_open_6","dialogue_cat_close_5")); 
 
         Map responce = new LinkedHashMap<>();
+        
         if (version.equals("")){
             for(Object object : eventsName){
                 String event = (String) object;
                 responce.put(event, eventRepo.countByEventName(event));
+            }
+        } else if (!version.equals("")){
+            for(Object object : eventsName){
+                String event = (String) object;
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
             }
         }
 
