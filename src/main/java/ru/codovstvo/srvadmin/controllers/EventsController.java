@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +26,7 @@ public class EventsController {
     EventsService eventsService;
 
     @PostMapping
-    public void newEvent(@RequestParam String hash,
+    public ResponseEntity newEvent(@RequestParam String hash,
                         @RequestParam String type,
                         @RequestParam int userId,
                         @RequestParam String version,
@@ -50,10 +52,12 @@ public class EventsController {
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
+            return new ResponseEntity(HttpStatus.OK);
         }else{
             System.out.println("Подпись неверна");
             System.out.println("hash: " + hash);
             System.out.println("encode: " + eventsService.encodeHmac256(parameters));
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
 
