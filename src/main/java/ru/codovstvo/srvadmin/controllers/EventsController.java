@@ -1,18 +1,18 @@
 package ru.codovstvo.srvadmin.controllers;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
+import ru.codovstvo.srvadmin.entitys.EventErrors;
+import ru.codovstvo.srvadmin.repo.EventErrorRepo;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 
@@ -24,7 +24,11 @@ public class EventsController {
     private EventRepo eventRepo;
 
     @Autowired
+    private EventErrorRepo eventErrorRepo;
+
+    @Autowired
     EventsService eventsService;
+    
 
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
@@ -41,7 +45,6 @@ public class EventsController {
                         ) throws Exception {
         String parameters = new String();
         System.out.println(allParams.toString());
-        System.out.println(allParams.get(userId));
 
         if(type.equals("start")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
@@ -58,11 +61,7 @@ public class EventsController {
             eventRepo.save(evvvent);
             return new ResponseEntity(HttpStatus.OK);
         }else{
-            System.out.println("Подпись неверна");
-            System.out.println("hash: " + hash);
-            System.out.println("encode: " + eventsService.encodeHmac256(parameters));
-
-
+            eventErrorRepo.save(new EventErrors(allParams.toString()));
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
