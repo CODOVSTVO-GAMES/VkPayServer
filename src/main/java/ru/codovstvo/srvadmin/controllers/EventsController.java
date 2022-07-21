@@ -44,7 +44,6 @@ public class EventsController {
                         @RequestParam Map<String, String> allParams
                         ) throws Exception {
         String parameters = new String();
-        System.out.println(allParams.toString());
 
         if(type.equals("start")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
