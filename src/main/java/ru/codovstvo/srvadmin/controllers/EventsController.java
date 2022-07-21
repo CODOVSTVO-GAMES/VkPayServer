@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,12 @@ public class EventsController {
                         @RequestParam String event,
                         @RequestParam(name = "lang", required=false, defaultValue="") String lang,
                         @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
-                        @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime
+                        @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime,
+                        @RequestParam Map<String, String> allParams
                         ) throws Exception {
         String parameters = new String();
+        System.out.println(allParams.toString());
+        System.out.println(allParams.get(userId));
 
         if(type.equals("start")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
@@ -57,6 +61,8 @@ public class EventsController {
             System.out.println("Подпись неверна");
             System.out.println("hash: " + hash);
             System.out.println("encode: " + eventsService.encodeHmac256(parameters));
+
+
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
