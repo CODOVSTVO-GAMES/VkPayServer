@@ -1,5 +1,8 @@
 package ru.codovstvo.srvadmin.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +33,22 @@ public class DataController {
                                     ){
                                         System.out.println(requestBody.toString());
                                         // System.out.println(userId);
-        // System.out.println(key);
-        // System.out.println(value);
-        // try{
-        //     UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-        //     userData.setData(value);
-        // }catch (Exception e){
-        //     userDataRepo.save(new UserData(userId, key, value));
-        // }
+        Map<String, String> parameters =  new HashMap<>();
+        String[] params = requestBody.toString().split("&");
+        for(String para : params){
+            try{
+                String[] keyValue = para.split("=");
+                parameters.put(keyValue[0], keyValue[1]);
+            }catch (Exception e){
+                parameters.put(para.replace("=", ""), "");
+            }
+        }
+        try{
+            UserData userData = userDataRepo.findByUserIdAndTitle(Integer.parseInt(parameters.get("userId")), parameters.get("key"));
+            userData.setData(parameters.get("value"));
+        }catch (Exception e){
+            userDataRepo.save(new UserData(Integer.parseInt(parameters.get("userId")), parameters.get("key"), parameters.get("value")));
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 
