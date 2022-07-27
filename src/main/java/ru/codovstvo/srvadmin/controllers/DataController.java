@@ -6,15 +6,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ru.codovstvo.srvadmin.entitys.UserData;
+import ru.codovstvo.srvadmin.repo.UserDataRepo;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "back/data")
 public class DataController {
+
+    @Autowired
+    UserDataRepo userDataRepo;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestParam String data){
-        System.out.println(data);
+    public ResponseEntity setData(@RequestParam int userId,
+                                    @RequestParam String key,
+                                    @RequestParam String value){
+        System.out.println(userId);
+        System.out.println(key);
+        System.out.println(value);
+        userDataRepo.save(new UserData());
         return new ResponseEntity(HttpStatus.OK);
     }
 }
