@@ -45,8 +45,10 @@ public class DataController {
         try{
             UserData userData = userDataRepo.findByUserIdAndTitle(Integer.parseInt(parameters.get("userId")), parameters.get("key"));
             userData.setData(parameters.get("value"));
+            System.out.println("Перезаписано");
         }catch (Exception e){
             userDataRepo.save(new UserData(Integer.parseInt(parameters.get("userId")), parameters.get("key"), parameters.get("value")));
+            System.out.println("первая запись")
         }
         return new ResponseEntity(HttpStatus.OK);
     }
