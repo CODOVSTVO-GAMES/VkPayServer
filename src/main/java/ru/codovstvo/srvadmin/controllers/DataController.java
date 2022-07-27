@@ -28,7 +28,7 @@ public class DataController {
                                     // @RequestParam String key,
                                     // @RequestParam String value
                                     ){
-                                        System.out.println(requestBody);
+                                        System.out.println(requestBody.toString());
                                         // System.out.println(userId);
         // System.out.println(key);
         // System.out.println(value);
