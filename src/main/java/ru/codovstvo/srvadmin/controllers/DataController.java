@@ -3,6 +3,7 @@ package ru.codovstvo.srvadmin.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,13 @@ public class DataController {
         System.out.println(userId);
         System.out.println(key);
         System.out.println(value);
-        userDataRepo.save(new UserData());
+        userDataRepo.save(new UserData(userId, key, value));
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("get")
+    public String getData(@RequestParam int userId,
+                            @RequestParam String key){
+        return userDataRepo.findByUserIdAndTitle(userId, key).getData();
     }
 }
