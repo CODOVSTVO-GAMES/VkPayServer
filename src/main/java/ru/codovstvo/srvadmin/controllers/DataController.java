@@ -44,17 +44,18 @@ public class DataController {
         }
         int userId = Integer.parseInt(parameters.get("userId"));
         String key = parameters.get("key");
+        String data = parameters.get("value");
         System.out.println("--------");
         System.out.println(userId);
         System.out.println(key);
         System.out.println("--------");
         try{
             UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-            userData.setData(key);
+            userData.setData();
             userDataRepo.save(userData);
             System.out.println("rg4erggewrg");
         }catch (Exception e){
-            userDataRepo.save(new UserData(Integer.parseInt(parameters.get("userId")), parameters.get("key"), parameters.get("value")));
+            userDataRepo.save(new UserData(userId, key, data));
             System.out.println("ffrists");
         }
         return new ResponseEntity(HttpStatus.OK);
