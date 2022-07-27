@@ -27,9 +27,9 @@ public class DataController {
         System.out.println(userId);
         System.out.println(key);
         System.out.println(value);
-        if(userDataRepo.cuntByUserIdAndTitle(userId, key) == 0){
+        if(userDataRepo.countByUserIdAndTitle(userId, key) == 0){
             userDataRepo.save(new UserData(userId, key, value));
-        }else if(userDataRepo.cuntByUserIdAndTitle(userId, key) == 1){
+        }else if(userDataRepo.countByUserIdAndTitle(userId, key) == 1){
             userDataRepo.save(new UserData(userId, key, value));
             userDataRepo.deleteById(userDataRepo.findByUserIdAndTitle(userId, key).getId());
         }
