@@ -31,7 +31,7 @@ public class DataController {
                                     // @RequestParam String key,
                                     // @RequestParam String value
                                     ){
-                                        System.out.println(requestBody.toString());
+                                        // System.out.println(requestBody.toString());
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");
         for(String para : params){
@@ -42,9 +42,16 @@ public class DataController {
                 parameters.put(para.replace("=", ""), "");
             }
         }
+        int userId = Integer.parseInt(parameters.get("userId"));
+        String key = parameters.get("key");
+        System.out.println("--------");
+        System.out.println(userId);
+        System.out.println(key);
+        System.out.println("--------");
         try{
-            UserData userData = userDataRepo.findByUserIdAndTitle(Integer.parseInt(parameters.get("userId")), parameters.get("key"));
-            userData.setData(parameters.get("value"));
+            UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
+            userData.setData(key);
+            userDataRepo.save(userData);
             System.out.println("rg4erggewrg");
         }catch (Exception e){
             userDataRepo.save(new UserData(Integer.parseInt(parameters.get("userId")), parameters.get("key"), parameters.get("value")));
