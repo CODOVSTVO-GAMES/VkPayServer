@@ -28,7 +28,6 @@ public class EventsController {
 
     @Autowired
     EventsService eventsService;
-    
 
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
