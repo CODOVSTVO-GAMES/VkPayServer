@@ -57,7 +57,7 @@ public class DataController {
             try{
                 return userDataRepo.findByUserIdAndTitle(userId, key).getData();
             }catch (Exception e){
-                return "0";
+                return null;
             }
     }
 }
