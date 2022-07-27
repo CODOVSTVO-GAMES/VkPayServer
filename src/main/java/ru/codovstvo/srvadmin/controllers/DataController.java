@@ -32,7 +32,6 @@ public class DataController {
                                     // @RequestParam String value
                                     ){
                                         System.out.println(requestBody.toString());
-                                        // System.out.println(userId);
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");
         for(String para : params){
@@ -55,6 +54,10 @@ public class DataController {
     @GetMapping("get")
     public String getData(@RequestParam int userId,
                             @RequestParam String key){
-        return userDataRepo.findByUserIdAndTitle(userId, key).getData();
+            try{
+                return userDataRepo.findByUserIdAndTitle(userId, key).getData();
+            }catch (Exception e){
+                return "";
+            }
     }
 }
