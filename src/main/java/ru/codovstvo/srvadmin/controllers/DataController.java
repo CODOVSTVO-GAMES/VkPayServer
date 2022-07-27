@@ -51,7 +51,7 @@ public class DataController {
         System.out.println("--------");
         try{
             UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-            userData.setData();
+            userData.setData(data);
             userDataRepo.save(userData);
             System.out.println("rg4erggewrg");
         }catch (Exception e){
