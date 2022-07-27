@@ -48,7 +48,7 @@ public class DataController {
             System.out.println("Перезаписано");
         }catch (Exception e){
             userDataRepo.save(new UserData(Integer.parseInt(parameters.get("userId")), parameters.get("key"), parameters.get("value")));
-            System.out.println("первая запись")
+            System.out.println("первая запись");
         }
         return new ResponseEntity(HttpStatus.OK);
     }
