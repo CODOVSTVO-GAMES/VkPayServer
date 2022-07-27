@@ -1,5 +1,6 @@
 package ru.codovstvo.srvadmin.entitys;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -18,7 +19,7 @@ public class UserData {
     private int userId;
 
     private String title;
-    @Lob
+    @Column(columnDefinition="TEXT")
     private String data;
 
     public UserData(){}
