@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,18 +22,22 @@ public class DataController {
     UserDataRepo userDataRepo;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestParam int userId,
-                                    @RequestParam String key,
-                                    @RequestParam String value){
-        System.out.println(userId);
-        System.out.println(key);
-        System.out.println(value);
-        try{
-            UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-            userData.setData(value);
-        }catch (Exception e){
-            userDataRepo.save(new UserData(userId, key, value));
-        }
+    public ResponseEntity setData(
+                                        @RequestBody String requestBody
+                                    // @RequestParam int userId,
+                                    // @RequestParam String key,
+                                    // @RequestParam String value
+                                    ){
+                                        System.out.println(requestBody);
+                                        // System.out.println(userId);
+        // System.out.println(key);
+        // System.out.println(value);
+        // try{
+        //     UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
+        //     userData.setData(value);
+        // }catch (Exception e){
+        //     userDataRepo.save(new UserData(userId, key, value));
+        // }
         return new ResponseEntity(HttpStatus.OK);
     }
 
