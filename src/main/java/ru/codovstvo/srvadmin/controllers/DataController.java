@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
+import ru.codovstvo.srvadmin.services.EventsService;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,15 +24,12 @@ public class DataController {
 
     @Autowired
     UserDataRepo userDataRepo;
+
+    @Autowired
+    EventsService eventsService;
     
     @PostMapping("set")
-    public ResponseEntity setData(
-                                        @RequestBody String requestBody
-                                    // @RequestParam int userId,
-                                    // @RequestParam String key,
-                                    // @RequestParam String value
-                                    ){
-                                        // System.out.println(requestBody.toString());
+    public ResponseEntity setData(@RequestBody String requestBody){
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");
         for(String para : params){
@@ -59,6 +57,25 @@ public class DataController {
             System.out.println("ffrists");
         }
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("dellall")
+    public void deleteData(@RequestBody String requestBody) throws Exception {
+        Map<String, String> parameters =  new HashMap<>();
+        String[] params = requestBody.toString().split("&");
+        for(String para : params){
+            try{
+                String[] keyValue = para.split("=");
+                parameters.put(keyValue[0], keyValue[1]);
+            }catch (Exception e){
+                parameters.put(para.replace("=", ""), "");
+            }
+        }
+        int userId = Integer.parseInt(parameters.get("userId"));
+        String hash = parameters.get("hash");
+        if (eventsService.encodeHmac256(parameters.get("userId")).equals(hash)){
+            userDataRepo.deleteAllByUserId(userId);
+        }
     }
 
     @GetMapping("get")
