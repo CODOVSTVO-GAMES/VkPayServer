@@ -52,11 +52,5 @@ public class Event {
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
     }
-    
-    public Event(int userId, String eventName)
-    {
-        this.userId = userId;
-        this.eventName = eventName;
-    }
 
 }

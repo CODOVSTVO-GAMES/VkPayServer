@@ -31,9 +31,6 @@ public class DataController {
 
     @Autowired
     EventsService eventsService;
-
-    @Autowired
-    private EventRepo eventRepo;
     
     @PostMapping("set")
     public ResponseEntity setData(@RequestBody String requestBody){
@@ -82,7 +79,6 @@ public class DataController {
         String hash = parameters.get("hash");
         if (eventsService.encodeHmac256(parameters.get("userId")).equals(hash)){
             userDataRepo.deleteAllByUserId(userId);
-            eventRepo.save(new Event(userId, "delete data"));
         }
     }
 
