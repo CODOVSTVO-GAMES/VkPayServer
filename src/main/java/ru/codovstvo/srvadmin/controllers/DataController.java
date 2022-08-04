@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.entitys.UserData;
+import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 
@@ -29,6 +31,9 @@ public class DataController {
 
     @Autowired
     EventsService eventsService;
+
+    @Autowired
+    private EventRepo eventRepo;
     
     @PostMapping("set")
     public ResponseEntity setData(@RequestBody String requestBody){
@@ -77,6 +82,7 @@ public class DataController {
         String hash = parameters.get("hash");
         if (eventsService.encodeHmac256(parameters.get("userId")).equals(hash)){
             userDataRepo.deleteAllByUserId(userId);
+            eventRepo.save(new Event(userId, "delete data"));
         }
     }
 
