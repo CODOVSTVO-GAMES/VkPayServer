@@ -41,9 +41,14 @@ public class VkController {
         } else if(notification_type.equals("order_status_change_test")) {
             return paymentsService.OrderExecuted(order_Vk_id, vkDate);
 
+        } else if (notification_type.equals("get_item")) {
+            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
+
+        } else if(notification_type.equals("order_status_change")) {
+            return paymentsService.OrderExecuted(order_Vk_id, vkDate);
+
         } else {
             return paymentsService.error(1);
-
         }
     }
 
