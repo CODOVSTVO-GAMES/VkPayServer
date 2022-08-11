@@ -31,6 +31,8 @@ public class Order {
     @ManyToOne
     private Item item;
 
+    private int priceValue;
+
     private Long userId;
 
     private Long receiverId;
@@ -45,7 +47,7 @@ public class Order {
     private LocalDate date;
 
 
-    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus) {
+    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus, int priceValue) {
         this.orderVkId  = orderVkId;
         this.appId = appId;
         this.item = item;
@@ -54,6 +56,7 @@ public class Order {
         this.orderStatus = orderStatus;
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
+        this.priceValue = priceValue;
     }
 
     public Order() {}
