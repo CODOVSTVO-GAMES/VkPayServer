@@ -45,7 +45,7 @@ public class Order {
     private LocalDate date;
 
 
-    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus, int priceValue) {
+    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus) {
         this.orderVkId  = orderVkId;
         this.appId = appId;
         this.item = item;
