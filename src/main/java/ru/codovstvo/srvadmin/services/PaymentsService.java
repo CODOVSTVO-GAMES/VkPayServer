@@ -27,7 +27,7 @@ public class PaymentsService {
         Order order = null;
         try {
             Item item = itemRepo.findByTitle(itemTitle);
-            order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED, item.getPrice());
+            order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED);
             orderRepo.save(order);
 
             Map response = new HashMap<>();

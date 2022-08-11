@@ -31,8 +31,6 @@ public class Order {
     @ManyToOne
     private Item item;
 
-    private int priceValue;
-
     private Long userId;
 
     private Long receiverId;
@@ -56,7 +54,6 @@ public class Order {
         this.orderStatus = orderStatus;
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
-        this.priceValue = priceValue;
     }
 
     public Order() {}
