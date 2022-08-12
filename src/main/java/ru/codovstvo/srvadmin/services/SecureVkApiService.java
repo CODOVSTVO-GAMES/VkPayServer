@@ -6,8 +6,8 @@ import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.ServiceActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.ServiceClientCredentialsFlowResponse;
-import com.vk.api.sdk.objects.apps.responses.GetResponse;
 import com.vk.api.sdk.objects.base.responses.OkResponse;
+import com.vk.api.sdk.objects.secure.responses.CheckTokenResponse;
 
 @Service
 public class SecureVkApiService {
@@ -21,6 +21,11 @@ public class SecureVkApiService {
 
         ServiceActor actor = new ServiceActor(8180902, authResponse.getAccessToken());
 
-        OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).value(2) .execute();
+        // OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).value(2).execute();
+
+        CheckTokenResponse ddd = vk.secure().checkToken(actor).execute();
+        System.out.println(ddd.validateRequired());
+        System.out.println(ddd.getUserId());
+        System.out.println(ddd.toString());
     }
 }
