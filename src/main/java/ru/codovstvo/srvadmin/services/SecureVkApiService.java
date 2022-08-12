@@ -19,9 +19,9 @@ public class SecureVkApiService {
 
         ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"3diesn7ViJiMazGJa7my").execute();
 
-        ServiceActor actor = new ServiceActor(8180902, authResponse.getAccessToken());
+        ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", authResponse.getAccessToken());
         System.out.println(actor.getAccessToken());
 
-        // OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).value(2).execute();
+        OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).value(2).execute();
     }
 }
