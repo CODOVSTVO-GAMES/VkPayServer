@@ -16,7 +16,6 @@ public class VkController {
     @Autowired
     private PaymentsService paymentsService;
 
-
     @PostMapping
     public Object VkNotification(@RequestParam String notification_type,
                                 @RequestParam Long app_id,
