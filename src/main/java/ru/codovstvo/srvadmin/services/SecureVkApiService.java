@@ -17,8 +17,7 @@ public class SecureVkApiService {
         HttpTransportClient httpClient = new HttpTransportClient();
         VkApiClient vk = new VkApiClient(httpClient);
 
-
-        ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"3diesn7ViJiMazGJa7my").execute();
+        ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf").execute();
 
         ServiceActor actor = new ServiceActor(8180902, authResponse.getAccessToken());
 
