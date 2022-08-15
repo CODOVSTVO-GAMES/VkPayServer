@@ -24,6 +24,6 @@ public class SecureVkApiService {
 
         // OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).execute();
 
-        System.out.println(vk.secure().addAppEvent(actor, 77517618, 2).executeAsString());
+        System.out.println(vk.secure().addAppEvent(actor, 77517618, 1).value(2).executeAsString());
     }
 }
