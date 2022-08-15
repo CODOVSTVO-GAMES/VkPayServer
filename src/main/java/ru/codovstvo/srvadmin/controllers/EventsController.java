@@ -15,6 +15,7 @@ import ru.codovstvo.srvadmin.entitys.EventErrors;
 import ru.codovstvo.srvadmin.repo.EventErrorRepo;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
+import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
 @RestController
 @RequestMapping(value = "back/events")
@@ -28,6 +29,9 @@ public class EventsController {
 
     @Autowired
     EventsService eventsService;
+
+    @Autowired
+    SecureVkApiService secureVkApiService;
 
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
@@ -57,6 +61,12 @@ public class EventsController {
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
+            if (event.contains("level_up"))
+            {
+                String level = event.replace("level_up_", "");
+                System.out.println("Получен уровень: " + level);
+                secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+            }
             return new ResponseEntity(HttpStatus.OK);
         }else{
             eventErrorRepo.save(new EventErrors(allParams.toString()));

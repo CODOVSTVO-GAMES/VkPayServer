@@ -118,8 +118,8 @@ public class StatController {
     }
 
     @GetMapping("test")
-    public void test() throws Exception{
-        secureVkApiService.test();
+    public void sendLevelUpEvent() throws Exception{
+        secureVkApiService.sendLevelUpEvent(5, 77517618);
     }
 
 }

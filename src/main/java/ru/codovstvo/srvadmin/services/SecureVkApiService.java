@@ -13,19 +13,16 @@ import com.vk.api.sdk.streaming.clients.VkStreamingApiClient;
 @Service
 public class SecureVkApiService {
     
-    public void test() throws Exception {
+    public void sendLevelUpEvent(int level, int userId) throws Exception {
         
         HttpTransportClient httpClient = new HttpTransportClient();
-        
         VkApiClient vk = new VkApiClient(httpClient);
 
-        ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"3diesn7ViJiMazGJa7my").execute();
-
+        // ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"3diesn7ViJiMazGJa7my").execute();
         ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
-        System.out.println(actor.getAccessToken());
 
-        // OkResponse okResponse = vk.secure().addAppEvent(actor, 77517618, 1).execute();
+        OkResponse okResponse = vk.secure().addAppEvent(actor, userId, 1).value(level).execute();
 
-        System.out.println(vk.secure().addAppEvent(actor, 77517618, 1).value(4).executeAsString());
+        System.out.println(okResponse.toString());
     }
 }
