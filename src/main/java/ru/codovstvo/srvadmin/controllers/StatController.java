@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.repo.EventRepo;
-// import ru.codovstvo.srvadmin.services.SecureVkApiService;
+import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
 @RestController
 @RequestMapping(value = "back/stat")
@@ -26,8 +26,8 @@ public class StatController {
     @Autowired
     private EventRepo eventRepo;
 
-    // @Autowired
-    // private SecureVkApiService secureVkApiService;
+    @Autowired
+    private SecureVkApiService secureVkApiService;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -117,9 +117,9 @@ public class StatController {
         return responce;
     }
 
-    // @GetMapping("test")
-    // public void test() throws Exception{
-    //     secureVkApiService.test();
-    // }
+    @GetMapping("test")
+    public void test() throws Exception{
+        secureVkApiService.test();
+    }
 
 }
