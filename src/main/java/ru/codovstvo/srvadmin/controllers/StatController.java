@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.repo.EventRepo;
-import ru.codovstvo.srvadmin.services.SecureVkApiService;
+// import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
 @RestController
 @RequestMapping(value = "back/stat")
@@ -26,8 +26,8 @@ public class StatController {
     @Autowired
     private EventRepo eventRepo;
 
-    @Autowired
-    private SecureVkApiService secureVkApiService;
+    // @Autowired
+    // private SecureVkApiService secureVkApiService;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -70,8 +70,8 @@ public class StatController {
                                                                 "dialogue_marya_close_2","merge_bloom_tree",
                                                                 "dialogue_marya_close_3","quest_done_0",
                                                                 "level_up_2","quest_open_1",
-                                                                "2_apple_harvested","first_click_in_marya",
-                                                                "click_exchange","click_speedup",
+                                                                "2_apple_harvested",//"first_click_in_marya",
+                                                                // "click_exchange","click_speedup",
                                                                 "quest_done_1","quest_open_2",
                                                                 "open_map_2","first_click_in_root",
                                                                 "dialogue_cat_close_1","dialogue_marya_close_6",
@@ -98,9 +98,9 @@ public class StatController {
         return responce;
     }
 
-    @GetMapping("test")
-    public void test() throws Exception{
-        secureVkApiService.test();
-    }
+    // @GetMapping("test")
+    // public void test() throws Exception{
+    //     secureVkApiService.test();
+    // }
 
 }
