@@ -96,6 +96,7 @@ public class StatController {
                                                                 "quest_open_10", "quest_done_9", 
                                                                 "quest_open_14", "quest_open_16", 
                                                                 "quest_open_15", "level_up_5", 
+                                                                "quest_done_4",
                                                                 "level_up_6", "level_up_7",
                                                                 "open_map_6", "open_map_7"
                                                                 )); 

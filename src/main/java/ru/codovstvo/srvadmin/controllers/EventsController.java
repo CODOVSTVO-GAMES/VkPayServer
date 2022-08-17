@@ -61,11 +61,12 @@ public class EventsController {
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
-            if (event.contains("level_up"))
-            {
+            if (event.contains("level_up")){
                 String level = event.replace("level_up_", "");
-                System.out.println("Получен уровень: " + level);
                 secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+            }
+            else if (event.contains("quest_done_4")){
+                secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
             }
             return new ResponseEntity(HttpStatus.OK);
         }else{

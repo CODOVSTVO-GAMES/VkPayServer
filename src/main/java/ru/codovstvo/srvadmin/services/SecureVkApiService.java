@@ -18,11 +18,17 @@ public class SecureVkApiService {
         HttpTransportClient httpClient = new HttpTransportClient();
         VkApiClient vk = new VkApiClient(httpClient);
 
-        // ServiceClientCredentialsFlowResponse authResponse = vk.oAuth().serviceClientCredentialsFlow(8180902,"3diesn7ViJiMazGJa7my").execute();
         ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
 
         OkResponse okResponse = vk.secure().addAppEvent(actor, userId, 1).value(level).execute();
+    }
 
-        System.out.println(okResponse.toString());
+    public void sendProgressMission(int mission, int userId) throws Exception{
+        HttpTransportClient httpClient = new HttpTransportClient();
+        VkApiClient vk = new VkApiClient(httpClient);
+
+        ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
+
+        OkResponse okResponse = vk.secure().addAppEvent(actor, userId, mission).execute();
     }
 }
