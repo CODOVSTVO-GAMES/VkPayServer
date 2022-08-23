@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.entitys.EventErrors;
+import ru.codovstvo.srvadmin.entitys.NotificationQueue;
+import ru.codovstvo.srvadmin.entitys.NotificationType;
 import ru.codovstvo.srvadmin.repo.EventErrorRepo;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.repo.NotificationQueueRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
@@ -26,6 +29,9 @@ public class EventsController {
 
     @Autowired
     private EventErrorRepo eventErrorRepo;
+
+    @Autowired
+    private NotificationQueueRepo notificationQueueRepo;
 
     @Autowired
     EventsService eventsService;
@@ -61,15 +67,33 @@ public class EventsController {
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
-            if (event.contains("level_up")){
+            
+            if (event.contains("level_up")) {
                 String level = event.replace("level_up_", "");
                 secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
             }
-            else if (event.contains("quest_done_4")){
+            else if (event.contains("quest_done_4")) {
                 secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
             }
+            else if (event.contains("apple_collect")) {
+                long userIdLong = userId;
+                notificationQueueRepo.save(new NotificationQueue(userIdLong, NotificationType.COLLERCTAPPLE));
+            }
+            else if (event.contains("tangerine_collect")) {
+                long userIdLong = userId;
+                notificationQueueRepo.save(new NotificationQueue(userIdLong, NotificationType.COLLERCTTANGETINE));
+            }
+            else if (event.contains("appleTree_death")) {
+                long userIdLong = userId;
+                notificationQueueRepo.deleteByUserIdAndNotificationType(userIdLong, NotificationType.COLLERCTAPPLE);
+            }
+            else if (event.contains("tangerineTree_death")) {
+                long userIdLong = userId;
+                notificationQueueRepo.deleteByUserIdAndNotificationType(userIdLong, NotificationType.COLLERCTTANGETINE);
+            }
+
             return new ResponseEntity(HttpStatus.OK);
-        }else{
+        } else {
             eventErrorRepo.save(new EventErrors(allParams.toString()));
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
