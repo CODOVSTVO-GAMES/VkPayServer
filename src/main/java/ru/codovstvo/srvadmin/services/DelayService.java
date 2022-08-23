@@ -31,7 +31,7 @@ public class DelayService {
     @Autowired
     private SecureVkApiService secureVkApiService;
 
-    @Scheduled(initialDelay = 1000 , fixedDelay = 6000)
+    @Scheduled(initialDelay = 10000 , fixedDelay = 300000)
     public void notificationManager() throws ApiException, ClientException {
         System.out.println("-------------------------------------------------------12345");
         List<Long> sentUsers = new ArrayList<Long>();
