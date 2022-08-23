@@ -14,7 +14,6 @@ import com.vk.api.sdk.streaming.clients.VkStreamingApiClient;
 public class SecureVkApiService {
     
     public void sendLevelUpEvent(int level, int userId) throws Exception {
-        
         HttpTransportClient httpClient = new HttpTransportClient();
         VkApiClient vk = new VkApiClient(httpClient);
 
