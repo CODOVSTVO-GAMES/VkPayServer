@@ -1,11 +1,9 @@
 package ru.codovstvo.srvadmin.controllers;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.repo.EventRepo;
-import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
 @RestController
 @RequestMapping(value = "back/stat")
@@ -25,9 +22,6 @@ public class StatController {
 
     @Autowired
     private EventRepo eventRepo;
-
-    @Autowired
-    private SecureVkApiService secureVkApiService;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,

@@ -1,8 +1,5 @@
 package ru.codovstvo.srvadmin.entitys;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Entity;

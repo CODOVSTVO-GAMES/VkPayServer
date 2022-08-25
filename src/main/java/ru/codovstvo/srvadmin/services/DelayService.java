@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.vk.api.sdk.actions.Secure;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 
@@ -33,7 +32,6 @@ public class DelayService {
 
     @Scheduled(initialDelay = 10000 , fixedDelay = 300000)
     public void notificationManager() throws ApiException, ClientException {
-        System.out.println("-------------------------------------------------------12345");
         List<Long> sentUsers = new ArrayList<Long>();
         Date date = new Date();
         Long dateTime = date.getTime();
@@ -43,16 +41,16 @@ public class DelayService {
                 NotificationQueue item = (NotificationQueue)itemObj;
                 if (item.getExpirationDate() < dateTime) {
                     if (sentUsers.indexOf(item.getUserId()) == -1) { // если небыло отправлено в этот вызов метода
-                        String message = "";
+                        String message = new String();
                         if (type == NotificationType.COLLERCTAPPLE){
                             message = "Пора собирать урожай яблок!";
                         } else if (type == NotificationType.COLLERCTTANGETINE){
                             message = "Пора собирать урожай мандаринов!";
                         }
-                        secureVkApiService.sendNotification(item.getUserId(), message);
                         notificationLogsRepo.save(new NotificationLogs(item.getUserId(), type, message));
                         notificationQueueRepo.deleteAllByUserIdAndNotificationType(item.getUserId(), type);
                         sentUsers.add(item.getUserId());
+                        secureVkApiService.sendNotification(item.getUserId(), message);
                     }
                 }
             }

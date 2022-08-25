@@ -1,11 +1,8 @@
 package ru.codovstvo.srvadmin.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.codovstvo.srvadmin.entitys.Event;
-import ru.codovstvo.srvadmin.repo.EventRepo;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

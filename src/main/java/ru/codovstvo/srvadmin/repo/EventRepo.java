@@ -1,6 +1,5 @@
 package ru.codovstvo.srvadmin.repo;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
