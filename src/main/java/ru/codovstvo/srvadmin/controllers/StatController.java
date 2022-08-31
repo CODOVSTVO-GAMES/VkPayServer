@@ -1,11 +1,16 @@
 package ru.codovstvo.srvadmin.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -97,7 +102,7 @@ public class StatController {
                                                                 "open_map_6", "open_map_7"
                                                                 )); 
 
-        Map responce = new LinkedHashMap<>();
+        Map responce = new HashMap<>();
         
         if (version.equals("")){
             for(Object object : eventsName){
@@ -110,8 +115,21 @@ public class StatController {
                 responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
             }
         }
+        Map responceLinked = sortByValue(responce);
 
-        return responce;
+        return responceLinked;
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 
 }
