@@ -129,12 +129,17 @@ public class StatController {
         for (Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
-        Map inversedResult = new LinkedHashMap<String, Long>();
-        for (Entry<K, V> entry : result.entrySet()){
-            inversedResult.put(entry.getKey(), entry.getValue());
+
+        Map reversedResult = new LinkedHashMap<String, Long>();
+        List<K> keys = new ArrayList<K>(result.keySet());
+        List<V> values = new ArrayList<V>(result.values());
+        
+        for (int i = result.size() - 1; i >= 0; i--)
+        {
+            reversedResult.put(keys.get(i), values.get(i));
         }
 
-        return inversedResult;
+        return reversedResult;
     }
 
 }
