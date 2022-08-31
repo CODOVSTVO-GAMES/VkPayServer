@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,7 +103,7 @@ public class StatController {
                                                                 "open_map_6", "open_map_7"
                                                                 )); 
 
-        Map responce = new HashMap<>();
+        Map responce = new HashMap<String, Long>();
         
         if (version.equals("")){
             for(Object object : eventsName){
@@ -128,8 +129,12 @@ public class StatController {
         for (Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
+        Map inversedResult = new LinkedHashMap<String, Long>();
+        for (Entry<K, V> entry : result.entrySet()){
+            inversedResult.put(entry.getKey(), entry.getValue());
+        }
 
-        return result;
+        return inversedResult;
     }
 
 }
