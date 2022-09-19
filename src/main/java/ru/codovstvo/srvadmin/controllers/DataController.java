@@ -31,7 +31,8 @@ public class DataController {
     EventsService eventsService;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestBody String requestBody){
+    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody){
+        System.out.println(hash);
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");
         for(String para : params){

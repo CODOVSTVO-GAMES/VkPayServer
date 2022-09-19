@@ -116,9 +116,8 @@ public class StatController {
                 responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
             }
         }
-        Map responceLinked = sortByValue(responce);
 
-        return responceLinked;
+        return sortByValue(responce);
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
