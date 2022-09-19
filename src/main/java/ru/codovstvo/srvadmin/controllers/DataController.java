@@ -31,8 +31,11 @@ public class DataController {
     EventsService eventsService;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody){
+    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
+        // if (eventsService.encodeHmac256(requestBody)) {}
         System.out.println(hash);
+        System.out.println(eventsService.encodeHmac256(requestBody).toString());
+        System.out.println("-------");
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");
         for(String para : params){
