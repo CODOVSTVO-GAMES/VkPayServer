@@ -32,31 +32,32 @@ public class DataController {
     
     @PostMapping("set")
     public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
-        // if (eventsService.encodeHmac256(requestBody)) {}
-        System.out.println(hash);
-        System.out.println(eventsService.encodeHmac256(requestBody).toString());
-        System.out.println("-------");
-        Map<String, String> parameters =  new HashMap<>();
-        String[] params = requestBody.toString().split("&");
-        for(String para : params){
-            try{
-                String[] keyValue = para.split("=");
-                parameters.put(keyValue[0], keyValue[1]);
-            }catch (Exception e){
-                parameters.put(para.replace("=", ""), "");
+        if (eventsService.encodeHmac256(requestBody).equals(hash)) {
+            Map<String, String> parameters =  new HashMap<>();
+            String[] params = requestBody.toString().split("&");
+            for(String para : params){
+                try{
+                    String[] keyValue = para.split("=");
+                    parameters.put(keyValue[0], keyValue[1]);
+                }catch (Exception e){
+                    parameters.put(para.replace("=", ""), "");
+                }
             }
+            int userId = Integer.parseInt(parameters.get("userId"));
+            String key = parameters.get("key");
+            String data = parameters.get("value");
+            try{
+                UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
+                userData.setData(data);
+                userDataRepo.save(userData);
+            }catch (Exception e){
+                userDataRepo.save(new UserData(userId, key, data));
+            }
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            System.out.println("FORBIDDEN");
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-        int userId = Integer.parseInt(parameters.get("userId"));
-        String key = parameters.get("key");
-        String data = parameters.get("value");
-        try{
-            UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-            userData.setData(data);
-            userDataRepo.save(userData);
-        }catch (Exception e){
-            userDataRepo.save(new UserData(userId, key, data));
-        }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("dellall")
