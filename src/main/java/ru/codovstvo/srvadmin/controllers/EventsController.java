@@ -58,12 +58,16 @@ public class EventsController {
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
         }
         else if(type.equals("ordinary")){
+            System.out.println(parameters);
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
         }
         else if(type.equals("firstload")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=firstload";
         }
         
+        System.out.println(hash);
+        System.out.println(eventsService.encodeHmac256(parameters));
+
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
             eventRepo.save(evvvent);
