@@ -41,32 +41,29 @@ public class EventsController {
 
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
-                        @RequestParam String type,
-                        @RequestParam int userId,
-                        @RequestParam String version,
-                        @RequestParam String platform,
-                        @RequestParam String deviceType,
-                        @RequestParam String event,
-                        @RequestParam(name = "lang", required=false, defaultValue="") String lang,
-                        @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
-                        @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime,
-                        @RequestParam Map<String, String> allParams
-                        ) throws Exception {
+                                    @RequestParam String type,
+                                    @RequestParam int userId,
+                                    @RequestParam String version,
+                                    @RequestParam String platform,
+                                    @RequestParam String deviceType,
+                                    @RequestParam String event,
+                                    @RequestParam(name = "lang", required=false, defaultValue="") String lang,
+                                    @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
+                                    @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime,
+                                    @RequestParam Map<String, String> allParams
+                                ) throws Exception {
         String parameters = new String();
 
         if(type.equals("start")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
         }
         else if(type.equals("ordinary")){
-            System.out.println(parameters);
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
         }
         else if(type.equals("firstload")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=firstload";
         }
-        
-        System.out.println(hash);
-        System.out.println(eventsService.encodeHmac256(parameters));
+
 
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
@@ -74,10 +71,18 @@ public class EventsController {
             
             if (event.contains("level_up")) {
                 String level = event.replace("level_up_", "");
-                secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+                try {
+                    secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+                } catch (Exception e) {
+                    System.out.println("Уровень равен или меньше текущего");
+                }
             }
             else if (event.contains("quest_done_4")) {
-                secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
+                try{
+                    secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
+                } catch (Exception e) {
+                    System.out.println("Знакомство с иваном уже было");
+                }
             }
             else if (event.contains("apple_collect")) {
                 long userIdLong = userId;
