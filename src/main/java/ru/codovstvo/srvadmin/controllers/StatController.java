@@ -120,6 +120,28 @@ public class StatController {
         return sortByValue(responce);
     }
 
+    @GetMapping("levelfunnel")
+    public Map getLevelFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("level_up_1", "level_up_2", "level_up_3","level_up_4","level_up_5",
+                                                                    "level_up_6", "level_up_7", "level_up_8","level_up_9","level_up_10"
+                                                                )); 
+
+        Map responce = new HashMap<String, Long>();
+        
+        if (version.equals("")){
+            for(Object object : eventsName){
+                String event = (String) object;
+                responce.put(event, eventRepo.countByEventName(event));
+            }
+        } else if (!version.equals("")){
+            for(Object object : eventsName){
+                String event = (String) object;
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+            }
+        }
+        return sortByValue(responce);
+    }
+
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
         list.sort(Entry.comparingByValue());
