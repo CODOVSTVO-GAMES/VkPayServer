@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.Event;
@@ -20,6 +21,7 @@ import ru.codovstvo.srvadmin.repo.NotificationQueueRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
+@Transactional
 @RestController
 @RequestMapping(value = "back/events")
 public class EventsController {
