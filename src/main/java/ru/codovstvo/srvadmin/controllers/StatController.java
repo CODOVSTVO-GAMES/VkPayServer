@@ -122,9 +122,9 @@ public class StatController {
     
     @GetMapping("startfunnel")
     public Map getStartFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("spawn-marya", "merge-appleTree-1", "merge-appleTree-2", "merge-appleTree-3", "first-drop-apples", 
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load", "spawn-marya", "merge-appleTree-1", "merge-appleTree-2", "merge-appleTree-3",
                                                                         "first-exchange", "first-key-collect", "first-cutting-of-the-root", "first-merge-logs", "second-cutting-of-the-root", 
-                                                                        "first-delete-root", "first-open-chestS", "second-open-chestS"
+                                                                        "first-delete-root", "first-open-chestS", "second-open-chestS", "first-drop-apples"
                                                                 )); 
 
         Map responce = new HashMap<String, Long>();
