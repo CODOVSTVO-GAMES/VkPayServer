@@ -62,7 +62,7 @@ public class StatController {
         return allTime / counter;
     }
     
-    @GetMapping("funnel")
+    @GetMapping("funnel") //первая версия воронки обучения, не актуальна
     public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version){
         Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load","started_game",
                                                                 "dialogue_marya_close_0","merge_marya",
@@ -119,6 +119,29 @@ public class StatController {
 
         return sortByValue(responce);
     }
+    
+    @GetMapping("startfunnel")
+    public Map getStartFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("spawn-marya", "merge-appleTree-1", "merge-appleTree-2", "merge-appleTree-3", "first-drop-apples", 
+                                                                        "first-exchange", "first-key-collect", "first-cutting-of-the-root", "first-merge-logs", "second-cutting-of-the-root", 
+                                                                        "first-delete-root", "first-open-chestS", "second-open-chestS"
+                                                                )); 
+
+        Map responce = new HashMap<String, Long>();
+        
+        if (version.equals("")){
+            for(Object object : eventsName){
+                String event = (String) object;
+                responce.put(event, eventRepo.countByEventName(event));
+            }
+        } else if (!version.equals("")){
+            for(Object object : eventsName){
+                String event = (String) object;
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+            }
+        }
+        return sortByValue(responce);
+    }
 
     @GetMapping("levelfunnel")
     public Map getLevelFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
@@ -168,7 +191,7 @@ public class StatController {
 
     @GetMapping("terrfunnel")
     public Map getTerritoryasOpenFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("open_map_1", "open_map_2", "open_map_3", "open_map_4", "open_map_5",
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList( "open_map_2", "open_map_3", "open_map_4", "open_map_5",
                                                                         "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10"
                                                                 )); 
 
