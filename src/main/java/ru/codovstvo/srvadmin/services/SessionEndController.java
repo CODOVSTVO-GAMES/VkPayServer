@@ -31,11 +31,20 @@ public class SessionEndController {
             if (thisDate - user.getLastActivity() > 10000l)
             {
                 Sessions session = sessionsRepo.findByUserAndNumberSession(user, user.getSessionCounter());
-                session.endSession();
-                sessionsRepo.save(session);
+                if (session != null)
+                {
+                    session.endSession();
+                    sessionsRepo.save(session);
+                    user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
+                    System.out.println("сессия завершена");
+                }
+                else
+                {
+                    System.out.println("Сессия не была создана но пользователь значится активным");
+                }
+                
 
                 user.setActive(false);
-                user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
                 userEntityRepo.save(user);
             }
         }
