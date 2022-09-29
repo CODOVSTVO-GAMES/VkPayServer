@@ -72,12 +72,10 @@ public class EventsController {
         if(type.equals("start")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
             
-            UserEntity user;
-            try{
-                user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
-            }
-            catch (Exception e){
-                System.out.println("Создан новый пользователь");
+            UserEntity user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
+            
+            if (user == null){
+                System.out.println("Создан новый пользователь в евент контроллере");
                 user = userEntityRepo.save(new UserEntity(userId));
             }
 

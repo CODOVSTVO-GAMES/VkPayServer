@@ -59,15 +59,13 @@ public class DataController {
                 userDataRepo.save(new UserData(userId, key, data));
             }
 
-            UserEntity user;
-            try{
-                user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
-            }
-            catch (Exception e){
+            UserEntity user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
+
+            if (user == null){
                 System.out.println("Создан новый пользователь в дата контроллере");
                 user = userEntityRepo.save(new UserEntity(userId));
             }
-            
+
             user.setActive(true);
             user.setLastActivityInThisTime();
             userEntityRepo.save(user);
