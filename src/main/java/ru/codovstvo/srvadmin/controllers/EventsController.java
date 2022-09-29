@@ -2,6 +2,8 @@ package ru.codovstvo.srvadmin.controllers;
 
 import java.util.Map;
 
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,13 @@ import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.entitys.EventErrors;
 import ru.codovstvo.srvadmin.entitys.NotificationQueue;
 import ru.codovstvo.srvadmin.entitys.NotificationType;
+import ru.codovstvo.srvadmin.entitys.Sessions;
+import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventErrorRepo;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.NotificationQueueRepo;
+import ru.codovstvo.srvadmin.repo.SessionsRepo;
+import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 import ru.codovstvo.srvadmin.services.SecureVkApiService;
 
@@ -41,6 +47,12 @@ public class EventsController {
     @Autowired
     SecureVkApiService secureVkApiService;
 
+    @Autowired
+    UserEntityRepo userEntityRepo;
+
+    @Autowired
+    SessionsRepo sessionsRepo;
+
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
                                     @RequestParam String type,
@@ -52,20 +64,41 @@ public class EventsController {
                                     @RequestParam(name = "lang", required=false, defaultValue="") String lang,
                                     @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
                                     @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime,
+                                    @RequestParam(name = "session", required=false, defaultValue="") int session,
                                     @RequestParam Map<String, String> allParams
                                 ) throws Exception {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
+            
+            UserEntity user;
+            try{
+                user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
+            }
+            catch (Exception e){
+                System.out.println("Создан новый пользователь");
+                user = userEntityRepo.save(new UserEntity(userId));
+            }
+
+            if (user.getActive()) //если сессия прошлая сессия не завершена, он ее завершит и начнет новую
+            {
+                Sessions sessionn = sessionsRepo.findByUserAndNumberSession(user, user.getSessionCounter());
+                sessionn.endSession();
+                sessionsRepo.save(sessionn);
+
+                user.setActive(false);
+                user.setPlayTime(user.getPlayTime() + sessionn.getSessionLeght());
+                userEntityRepo.save(user);
+            }
+
+            user.setSessionCounter(session);
+            user.setActive(true);
+            sessionsRepo.save(new Sessions(user, session));
         }
         else if(type.equals("ordinary")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
         }
-        else if(type.equals("firstload")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=firstload";
-        }
-
 
         if(eventsService.encodeHmac256(parameters).equals(hash)){
             Event evvvent = new Event(userId, version, platform, deviceType, event, lang, referrer, loadTime);
