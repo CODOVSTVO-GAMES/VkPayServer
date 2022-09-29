@@ -7,6 +7,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.ManyToAny;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -21,6 +25,7 @@ public class Sessions {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
+    @ManyToOne
     private UserEntity user;
 
     private LocalTime startSessionTime;
