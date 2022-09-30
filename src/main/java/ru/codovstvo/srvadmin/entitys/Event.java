@@ -20,7 +20,7 @@ public class Event {
 
     private int userId;
 
-    private String version;
+    private String version; // есть вариант смапить на таблицу версий, но тогда нужно будет мигрировать таблицы
 
     private String platform;
 

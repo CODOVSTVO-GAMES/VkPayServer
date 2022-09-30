@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 

@@ -18,6 +18,7 @@ import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
+import ru.codovstvo.srvadmin.services.UserService;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,6 +35,9 @@ public class DataController {
 
     @Autowired
     EventsService eventsService;
+    
+    @Autowired
+    UserService userService;
     
     @PostMapping("set")
     public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
@@ -59,12 +63,7 @@ public class DataController {
                 userDataRepo.save(new UserData(userId, key, data));
             }
 
-            UserEntity user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
-
-            if (user == null){
-                System.out.println("Создан новый пользователь в дата контроллере");
-                user = userEntityRepo.save(new UserEntity(userId));
-            }
+            UserEntity user = userService.createOrFindVersion(userId);
 
             user.setActive(true);
             user.setLastActivityInThisTime();

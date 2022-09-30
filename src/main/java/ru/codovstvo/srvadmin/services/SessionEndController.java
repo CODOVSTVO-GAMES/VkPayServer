@@ -40,7 +40,7 @@ public class SessionEndController {
                 }
                 else
                 {
-                    System.out.println("Сессия не была создана но пользователь значится активным");
+                    System.out.println("Сессия не была создана но пользователь значится активным. Так бывает у админов: id - " + user.getPlatformUserId());
                 }
                 
 

@@ -26,6 +26,8 @@ import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.EventsService;
 import ru.codovstvo.srvadmin.services.SecureVkApiService;
+import ru.codovstvo.srvadmin.services.UserService;
+import ru.codovstvo.srvadmin.services.VersionService;
 
 @Transactional
 @RestController
@@ -53,6 +55,12 @@ public class EventsController {
     @Autowired
     SessionsRepo sessionsRepo;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    VersionService versionService;
+
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
                                     @RequestParam String type,
@@ -70,14 +78,11 @@ public class EventsController {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";// + "&session=" + session;
             
-            UserEntity user = userEntityRepo.findByPlatformUserId(Integer.toString(userId));
-            
-            if (user == null){
-                System.out.println("Создан новый пользователь в евент контроллере");
-                user = userEntityRepo.save(new UserEntity(userId));
-            }
+            UserEntity user = userService.createOrFindVersion(userId);
+
+            versionService.createOrFindVersion(version);
 
             if (user.getActive()) //если сессия прошлая сессия не завершена, он ее завершит и начнет новую
             {
@@ -95,7 +100,7 @@ public class EventsController {
             sessionsRepo.save(new Sessions(user, session));
         }
         else if(type.equals("ordinary")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";// + "&session=" + session;
         }
 
         if(eventsService.encodeHmac256(parameters).equals(hash)){
