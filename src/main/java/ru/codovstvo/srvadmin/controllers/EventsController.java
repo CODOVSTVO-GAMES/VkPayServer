@@ -78,7 +78,7 @@ public class EventsController {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start";// + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
             
             UserEntity user = userService.createOrFindVersion(userId);
 
@@ -100,7 +100,7 @@ public class EventsController {
             sessionsRepo.save(new Sessions(user, session));
         }
         else if(type.equals("ordinary")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary";// + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
         }
 
         if(eventsService.encodeHmac256(parameters).equals(hash)){
