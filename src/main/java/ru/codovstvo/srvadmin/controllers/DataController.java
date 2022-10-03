@@ -62,7 +62,7 @@ public class DataController {
             }catch (Exception e){
                 userDataRepo.save(new UserData(userId, key, data));
             }
-
+            
             UserEntity user = userService.createOrFindVersion(userId);
 
             user.setActive(true);

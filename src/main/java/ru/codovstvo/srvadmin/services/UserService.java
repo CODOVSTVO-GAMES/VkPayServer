@@ -1,5 +1,7 @@
 package ru.codovstvo.srvadmin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,13 @@ public class UserService {
 
 
     public UserEntity createOrFindVersion(String userId){
-        UserEntity user = userEntityRepo.findByPlatformUserId(userId);
-        if (user == null){
-            user = new UserEntity(userId);
+        List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userId);
+        if (users.isEmpty()){
+            UserEntity user = new UserEntity(userId);
             userEntityRepo.save(user);
             System.out.println("Создан новый пользователь");
         }
-        return user;
+        return users.get(0);
     }
 
     public UserEntity createOrFindVersion(int userId){

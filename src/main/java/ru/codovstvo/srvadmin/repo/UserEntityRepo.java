@@ -8,5 +8,6 @@ import ru.codovstvo.srvadmin.entitys.UserEntity;
 
 public interface UserEntityRepo extends CrudRepository<UserEntity, Long> {
     UserEntity findByPlatformUserId(String platformUserId);
+    List<UserEntity> findAllByPlatformUserId(String platformUserId);
     List<UserEntity> findAllByActive(Boolean active);
 }
