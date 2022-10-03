@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
@@ -18,6 +19,7 @@ import ru.codovstvo.srvadmin.entitys.NotificationType;
 import ru.codovstvo.srvadmin.repo.NotificationLogsRepo;
 import ru.codovstvo.srvadmin.repo.NotificationQueueRepo;
 
+@Transactional
 @Service
 public class DelayService {
 

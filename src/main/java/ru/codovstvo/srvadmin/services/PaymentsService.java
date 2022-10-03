@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.codovstvo.srvadmin.dto.ErrorTransfer;
 import ru.codovstvo.srvadmin.dto.ResponseTransfer;
@@ -14,6 +15,7 @@ import ru.codovstvo.srvadmin.entitys.OrderStatus;
 import ru.codovstvo.srvadmin.repo.ItemRepo;
 import ru.codovstvo.srvadmin.repo.OrderRepo;
 
+@Transactional
 @Service
 public class PaymentsService {
 
