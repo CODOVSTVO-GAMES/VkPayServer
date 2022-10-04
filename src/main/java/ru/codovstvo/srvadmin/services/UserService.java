@@ -23,6 +23,7 @@ public class UserService {
             UserEntity user = new UserEntity(userId);
             userEntityRepo.save(user);
             System.out.println("Создан новый пользователь");
+            return user;
         }
         return users.get(0);
     }

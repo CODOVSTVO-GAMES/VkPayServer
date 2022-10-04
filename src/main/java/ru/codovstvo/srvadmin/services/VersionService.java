@@ -10,7 +10,7 @@ import ru.codovstvo.srvadmin.repo.VersionRepo;
 @Transactional
 @Service
 public class VersionService {
-
+     
     @Autowired
     VersionRepo versionRepo;
 
@@ -20,11 +20,9 @@ public class VersionService {
             version = new Version(versionIdentifier);
             versionRepo.save(version);
 
-            if(findLastVersion() != null){
-                Version v = findLastVersion();
-                v.endSession();
-                versionRepo.save(v);
-            }
+            Version v = findLastVersion();
+            v.endSession();
+            versionRepo.save(v);
         }
 
         return version;
@@ -34,12 +32,10 @@ public class VersionService {
         Iterable<Version> list = versionRepo.findAll();
         long bufferMaxStartValue = 0;
         Version lastVersion = null;
-        if(list.iterator().hasNext()){
-            for (Version v : list){
-                if (bufferMaxStartValue < v.getStartDateLong()){
-                    bufferMaxStartValue = v.getStartDateLong();
-                    lastVersion = v;
-                }
+        for (Version v : list){
+            if (bufferMaxStartValue < v.getStartDateLong()){
+                bufferMaxStartValue = v.getStartDateLong();
+                lastVersion = v;
             }
         }
         return lastVersion;
