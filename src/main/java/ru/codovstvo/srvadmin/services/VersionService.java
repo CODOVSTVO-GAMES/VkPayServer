@@ -20,9 +20,9 @@ public class VersionService {
             version = new Version(versionIdentifier);
             versionRepo.save(version);
 
-            Version v = findLastVersion();
-            v.endSession();
-            versionRepo.save(v);
+            // Version v = findLastVersion();
+            // v.endSession();
+            // versionRepo.save(v);
         }
 
         return version;

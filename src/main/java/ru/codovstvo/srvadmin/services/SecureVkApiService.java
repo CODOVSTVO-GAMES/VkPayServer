@@ -39,4 +39,8 @@ public class SecureVkApiService {
         
         vk.secure().sendNotification(actor, message).execute();
     }
+
+    public void sendWallPost(Long userId, int level){
+        
+    }
 }
