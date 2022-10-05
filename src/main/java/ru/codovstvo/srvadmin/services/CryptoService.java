@@ -10,8 +10,8 @@ import javax.xml.bind.DatatypeConverter;
 
 @Transactional
 @Service
-public class EventsService {
-
+public class CryptoService {
+    
     public static String encodeHmac256(String data) throws Exception {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         String key = "programmistika";
@@ -21,5 +21,4 @@ public class EventsService {
         byte[] hash = sha256_HMAC.doFinal(data.getBytes());
         return DatatypeConverter.printBase64Binary(hash).replace("=", "").replace("/", "").replace("+", "");
     }
-
-} 
+}

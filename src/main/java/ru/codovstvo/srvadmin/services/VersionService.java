@@ -1,5 +1,7 @@
 package ru.codovstvo.srvadmin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,30 +16,20 @@ public class VersionService {
     @Autowired
     VersionRepo versionRepo;
 
-    public Version createOrFindVersion(String versionIdentifier){
-        Version version = versionRepo.findByVersionIdentifier(versionIdentifier);
-        if (version == null){
-            version = new Version(versionIdentifier);
-            versionRepo.save(version);
-
-            Version v = findLastVersion();
-            v.endSession();
-            versionRepo.save(v);
+    public Version createOrFindVersion(String versionIdentifier, String platform){
+        List<Version> versions = versionRepo.findAllByVersionIdentifierAndPlatform(versionIdentifier, platform);
+        if (versions.isEmpty()){
+            Version version = new Version(versionIdentifier, platform);
+            System.out.println("Создана новая версия: " + versionIdentifier + ", platform: " + platform);
+            return version;
         }
 
-        return version;
-    }
-
-    private Version findLastVersion(){
-        Iterable<Version> list = versionRepo.findAll();
-        long bufferMaxStartValue = 0;
-        Version lastVersion = null;
-        for (Version v : list){
-            if (bufferMaxStartValue < v.getStartDateLong()){
-                bufferMaxStartValue = v.getStartDateLong();
-                lastVersion = v;
+        for(Version v : versions){
+            if (v == versions.get(0)){
+                versionRepo.delete(v);
+                //залогировать
             }
         }
-        return lastVersion;
+        return versions.get(0);
     }
 }

@@ -21,6 +21,8 @@ public class Version {
 
     private String versionIdentifier;
 
+    private String platform;
+
 
     private LocalTime startTime;
 
@@ -35,11 +37,13 @@ public class Version {
 
     private long endDateLong;
 
-
+    
     public Version(){}
 
-    public Version(String version){
+    public Version(String version, String platform){
         this.versionIdentifier = version;
+        this.platform = platform;
+
         this.startTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.startDate = LocalDate.now(ZoneId.of("GMT+03:00"));
 

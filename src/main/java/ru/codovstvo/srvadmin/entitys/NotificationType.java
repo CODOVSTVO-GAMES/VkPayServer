@@ -1,5 +1,5 @@
-package ru.codovstvo.srvadmin.entitys;
+// package ru.codovstvo.srvadmin.entitys;
 
-public enum NotificationType {
-    COLLERCTAPPLE, COLLERCTTANGETINE,
-}
+// public enum NotificationType {
+//     COLLERCTAPPLE, COLLERCTTANGETINE,
+// }

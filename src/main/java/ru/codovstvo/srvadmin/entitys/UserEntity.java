@@ -1,9 +1,11 @@
 package ru.codovstvo.srvadmin.entitys;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -27,6 +29,12 @@ public class UserEntity {
 
     private Boolean active;
 
+    @OneToMany
+    private Set<UserData> userData;
+
+    @OneToMany
+    private Set<Event> events;
+
     public UserEntity(){}
 
     public UserEntity(int platformUserId){
@@ -41,4 +49,32 @@ public class UserEntity {
         Date date = new Date();
         this.lastActivity = date.getTime();
     }
+
+    public void saveData(String key, String value){
+        for(UserData data : userData){
+            if (data.getTitle() == key){
+                data.setData(value);
+                return; //обновит значение переменной
+            }
+        }
+        userData.add(new UserData(this, key, value));
+    }
+
+    public String getDatByKey(String key){
+        for(UserData data : userData){
+            if (data.getTitle() == key){
+                return data.getData();
+            }
+        }
+        return new String();
+    }
+
+    public void addEvent(Event evvent){
+        events.add(evvent);
+    }
+
+    public void delUserData(){
+        userData.clear();
+    }
+
 }

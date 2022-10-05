@@ -6,6 +6,7 @@ import java.time.ZoneId;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -18,9 +19,11 @@ public class Event {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    private int userId;
+    @ManyToOne
+    private UserEntity user;
 
-    private String version; // есть вариант смапить на таблицу версий, но тогда нужно будет мигрировать таблицы
+    @ManyToOne
+    private Version version;
 
     private String platform;
 
@@ -40,8 +43,8 @@ public class Event {
 
     public Event(){}
 
-    public Event(int userId, String version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
-        this.userId = userId;
+    public Event(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
+        this.user = user;
         this.version = version;
         this.platform = platform;
         this.deviceType = deviceType;
@@ -49,6 +52,7 @@ public class Event {
         this.language = language;
         this.referrer = referrer;
         this.loadTime = loadTime;
+        
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
     }

@@ -17,7 +17,8 @@ import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
-import ru.codovstvo.srvadmin.services.EventsService;
+import ru.codovstvo.srvadmin.services.CryptoService;
+import ru.codovstvo.srvadmin.services.DataService;
 import ru.codovstvo.srvadmin.services.UserService;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,81 +29,65 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DataController {
 
     @Autowired
+    DataService dataService;
+
+    @Autowired
     UserDataRepo userDataRepo;
 
     @Autowired
     UserEntityRepo userEntityRepo;
 
     @Autowired
-    EventsService eventsService;
+    CryptoService cryptoService;
     
     @Autowired
     UserService userService;
     
     @PostMapping("set")
     public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
-        if (eventsService.encodeHmac256(requestBody).equals(hash)) {
-            Map<String, String> parameters =  new HashMap<>();
-            String[] params = requestBody.toString().split("&");
-            for(String para : params){
-                try{
-                    String[] keyValue = para.split("=");
-                    parameters.put(keyValue[0], keyValue[1]);
-                }catch (Exception e){
-                    parameters.put(para.replace("=", ""), "");
-                }
-            }
-            int userId = Integer.parseInt(parameters.get("userId"));
-            String key = parameters.get("key");
-            String data = parameters.get("value");
-            try{
-                UserData userData = userDataRepo.findByUserIdAndTitle(userId, key);
-                userData.setData(data);
-                userDataRepo.save(userData);
-            }catch (Exception e){
-                userDataRepo.save(new UserData(userId, key, data));
-            }
-            
-            UserEntity user = userService.createOrFindVersion(userId);
 
-            user.setActive(true);
-            user.setLastActivityInThisTime();
-            userEntityRepo.save(user);
-
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            System.out.println("FORBIDDEN");
+        if (!cryptoService.encodeHmac256(requestBody).equals(hash)){// если хеш неверный
+            System.out.println("неверный хеш дата контроллер");
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
+            
+        Map<String, String> parameters =  dataService.requestBodyParser(requestBody);
+        
+        String userId = parameters.get("userId");
+        String key = parameters.get("key");
+        String data = parameters.get("value");
+
+        UserEntity user = userService.createOrFindUser(userId);
+
+        user.saveData(key, data);
+
+        userService.activateUser(user);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("dellall")
     public void deleteData(@RequestBody String requestBody) throws Exception {
-        Map<String, String> parameters =  new HashMap<>();
-        String[] params = requestBody.toString().split("&");
-        for(String para : params){
-            try{
-                String[] keyValue = para.split("=");
-                parameters.put(keyValue[0], keyValue[1]);
-            }catch (Exception e){
-                parameters.put(para.replace("=", ""), "");
-            }
-        }
+
+        Map<String, String> parameters =  dataService.requestBodyParser(requestBody);
+
         int userId = Integer.parseInt(parameters.get("userId"));
         String hash = parameters.get("hash");
-        if (eventsService.encodeHmac256(parameters.get("userId")).equals(hash)){
-            userDataRepo.deleteAllByUserId(userId);
+
+        if (cryptoService.encodeHmac256(parameters.get("userId")).equals(hash)){
+            UserEntity user = userService.createOrFindUser(userId);
+            user.delUserData();
+            userEntityRepo.save(user);
         }
     }
 
     @GetMapping("get")
-    public String getData(@RequestParam int userId,
-                            @RequestParam String key){
-            try{
-                return userDataRepo.findByUserIdAndTitle(userId, key).getData();
-            }catch (Exception e){
-                return new String();
-            }
+    public String getData(@RequestParam int userId, @RequestParam String key){
+        UserEntity user = userService.findOrNullUser(userId);
+        if (user == null){
+            return new String();
+        }
+        return user.getDatByKey(key);
     }
 
 }

@@ -1,39 +1,39 @@
-package ru.codovstvo.srvadmin.entitys;
+// package ru.codovstvo.srvadmin.entitys;
 
-import java.util.Date;
+// import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
+// import javax.persistence.GeneratedValue;
+// import javax.persistence.GenerationType;
+// import javax.persistence.EnumType;
+// import javax.persistence.Enumerated;
 
-import lombok.Data;
+// import lombok.Data;
 
-@Data
-@Entity
-public class NotificationQueue {
+// @Data
+// @Entity
+// public class NotificationQueue {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long Id;
+//     @Id
+//     @GeneratedValue(strategy=GenerationType.AUTO)
+//     private long Id;
 
-    private Long userId;
+//     private Long userId;
 
-    private Long expirationDate;
+//     private Long expirationDate;
 
-    @Enumerated(EnumType.STRING)
-    private NotificationType notificationType;
+//     @Enumerated(EnumType.STRING)
+//     private NotificationType notificationType;
 
-    public NotificationQueue(){}
+//     public NotificationQueue(){}
 
-    public NotificationQueue(Long userId, NotificationType notificationType){
-        this.userId = userId;
-        this.notificationType = notificationType;
+//     public NotificationQueue(Long userId, NotificationType notificationType){
+//         this.userId = userId;
+//         this.notificationType = notificationType;
         
-        Date date = new Date();
-        this.expirationDate = date.getTime() + 10800000L;
-    }
+//         Date date = new Date();
+//         this.expirationDate = date.getTime() + 10800000L;
+//     }
 
-}
+// }
