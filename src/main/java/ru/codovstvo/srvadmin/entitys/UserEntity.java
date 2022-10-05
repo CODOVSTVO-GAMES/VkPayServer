@@ -54,7 +54,7 @@ public class UserEntity {
     }
 
     public void saveData(String key, String value){
-        if (userData.size() != 0){
+        try{
             for(UserData data : userData){
                 if (data.getTitle() == key){
                     data.setData(value);
@@ -62,8 +62,9 @@ public class UserEntity {
                 }
             }
         }
-
-        userData.add(new UserData(this, key, value));
+        catch (Exception e) {
+            userData.add(new UserData(this, key, value));
+        }
     }
 
     public String getDatByKey(String key){
