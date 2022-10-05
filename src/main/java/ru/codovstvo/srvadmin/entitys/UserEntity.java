@@ -54,7 +54,7 @@ public class UserEntity {
     }
 
     public void saveData(String key, String value){
-        if (!userData.isEmpty()){
+        if (userData.size() != 0){
             for(UserData data : userData){
                 if (data.getTitle() == key){
                     data.setData(value);
