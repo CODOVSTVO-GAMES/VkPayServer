@@ -29,9 +29,6 @@ import ru.codovstvo.srvadmin.services.VersionService;
 public class EventsController {
 
     @Autowired
-    private EventRepo eventRepo;
-
-    @Autowired
     CryptoService cryptoService;
 
     @Autowired
