@@ -51,19 +51,24 @@ public class UserEntity {
     }
 
     public void saveData(String key, String value){
-        for(UserData data : userData){
-            if (data.getTitle() == key){
-                data.setData(value);
-                return; //обновит значение переменной
+        if (!userData.isEmpty()){
+            for(UserData data : userData){
+                if (data.getTitle() == key){
+                    data.setData(value);
+                    return; //обновит значение переменной
+                }
             }
         }
+
         userData.add(new UserData(this, key, value));
     }
 
     public String getDatByKey(String key){
-        for(UserData data : userData){
-            if (data.getTitle() == key){
-                return data.getData();
+        if (!userData.isEmpty()){
+            for(UserData data : userData){
+                if (data.getTitle() == key){
+                    return data.getData();
+                }
             }
         }
         return new String();
