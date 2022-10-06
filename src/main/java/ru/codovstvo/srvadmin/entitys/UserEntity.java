@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -30,7 +31,7 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<UserData> userData;
 
     @OneToMany
