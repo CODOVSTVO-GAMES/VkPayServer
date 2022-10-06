@@ -67,11 +67,13 @@ public class UserService {
     }
 
     public void saveData(UserEntity user, String key, String value){
-        for(UserData data : user.getUserData()){
-            if (data.getTitle().equals(key)){
-                data.setData(value);
-                userDataRepo.save(data);
-                return;
+        if (!user.getUserData().isEmpty()){
+            for(UserData data : user.getUserData()){
+                if (data.getTitle().equals(key)){
+                    data.setData(value);
+                    userDataRepo.save(data);
+                    return;
+                }
             }
         }
         UserData data = new UserData(key, value);
