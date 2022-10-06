@@ -31,7 +31,7 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private Set<UserData> userData;
 
     @OneToMany
