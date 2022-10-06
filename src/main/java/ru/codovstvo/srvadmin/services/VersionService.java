@@ -20,6 +20,7 @@ public class VersionService {
         List<Version> versions = versionRepo.findAllByVersionIdentifierAndPlatform(versionIdentifier, platform);
         if (versions.isEmpty()){
             Version version = new Version(versionIdentifier, platform);
+            versionRepo.save(version);
             System.out.println("Создана новая версия: " + versionIdentifier + ", platform: " + platform);
             return version;
         }
