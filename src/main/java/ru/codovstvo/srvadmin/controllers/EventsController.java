@@ -104,18 +104,11 @@ public class EventsController {
         try{
             if (event.contains("level_up")) {
                 String level = event.replace("level_up_", "");
-                try {
-                    secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
-                } catch (Exception e) {
-                    System.out.println("Уровень равен или меньше текущего");
-                }
+                secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+
             }
             else if (event.contains("quest_done_4")) {
-                try{
-                    secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
-                } catch (Exception e) {
-                    System.out.println("Знакомство с иваном уже было");
-                }
+                secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
             }
 
         }catch(Exception e){System.out.println("Ошибка отправки сообщения вк");}
