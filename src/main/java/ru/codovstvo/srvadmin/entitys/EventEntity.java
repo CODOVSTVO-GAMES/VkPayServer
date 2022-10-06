@@ -22,7 +22,6 @@ public class EventEntity {
     @ManyToOne
     private UserEntity userEntity;
 
-    @ManyToOne
     private Version version;
 
     private String platform;

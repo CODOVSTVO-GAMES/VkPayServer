@@ -59,7 +59,7 @@ public class DataController {
 
         UserEntity user = userService.createOrFindUser(userId);
 
-        userService.saveData(user, key, data);
+        dataService.saveData(user, key, data);
 
         userService.activateUser(user);
 
@@ -76,8 +76,7 @@ public class DataController {
 
         if (cryptoService.encodeHmac256(parameters.get("userId")).equals(hash)){
             UserEntity user = userService.createOrFindUser(userId);
-            user.delUserData();
-            userEntityRepo.save(user);
+            dataService.deleteUserData(user);
         }
     }
 
@@ -87,7 +86,7 @@ public class DataController {
         if (user == null){
             return new String();
         }
-        return userService.getDataByKey(user, key);
+        return dataService.GetDataByUserAndKey(user, key);
     }
 
 }

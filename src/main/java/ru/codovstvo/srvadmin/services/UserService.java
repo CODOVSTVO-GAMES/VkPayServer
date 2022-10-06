@@ -71,34 +71,5 @@ public class UserService {
     public UserEntity findOrNullUser(int userIdentifier){
         return findOrNullUser(Integer.toString(userIdentifier));
     }
-
-    public void saveData(UserEntity user, String key, String value){
-        Set<UserData> datas = userDataRepo.findByUser(user);
-        if (datas != null || !datas.isEmpty()){
-            for (UserData data : datas){
-                if (data.getTitle().equals(key)){
-                    data.setData(value);
-                    userDataRepo.save(data);
-                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
-                    return;
-                }
-            }
-        }
-        System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
-        UserData data = new UserData(user, key, value);
-        userDataRepo.save(data);
-    }
-
-    public String getDataByKey(UserEntity user, String key){
-        Set<UserData> datas = userDataRepo.findByUser(user);
-        if (datas != null || !datas.isEmpty()){
-            for(UserData data : datas){
-                if(data.getTitle().equals(key)){
-                    return data.getData();
-                }
-            }
-        }
-        return new String();
-    }
     
 }
