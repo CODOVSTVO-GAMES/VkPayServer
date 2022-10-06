@@ -6,5 +6,5 @@ import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 
 public interface SessionsRepo extends CrudRepository<Sessions1, Long> {
-    Sessions1 findByUserAndNumberSession(UserEntity userEntity, int numberSession);
+    Sessions1 findByUserEntityAndNumberSession(UserEntity userEntity, int numberSession);
 }
