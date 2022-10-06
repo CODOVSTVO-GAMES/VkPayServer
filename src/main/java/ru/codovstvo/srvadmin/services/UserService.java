@@ -100,9 +100,5 @@ public class UserService {
         }
         return new String();
     }
-
-    public void saveEvent(Event event){
-        eventRepo.save(event);
-    }
     
 }
