@@ -31,7 +31,7 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     private Set<UserData> userData;
 
     @OneToMany
