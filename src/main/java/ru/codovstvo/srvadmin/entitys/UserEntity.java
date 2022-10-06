@@ -64,7 +64,7 @@ public class UserEntity {
         }
         catch (Exception e) {
             userData = new HashSet<UserData>();
-            userData.add(new UserData(this, key, value));
+            userData.add(new UserData( key, value));
         }
     }
 
