@@ -75,6 +75,8 @@ public class UserService {
 
     public void saveData(UserEntity user, String key, String value){
         Set<UserData> datas = user.getUserData();
+        if (datas == null)System.out.println("keks");
+        if (datas.isEmpty())System.out.println("ddfkeks");
         if (datas != null && !datas.isEmpty()){
             for (UserData data : datas){
                 if (data.getTitle().equals(key)){

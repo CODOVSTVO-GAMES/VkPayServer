@@ -57,8 +57,6 @@ public class DataController {
         String key = parameters.get("key");
         String data = parameters.get("value");
 
-
-
         UserEntity user = userService.createOrFindUser(userId);
 
         userService.saveData(user, key, data);
