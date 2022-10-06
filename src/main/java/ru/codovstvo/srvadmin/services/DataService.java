@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
+import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
 @Transactional
 @Service
@@ -18,6 +19,9 @@ public class DataService {
 
     @Autowired
     UserDataRepo userDataRepo;
+
+    @Autowired
+    UserEntityRepo userEntityRepo;
 
     public Map<String, String> requestBodyParser(String requestBody){
         Map<String, String> parameters =  new HashMap<>();
@@ -64,6 +68,7 @@ public class DataService {
 
     public void deleteUserData(UserEntity user){
         user.cleanUserData();
+        userEntityRepo.save(user);
     }
 
 }
