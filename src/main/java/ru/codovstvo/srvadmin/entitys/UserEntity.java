@@ -53,30 +53,8 @@ public class UserEntity {
         this.lastActivity = date.getTime();
     }
 
-    public void saveData(String key, String value){
-        try{
-            for(UserData data : userData){
-                if (data.getTitle() == key){
-                    data.setData(value);
-                    return; //обновит значение переменной
-                }
-            }
-        }
-        catch (Exception e) {
-            userData = new HashSet<UserData>();
-            userData.add(new UserData( key, value));
-        }
-    }
-
-    public String getDatByKey(String key){
-        if (!userData.isEmpty()){
-            for(UserData data : userData){
-                if (data.getTitle() == key){
-                    return data.getData();
-                }
-            }
-        }
-        return new String();
+    public void addData(UserData data){
+        userData.add(data);
     }
 
     public void addEvent(Event evvent){

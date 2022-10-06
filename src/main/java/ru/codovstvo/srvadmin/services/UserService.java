@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
+import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
 @Transactional
@@ -15,6 +17,9 @@ public class UserService {
 
     @Autowired
     UserEntityRepo userEntityRepo;
+
+    @Autowired
+    UserDataRepo userDataRepo;
 
     public UserEntity createOrFindUser(String userIdentifier){
         List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
@@ -61,6 +66,29 @@ public class UserService {
         return findOrNullUser(Integer.toString(userIdentifier));
     }
 
-    // public void saveData
+    public void saveData(UserEntity user, String key, String value){
+        for(UserData data : user.getUserData()){
+            if (data.getTitle().equals(key)){
+                data.setData(value);
+                userDataRepo.save(data);
+                return;
+            }
+        }
+        UserData data = new UserData(key, value);
+        userDataRepo.save(data);
+        user.addData(data);
+        userEntityRepo.save(user);
+    }
+
+    public String getDataByKey(UserEntity user, String key){
+        if (!user.getUserData().isEmpty()){
+            for(UserData data : user.getUserData()){
+                if(data.getTitle().equals(key)){
+                    return data.getTitle();
+                }
+            }
+        }
+        return new String();
+    }
     
 }
