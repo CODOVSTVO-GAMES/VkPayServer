@@ -19,7 +19,6 @@ public class UserData {
     private String title;
 
     @ManyToOne
-    @Column(name = "userentity")
     private UserEntity userEntity;
 
     @Column(columnDefinition="TEXT")
