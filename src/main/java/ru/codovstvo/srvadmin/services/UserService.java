@@ -32,7 +32,7 @@ public class UserService {
         if (users.isEmpty()){
             UserEntity user = new UserEntity(userIdentifier);
             userEntityRepo.save(user);
-            System.out.println("Создан новый пользователь");
+            System.out.println("Создан новый пользователь id: " + user.getId());
             return user;
         }
 
