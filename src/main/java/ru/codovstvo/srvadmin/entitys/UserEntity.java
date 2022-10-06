@@ -35,10 +35,6 @@ public class UserEntity {
     @OneToMany
     private Set<UserData> userData;
 
-    @OneToMany(orphanRemoval=true)
-    @JoinColumn(name="userEntityKek")
-    private Set<UserData> userDataD;
-
     @OneToMany(mappedBy = "userEntity")
     private Set<EventEntity> events;
 
