@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
+import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
@@ -249,7 +250,11 @@ public class StatController {
         System.out.println(user.getPlatformUserId());
 
         if (user.getUserData() == null)System.out.println("fdfsdfsdfsdf");
-        user.addOrUpdateUserData("kek", "eeeeeee");
+        UserData dat = user.addOrUpdateUserData("kek", "eeeeeee");
+        
+        System.out.println(dat.getTitle());
+        System.out.println(dat.getData());
+        System.out.println(dat.getUserEntity().getPlatformUserId());
 
         userEntityRepo.save(user);
     }
