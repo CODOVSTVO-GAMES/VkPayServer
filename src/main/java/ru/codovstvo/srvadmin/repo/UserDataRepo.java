@@ -9,5 +9,5 @@ import ru.codovstvo.srvadmin.entitys.UserEntity;
 
 public interface UserDataRepo extends CrudRepository<UserData, Long> {
     Set<UserData> findByUserEntity(UserEntity user);
-    void deleteByUserEntity(UserEntity user);
+    void deleteAllByUserEntity(UserEntity user);
 }

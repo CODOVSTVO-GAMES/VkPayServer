@@ -67,8 +67,8 @@ public class DataService {
     }
 
     public void deleteUserData(UserEntity user){
-        user.cleanUserData();
-        userEntityRepo.save(user);
+        userDataRepo.deleteAllByUserEntity(user);
+
         System.out.println("Данные удалены id: " + user.getPlatformUserId());
     }
 
