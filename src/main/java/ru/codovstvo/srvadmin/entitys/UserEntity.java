@@ -33,7 +33,7 @@ public class UserEntity {
     private Boolean active;
 
     @OneToMany(orphanRemoval=true)
-    @JoinColumn(name="userEntity")
+    @JoinColumn(name="userEntityKek")
     private Set<UserData> userData;
 
     @OneToMany
