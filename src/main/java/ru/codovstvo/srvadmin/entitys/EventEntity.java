@@ -20,7 +20,7 @@ public class EventEntity {
     private long id;
 
     @ManyToOne
-    private UserEntity user;
+    private UserEntity userEntity;
 
     @ManyToOne
     private Version version;
@@ -44,7 +44,7 @@ public class EventEntity {
     public EventEntity(){}
 
     public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
-        this.user = user;
+        this.userEntity = user;
         this.version = version;
         this.platform = platform;
         this.deviceType = deviceType;
