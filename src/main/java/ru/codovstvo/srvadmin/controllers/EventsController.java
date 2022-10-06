@@ -81,9 +81,12 @@ public class EventsController {
 
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
 
-        EventEntity event3 = new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime);
+        // EventEntity event3 = new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime);
 
-        eventRepo.save(event3);
+        user.saveEvent(new EventEntity(vestionInstanse, platform, deviceType, event, lang, referrer, loadTime));
+        userEntityRepo.save(user);
+
+        // eventRepo.save(event3);
 
 
         if (type.equals("start")){

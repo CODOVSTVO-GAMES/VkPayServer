@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -30,10 +31,10 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<UserData> userData;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<EventEntity> events;
 
     public UserEntity(){}
@@ -55,6 +56,13 @@ public class UserEntity {
 
     public void delUserData(){
         userData.clear();
+    }
+
+    public void saveEvent(EventEntity event){
+        if (events.isEmpty() || events == null){
+            events = new HashSet<>();
+        }
+        events.add(event);
     }
 
 }

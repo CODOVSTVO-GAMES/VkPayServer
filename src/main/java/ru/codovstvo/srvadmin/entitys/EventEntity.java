@@ -19,8 +19,8 @@ public class EventEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
-    private UserEntity user;
+    // @ManyToOne
+    // private UserEntity user;
 
     @ManyToOne
     private Version version;
@@ -43,8 +43,10 @@ public class EventEntity {
 
     public EventEntity(){}
 
-    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
-        this.user = user;
+    public EventEntity(
+        // UserEntity user, 
+        Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
+        // this.user = user;
         this.version = version;
         this.platform = platform;
         this.deviceType = deviceType;
