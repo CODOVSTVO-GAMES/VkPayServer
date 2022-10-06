@@ -32,7 +32,7 @@ public class SessionEndController {
         for(UserEntity user : list){
             if (thisDate - user.getLastActivity() > 10000l)
             {
-                Sessions1 session = sessionsRepo.findByUserAndNumberSession(user, user.getSessionCounter());
+                Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
                 if (session != null)
                 {
                     session.endSession();
