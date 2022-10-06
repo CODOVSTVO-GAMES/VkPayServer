@@ -35,7 +35,7 @@ public class UserEntity {
     @OneToMany
     private Set<UserData> userData;
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany
     private Set<EventEntity> events;
 
     public UserEntity(){}
