@@ -38,6 +38,9 @@ public class StatController {
 
     @Autowired
     UserEntityRepo userEntityRepo;
+    
+    @Autowired
+    UserDataRepo userDataRepo;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -255,7 +258,15 @@ public class StatController {
         System.out.println(dat.getTitle());
         System.out.println(dat.getData());
         System.out.println(dat.getUserEntity().getPlatformUserId());
+        System.out.println("----------------------");
 
+        // for(UserData ud : user.getUserData()){
+        //     System.out.println(ud.getTitle());
+        //     System.out.println(ud.getData());
+        //     System.out.println(ud.getUserEntity().getPlatformUserId());
+        //     System.out.println("----------------------");
+        // }
+        userDataRepo.save(dat);
         userEntityRepo.save(user);
     }
 
