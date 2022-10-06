@@ -18,7 +18,7 @@ public class EventEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    private Long user;
+    private long user;
 
     private String version;
 
