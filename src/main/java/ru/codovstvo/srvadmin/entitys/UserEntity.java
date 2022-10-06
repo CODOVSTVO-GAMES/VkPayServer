@@ -33,7 +33,7 @@ public class UserEntity {
     @OneToMany
     private Set<UserData> userData;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private Set<EventEntity> events;
 
     public UserEntity(){}
