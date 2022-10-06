@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
+import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.repo.UserDataRepo;
+import ru.codovstvo.srvadmin.repo.UserEntityRepo;
+import ru.codovstvo.srvadmin.services.UserService;
 
 @RestController
 @RequestMapping(value = "back/stat")
@@ -27,6 +31,12 @@ public class StatController {
 
     @Autowired
     private EventRepo eventRepo;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserEntityRepo userEntityRepo;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -229,6 +239,16 @@ public class StatController {
         }
 
         return reversedResult;
+    }
+
+    @GetMapping("test")
+    public void test(){
+        UserEntity user = userService.createOrFindUser("12345678909898");
+        userEntityRepo.save(user);
+        
+        System.out.println(user.getPlatformUserId());
+        if (user.getUserData() == null)System.out.println("fdfsdfsdfsdf");
+        if (user.getUserData().isEmpty())System.out.println("df");
     }
 
 }

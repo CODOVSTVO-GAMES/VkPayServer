@@ -55,4 +55,11 @@ public class UserEntity {
         userData = new HashSet<>();
     }
 
+    public void addOrUpdateUserData(String key, String data){
+        if (userData.isEmpty()){
+            userData = new HashSet<>();
+            userData.add(new UserData(this, key, data));
+        }
+    }
+
 }
