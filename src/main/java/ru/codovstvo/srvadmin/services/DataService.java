@@ -63,7 +63,7 @@ public class DataService {
     // }
 
     public void deleteUserData(UserEntity user){
-        userDataRepo.deleteByUser(user.getId());
+        user.cleanUserData();
     }
 
 }

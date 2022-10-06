@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 
-public class Sessions {
+public class Sessions1 {
         
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -40,9 +40,9 @@ public class Sessions {
 
     private int numberSession;
 
-    public Sessions(){}
+    public Sessions1(){}
 
-    public Sessions(UserEntity user, int numberSession){
+    public Sessions1(UserEntity user, int numberSession){
         this.userEntity = user;
         this.numberSession = numberSession;
         this.startSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));

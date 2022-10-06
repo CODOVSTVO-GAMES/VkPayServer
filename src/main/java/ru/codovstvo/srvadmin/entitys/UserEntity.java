@@ -1,6 +1,7 @@
 package ru.codovstvo.srvadmin.entitys;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -48,6 +49,10 @@ public class UserEntity {
     public void setLastActivityInThisTime(){
         Date date = new Date();
         this.lastActivity = date.getTime();
+    }
+
+    public void cleanUserData(){
+        userData = new HashSet<>();
     }
 
 }

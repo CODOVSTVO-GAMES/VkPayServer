@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Date;
 
-import ru.codovstvo.srvadmin.entitys.Sessions;
+import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
@@ -32,7 +32,7 @@ public class SessionEndController {
         for(UserEntity user : list){
             if (thisDate - user.getLastActivity() > 10000l)
             {
-                Sessions session = sessionsRepo.findByUserAndNumberSession(user, user.getSessionCounter());
+                Sessions1 session = sessionsRepo.findByUserAndNumberSession(user, user.getSessionCounter());
                 if (session != null)
                 {
                     session.endSession();
