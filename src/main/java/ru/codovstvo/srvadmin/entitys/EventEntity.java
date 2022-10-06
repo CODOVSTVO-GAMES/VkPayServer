@@ -41,8 +41,9 @@ public class EventEntity {
     public EventEntity(){}
 
     public EventEntity(
-        UserEntity user, 
-        Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
+                UserEntity user, 
+                Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) 
+        {
         this.user = user.getId();
         this.version = version.getVersionIdentifier();
         this.platform = platform;
