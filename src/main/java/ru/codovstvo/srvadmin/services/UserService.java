@@ -23,8 +23,6 @@ public class UserService {
 
     public UserEntity createOrFindUser(String userIdentifier){
         List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
-        if(users == null) System.out.println("hello worrrddfsdf");
-        if(users.isEmpty()) System.out.println("hello worrrd");
         if (users.isEmpty()){
             UserEntity user = new UserEntity(userIdentifier);
             userEntityRepo.save(user);
@@ -78,10 +76,10 @@ public class UserService {
                 }
             }
         }
-        UserData data = new UserData(key, value);
+        UserData data = new UserData(user ,key, value);
         userDataRepo.save(data);
-        user.addData(data);
-        userEntityRepo.save(user);
+        // user.addData(data);
+        // userEntityRepo.save(user);
     }
 
     public String getDataByKey(UserEntity user, String key){
