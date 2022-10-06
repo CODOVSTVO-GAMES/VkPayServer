@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.codovstvo.srvadmin.entitys.Event;
+import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.entitys.Sessions;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.entitys.Version;
@@ -81,10 +81,10 @@ public class EventsController {
 
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
 
-        Event event3 = new Event(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime);
+        EventEntity event3 = new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime);
 
         eventRepo.save(event3);
-        
+
 
         if (type.equals("start")){
             if(user.getActive()) { //если сессия прошлая сессия не завершена, он ее завершит и начнет новую

@@ -34,14 +34,14 @@ public class UserEntity {
     private Set<UserData> userData;
 
     @OneToMany
-    private Set<Event> events;
+    private Set<EventEntity> events;
 
     public UserEntity(){}
 
     public UserEntity(int platformUserId){
         this.platformUserId = Integer.toString(platformUserId);
         this.userData = new HashSet<UserData>();
-        this.events = new HashSet<Event>();
+        this.events = new HashSet<EventEntity>();
     }
 
     public UserEntity(String platformUserId){

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.codovstvo.srvadmin.entitys.Event;
+import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 
 @RestController
@@ -33,7 +33,7 @@ public class StatController {
                                 @RequestParam(name = "version", required=false, defaultValue = "") String version){
         long counter = 0;
         long allTime = 0;
-        Set<Event> allEvents = new HashSet<>();
+        Set<EventEntity> allEvents = new HashSet<>();
         if(version.equals("")){
             if(place.equals("start")){
                 allEvents = eventRepo.findAllByEventName("started_game");
@@ -54,7 +54,7 @@ public class StatController {
                 allEvents.addAll(eventRepo.findAllByEventNameAndVersion("first_load", version));
             }
         }
-        for(Event event : allEvents){
+        for(EventEntity event : allEvents){
             allTime += Long.parseLong(event.getLoadTime());
             counter++;
         }

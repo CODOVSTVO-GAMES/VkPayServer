@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Event {
+public class EventEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
@@ -41,9 +41,9 @@ public class Event {
 
     private String loadTime;
 
-    public Event(){}
+    public EventEntity(){}
 
-    public Event(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
+    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
         this.user = user;
         this.version = version;
         this.platform = platform;
