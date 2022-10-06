@@ -59,7 +59,7 @@ public class DataController {
 
         UserEntity user = userService.createOrFindUser(userId);
 
-        userService.saveData(user, key, data);
+        dataService.saveData(user, key, data);
 
         userService.activateUser(user);
 
@@ -86,7 +86,7 @@ public class DataController {
         if (user == null){
             return new String();
         }
-        return userService.GetDataByUserAndKey(user, key);
+        return dataService.GetDataByUserAndKey(user, key);
     }
 
 }
