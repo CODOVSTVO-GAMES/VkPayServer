@@ -54,6 +54,10 @@ public class UserEntity {
     }
 
     public void addData(UserData data){
+        if (userData == null)
+        {
+            userData = new HashSet<UserData>();
+        }
         userData.add(data);
     }
 
