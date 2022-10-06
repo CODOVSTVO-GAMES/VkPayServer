@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,8 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval=true)
+    @JoinColumn(name="userEntity")
     private Set<UserData> userData;
 
     @OneToMany

@@ -19,9 +19,9 @@ public class UserData {
 
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name="userData")
-    private UserEntity userEntity;
+    // @ManyToOne
+    // @JoinColumn(name="userData")
+    // private UserEntity userEntity;
 
     @Column(columnDefinition="TEXT")
     private String data;
@@ -29,7 +29,7 @@ public class UserData {
     public UserData(){}
 
     public UserData(UserEntity user, String title, String data){
-        this.userEntity = user;
+        // this.userEntity = user;
         this.title = title;
         this.data = data;
     }
