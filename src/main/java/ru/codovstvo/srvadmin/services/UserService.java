@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
@@ -74,7 +75,7 @@ public class UserService {
                 if (data.getTitle().equals(key)){
                     data.setData(value);
                     userDataRepo.save(data);
-                    System.out.println("сохранение обновлено id:" + user.getPlatformUserId() + " | key : "  + key);
+                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
                     return;
                 }
             }
@@ -95,5 +96,9 @@ public class UserService {
         }
         return new String();
     }
+
+    // public void saveEvent(UserEntity user, Event event){
+    //     user.
+    // }
     
 }
