@@ -1,6 +1,7 @@
 package ru.codovstvo.srvadmin.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,8 +68,10 @@ public class UserService {
     }
 
     public void saveData(UserEntity user, String key, String value){
-        if (user.getUserData() != null){
-            for(UserData data : user.getUserData()){
+        Set<UserData> datas = userDataRepo.findByUser(user);
+
+        if (datas != null || datas.isEmpty()){
+            for (UserData data : datas){
                 if (data.getTitle().equals(key)){
                     data.setData(value);
                     userDataRepo.save(data);
