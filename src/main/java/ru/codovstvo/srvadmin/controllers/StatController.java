@@ -254,7 +254,7 @@ public class StatController {
         
         System.out.println(dat.getTitle());
         System.out.println(dat.getData());
-        // System.out.println(dat.getUserEntity().getPlatformUserId());
+        System.out.println(dat.getUserEntity().getPlatformUserId());
 
         userEntityRepo.save(user);
     }
