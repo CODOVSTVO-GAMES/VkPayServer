@@ -32,9 +32,12 @@ public class UserEntity {
 
     private Boolean active;
 
+    @OneToMany
+    private Set<UserData> userData;
+
     @OneToMany(orphanRemoval=true)
     @JoinColumn(name="userEntityKek")
-    private Set<UserData> userData;
+    private Set<UserData> userDataD;
 
     @OneToMany
     private Set<EventEntity> events;
