@@ -8,6 +8,6 @@ import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 
 public interface UserDataRepo extends CrudRepository<UserData, Long> {
-    Set<UserData> findByUser(UserEntity user);
-    void deleteByUser(UserEntity user);
+    Set<UserData> findByUserEntity(UserEntity user);
+    void deleteByUserEntity(UserEntity user);
 }
