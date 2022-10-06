@@ -85,7 +85,7 @@ public class EventsController {
 
         if (type.equals("start")){
             if(user.getActive()) { //если сессия прошлая сессия не завершена, он ее завершит и начнет новую
-                Sessions1 s = sessionsRepo.findByUserAndNumberSession(user, session);
+                Sessions1 s = sessionsRepo.findByUserEntityAndNumberSession(user, session);
                 s.endSession();
                 sessionsRepo.save(s);
 
