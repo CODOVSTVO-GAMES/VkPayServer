@@ -18,7 +18,7 @@ public class DataService {
 
     @Autowired
     UserDataRepo userDataRepo;
-    
+
     public Map<String, String> requestBodyParser(String requestBody){
         Map<String, String> parameters =  new HashMap<>();
         String[] params = requestBody.toString().split("&");

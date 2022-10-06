@@ -18,7 +18,7 @@ public class EventEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    private long user;
+    private long userId;
 
     private String version;
 
@@ -44,7 +44,7 @@ public class EventEntity {
                 long user, 
                 Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) 
         {
-        this.user = user;
+        this.userId = user;
         this.version = version.getVersionIdentifier();
         this.platform = platform;
         this.deviceType = deviceType;

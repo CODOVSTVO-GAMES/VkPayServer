@@ -17,7 +17,7 @@ public class UserData {
 
     private String title;
 
-    private Long user;
+    private Long userId;
 
     @Column(columnDefinition="TEXT")
     private String data;
@@ -25,7 +25,7 @@ public class UserData {
     public UserData(){}
 
     public UserData(UserEntity user, String title, String data){
-        this.user = user.getId();
+        this.userId = user.getId();
         this.title = title;
         this.data = data;
     }
