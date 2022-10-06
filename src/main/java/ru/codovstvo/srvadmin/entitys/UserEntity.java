@@ -53,13 +53,6 @@ public class UserEntity {
         this.lastActivity = date.getTime();
     }
 
-    public void addEvent(Event evvent){
-        if (events == null || events.isEmpty()){
-            events = new HashSet<>();
-        }
-        events.add(evvent);
-    }
-
     public void delUserData(){
         userData.clear();
     }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.codovstvo.srvadmin.entitys.Event;
 import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
+import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     UserDataRepo userDataRepo;
+
+    @Autowired
+    EventRepo eventRepo;
 
     public UserEntity createOrFindUser(String userIdentifier){
         List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
@@ -97,8 +101,8 @@ public class UserService {
         return new String();
     }
 
-    // public void saveEvent(UserEntity user, Event event){
-    //     user.
-    // }
+    public void saveEvent(Event event){
+        eventRepo.save(event);
+    }
     
 }
