@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
-import ru.codovstvo.srvadmin.entitys.Sessions1;
+import ru.codovstvo.srvadmin.entitys.Sessions;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.entitys.Version;
 import ru.codovstvo.srvadmin.repo.EventRepo;
@@ -85,7 +85,7 @@ public class EventsController {
 
         if (type.equals("start")){
             if(user.getActive()) { //если сессия прошлая сессия не завершена, он ее завершит и начнет новую
-                Sessions1 s = sessionsRepo.findByUserAndNumberSession(user, session);
+                Sessions s = sessionsRepo.findByUserAndNumberSession(user, session);
                 s.endSession();
                 sessionsRepo.save(s);
 
@@ -95,7 +95,7 @@ public class EventsController {
 
             user.setSessionCounter(user.getSessionCounter() + 1);
             user.setActive(true);
-            sessionsRepo.save(new Sessions1(user, session));
+            sessionsRepo.save(new Sessions(user, session));
 
         }
 
