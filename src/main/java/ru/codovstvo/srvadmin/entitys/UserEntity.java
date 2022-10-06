@@ -31,7 +31,7 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany(mappedBy = "user_entity_id")
+    @OneToMany(mappedBy = "userEntity")
     private Set<UserData> userData;
 
     @OneToMany
