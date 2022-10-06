@@ -69,8 +69,7 @@ public class UserService {
 
     public void saveData(UserEntity user, String key, String value){
         Set<UserData> datas = userDataRepo.findByUser(user);
-
-        if (datas != null || datas.isEmpty()){
+        if (datas != null || !datas.isEmpty()){
             for (UserData data : datas){
                 if (data.getTitle().equals(key)){
                     data.setData(value);
@@ -86,8 +85,10 @@ public class UserService {
     }
 
     public String getDataByKey(UserEntity user, String key){
-        if (user.getUserData() != null){
-            for(UserData data : user.getUserData()){
+        Set<UserData> datas = userDataRepo.findByUser(user);
+
+        if (datas != null || !datas.isEmpty()){
+            for(UserData data : datas){
                 if(data.getTitle().equals(key)){
                     return data.getTitle();
                 }
