@@ -67,9 +67,7 @@ public class UserService {
     }
 
     public void saveData(UserEntity user, String key, String value){
-        if (user == null)System.out.println("user null");
-        if (user.getUserData() == null)System.out.println("dataset null");
-        if (!user.getUserData().isEmpty()){
+        if (user.getUserData() != null){
             for(UserData data : user.getUserData()){
                 if (data.getTitle().equals(key)){
                     data.setData(value);
@@ -85,7 +83,7 @@ public class UserService {
     }
 
     public String getDataByKey(UserEntity user, String key){
-        if (!user.getUserData().isEmpty()){
+        if (user.getUserData() != null){
             for(UserData data : user.getUserData()){
                 if(data.getTitle().equals(key)){
                     return data.getTitle();
