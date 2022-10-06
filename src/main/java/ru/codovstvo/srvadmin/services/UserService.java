@@ -73,35 +73,5 @@ public class UserService {
     }
 
 
-    // public void saveData(UserEntity user, String key, String value){
-    //     Set<UserData> datas = user.getUserData();
-    //     if (datas == null)System.out.println("keks");
-    //     if (datas.isEmpty())System.out.println("ddfkeks");
-    //     if (datas != null && !datas.isEmpty()){
-    //         for (UserData data : datas){
-    //             if (data.getTitle().equals(key)){
-    //                 data.setData(value);
-    //                 userDataRepo.save(data);
-    //                 System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
-    //                 return;
-    //             }
-    //         }
-    //     }
-    //     System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
-    //     UserData data = new UserData(user, key, value);
-    //     userDataRepo.save(data);
-    // }
-
-    // public String GetDataByUserAndKey(UserEntity user, String key){
-    //     Set<UserData> datas = user.getUserData();
-    //     if (datas != null && !datas.isEmpty()){
-    //         for (UserData data : datas){
-    //             if (data.getTitle().equals(key)){
-    //                 return data.getData();
-    //             }
-    //         }
-    //     }
-    //     return new String();
-    // }
     
 }

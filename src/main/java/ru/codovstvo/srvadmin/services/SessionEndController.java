@@ -38,7 +38,7 @@ public class SessionEndController {
                     session.endSession();
                     sessionsRepo.save(session);
                     user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
-                    System.out.println("сессия завершена");
+                    System.out.println("сессия завершена id: " + user.getId());
                 }
                 else
                 {
