@@ -247,8 +247,11 @@ public class StatController {
         userEntityRepo.save(user);
         
         System.out.println(user.getPlatformUserId());
+
         if (user.getUserData() == null)System.out.println("fdfsdfsdfsdf");
-        if (user.getUserData().isEmpty())System.out.println("df");
+        user.addOrUpdateUserData("kek", "eeeeeee");
+
+        userEntityRepo.save(user);
     }
 
 }
