@@ -6,7 +6,6 @@ import java.time.ZoneId;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -22,8 +21,7 @@ public class EventEntity {
     // @ManyToOne
     // private UserEntity user;
 
-    @ManyToOne
-    private Version version;
+    private String version;
 
     private String platform;
 
@@ -47,7 +45,7 @@ public class EventEntity {
         // UserEntity user, 
         Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
         // this.user = user;
-        this.version = version;
+        this.version = version.getVersionIdentifier();
         this.platform = platform;
         this.deviceType = deviceType;
         this.eventName = eventName;

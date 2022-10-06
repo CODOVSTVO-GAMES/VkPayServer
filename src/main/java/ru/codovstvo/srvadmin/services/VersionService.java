@@ -18,19 +18,19 @@ public class VersionService {
 
     public Version createOrFindVersion(String versionIdentifier, String platform){
         List<Version> versions = versionRepo.findAllByVersionIdentifierAndPlatform(versionIdentifier, platform);
-        if (versions.isEmpty()){
+        if (versions.isEmpty() || versions == null){
             Version version = new Version(versionIdentifier, platform);
             versionRepo.save(version);
             System.out.println("Создана новая версия: " + versionIdentifier + ", platform: " + platform);
             return version;
         }
 
-        for(Version v : versions){
-            if (v == versions.get(0)){
-                versionRepo.delete(v);
-                //залогировать
-            }
-        }
+        // for(Version v : versions){
+        //     if (v == versions.get(0)){
+        //         versionRepo.delete(v);
+        //         //залогировать
+        //     }
+        // }
         return versions.get(0);
     }
 }
