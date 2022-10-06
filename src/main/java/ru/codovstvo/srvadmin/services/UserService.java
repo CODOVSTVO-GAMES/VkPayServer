@@ -72,14 +72,14 @@ public class UserService {
                 if (data.getTitle().equals(key)){
                     data.setData(value);
                     userDataRepo.save(data);
+                    System.out.println("сохранение обновлено");
                     return;
                 }
             }
         }
-        UserData data = new UserData(user ,key, value);
+        System.out.println("сохранения нет");
+        UserData data = new UserData(user, key, value);
         userDataRepo.save(data);
-        // user.addData(data);
-        // userEntityRepo.save(user);
     }
 
     public String getDataByKey(UserEntity user, String key){
