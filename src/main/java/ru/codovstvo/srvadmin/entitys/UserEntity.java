@@ -57,22 +57,4 @@ public class UserEntity {
         userData = new HashSet<>();
     }
 
-    public UserData addOrUpdateUserData(String key, String data){
-        if (userData == null || userData.isEmpty()){
-            userData = new HashSet<>();
-            UserData inst = new UserData(this, key, data);
-            userData.add(inst);
-            return inst;
-        }
-        
-        for(UserData ins : userData){
-            if (ins.getTitle().equals(key)){
-                ins.setData(data);
-                return ins;
-            }
-        }
-        System.out.println("EBANY NULL");
-        return null;
-    }
-
 }

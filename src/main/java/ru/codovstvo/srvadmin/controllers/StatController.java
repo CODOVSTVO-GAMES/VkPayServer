@@ -244,30 +244,4 @@ public class StatController {
 
         return reversedResult;
     }
-
-    @GetMapping("test")
-    public void test(){
-        UserEntity user = userService.createOrFindUser("12345678909898");
-        userEntityRepo.save(user);
-        
-        System.out.println(user.getPlatformUserId());
-
-        if (user.getUserData() == null)System.out.println("fdfsdfsdfsdf");
-        UserData dat = user.addOrUpdateUserData("kek", "eeeeeee");
-        
-        System.out.println(dat.getTitle());
-        System.out.println(dat.getData());
-        System.out.println(dat.getUserEntity().getPlatformUserId());
-        System.out.println("----------------------");
-
-        // for(UserData ud : user.getUserData()){
-        //     System.out.println(ud.getTitle());
-        //     System.out.println(ud.getData());
-        //     System.out.println(ud.getUserEntity().getPlatformUserId());
-        //     System.out.println("----------------------");
-        // }
-        userDataRepo.save(dat);
-        userEntityRepo.save(user);
-    }
-
 }
