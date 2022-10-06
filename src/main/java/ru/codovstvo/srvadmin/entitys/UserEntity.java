@@ -39,7 +39,7 @@ public class UserEntity {
     @JoinColumn(name="userEntityKek")
     private Set<UserData> userDataD;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userEntity")
     private Set<EventEntity> events;
 
     public UserEntity(){}
