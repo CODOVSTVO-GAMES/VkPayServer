@@ -1,13 +1,9 @@
 package ru.codovstvo.srvadmin.entitys;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -31,18 +27,10 @@ public class UserEntity {
 
     private Boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<UserData> userData;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<EventEntity> events;
-
     public UserEntity(){}
 
     public UserEntity(int platformUserId){
         this.platformUserId = Integer.toString(platformUserId);
-        this.userData = new HashSet<UserData>();
-        this.events = new HashSet<EventEntity>();
     }
 
     public UserEntity(String platformUserId){
@@ -52,17 +40,6 @@ public class UserEntity {
     public void setLastActivityInThisTime(){
         Date date = new Date();
         this.lastActivity = date.getTime();
-    }
-
-    public void delUserData(){
-        userData.clear();
-    }
-
-    public void saveEvent(EventEntity event){
-        if (events.isEmpty() || events == null){
-            events = new HashSet<>();
-        }
-        events.add(event);
     }
 
 }

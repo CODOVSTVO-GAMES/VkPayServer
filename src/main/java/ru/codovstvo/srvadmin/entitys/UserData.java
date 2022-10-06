@@ -3,7 +3,6 @@ package ru.codovstvo.srvadmin.entitys;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -18,8 +17,7 @@ public class UserData {
 
     private String title;
 
-    @ManyToOne
-    private UserEntity user;
+    private Long user;
 
     @Column(columnDefinition="TEXT")
     private String data;
@@ -27,7 +25,7 @@ public class UserData {
     public UserData(){}
 
     public UserData(UserEntity user, String title, String data){
-        this.user = user;
+        this.user = user.getId();
         this.title = title;
         this.data = data;
     }
