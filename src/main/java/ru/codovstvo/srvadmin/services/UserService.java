@@ -36,11 +36,11 @@ public class UserService {
             return user;
         }
 
-        for(UserEntity user : users){ //удалит повторки юзеров втупую . Не лучший вариант. Все будет работать хорошо если нигде в системе не создастся два пользователя с одинаковым платформ айди
-            if(user == users.get(0)) continue; 
-            userEntityRepo.delete(user);
-            //залогировать
-        }
+        // for(UserEntity user : users){ //удалит повторки юзеров втупую . Не лучший вариант. Все будет работать хорошо если нигде в системе не создастся два пользователя с одинаковым платформ айди
+        //     if(user == users.get(0)) continue; 
+        //     userEntityRepo.delete(user);
+        //     //залогировать
+        // }
         return users.get(0);
     }
 
@@ -60,16 +60,46 @@ public class UserService {
             return null;
         }
 
-        for(UserEntity user : users){ //удалит повторки юзеров втупую . Не лучший вариант. Все будет работать хорошо если нигде в системе не создастся два пользователя с одинаковым платформ айди
-            if(user == users.get(0)) continue; 
-            userEntityRepo.delete(user);
-            //залогировать
-        }
+        // for(UserEntity user : users){ //удалит повторки юзеров втупую . Не лучший вариант. Все будет работать хорошо если нигде в системе не создастся два пользователя с одинаковым платформ айди
+        //     if(user == users.get(0)) continue; 
+        //     userEntityRepo.delete(user);
+        //     //залогировать
+        // }
         return users.get(0);
     }
 
     public UserEntity findOrNullUser(int userIdentifier){
         return findOrNullUser(Integer.toString(userIdentifier));
+    }
+
+
+    public void saveData(UserEntity user, String key, String value){
+        Set<UserData> datas = user.getUserData();
+        if (!datas.isEmpty()){
+            for (UserData data : datas){
+                if (data.getTitle().equals(key)){
+                    data.setData(value);
+                    userDataRepo.save(data);
+                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
+                    return;
+                }
+            }
+        }
+        System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
+        UserData data = new UserData(user, key, value);
+        userDataRepo.save(data);
+    }
+
+    public String GetDataByUserAndKey(UserEntity user, String key){
+        Set<UserData> datas = user.getUserData();
+        if (!datas.isEmpty()){
+            for (UserData data : datas){
+                if (data.getTitle().equals(key)){
+                    return data.getData();
+                }
+            }
+        }
+        return new String();
     }
     
 }

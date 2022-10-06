@@ -33,34 +33,34 @@ public class DataService {
         return parameters;
     }
 
-    public void saveData(UserEntity user, String key, String value){
-        Set<UserData> datas = userDataRepo.findByUser(user.getId());
-        if (!datas.isEmpty()){
-            for (UserData data : datas){
-                if (data.getTitle().equals(key)){
-                    data.setData(value);
-                    userDataRepo.save(data);
-                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
-                    return;
-                }
-            }
-        }
-        System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
-        UserData data = new UserData(user, key, value);
-        userDataRepo.save(data);
-    }
+    // public void saveData(UserEntity user, String key, String value){
+    //     Set<UserData> datas = userDataRepo.findByUser(user.getId());
+    //     if (!datas.isEmpty()){
+    //         for (UserData data : datas){
+    //             if (data.getTitle().equals(key)){
+    //                 data.setData(value);
+    //                 userDataRepo.save(data);
+    //                 System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
+    //                 return;
+    //             }
+    //         }
+    //     }
+    //     System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
+    //     UserData data = new UserData(user, key, value);
+    //     userDataRepo.save(data);
+    // }
 
-    public String GetDataByUserAndKey(UserEntity user, String key){
-        Set<UserData> datas = userDataRepo.findByUser(user.getId());
-        if (!datas.isEmpty()){
-            for (UserData data : datas){
-                if (data.getTitle().equals(key)){
-                    return data.getData();
-                }
-            }
-        }
-        return new String();
-    }
+    // public String GetDataByUserAndKey(UserEntity user, String key){
+    //     Set<UserData> datas = userDataRepo.findByUser(user.getId());
+    //     if (!datas.isEmpty()){
+    //         for (UserData data : datas){
+    //             if (data.getTitle().equals(key)){
+    //                 return data.getData();
+    //             }
+    //         }
+    //     }
+    //     return new String();
+    // }
 
     public void deleteUserData(UserEntity user){
         userDataRepo.deleteByUser(user.getId());

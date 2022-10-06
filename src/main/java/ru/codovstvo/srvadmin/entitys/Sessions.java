@@ -24,7 +24,7 @@ public class Sessions {
     private long id;
 
     @ManyToOne
-    private UserEntity user;
+    private UserEntity userEntity;
 
     private LocalTime startSessionTime;
 
@@ -43,7 +43,7 @@ public class Sessions {
     public Sessions(){}
 
     public Sessions(UserEntity user, int numberSession){
-        this.user = user;
+        this.userEntity = user;
         this.numberSession = numberSession;
         this.startSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.startSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
