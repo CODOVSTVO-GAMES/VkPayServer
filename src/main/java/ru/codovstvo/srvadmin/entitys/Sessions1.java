@@ -16,7 +16,6 @@ import lombok.Data;
 
 @Data
 @Entity
-
 public class Sessions1 {
         
     @Id
@@ -40,6 +39,10 @@ public class Sessions1 {
 
     private int numberSession;
 
+    private boolean isEnd;
+
+    private boolean isForseEnd;
+
     public Sessions1(){}
 
     public Sessions1(UserEntity user, int numberSession){
@@ -50,15 +53,37 @@ public class Sessions1 {
 
         Date date = new Date();
         this.startSessionDateLong = date.getTime();
+        this.isEnd = false;
+        this.isForseEnd = false;
     }
 
     public void endSession()
     {
-        this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
-        this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
+        if(!isEnd){
+            this.isEnd = true;
+            this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+            this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
 
-        Date date = new Date();
-        this.sessionLeght = date.getTime() - startSessionDateLong;
+            Date date = new Date();
+            this.sessionLeght = date.getTime() - startSessionDateLong;
+        }
+
+    }
+
+    public void forseEnd(){
+        if(!isEnd){
+            this.isEnd = true;
+            this.isForseEnd = true;
+            this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+            this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
+
+            Date date = new Date();
+            this.sessionLeght = date.getTime() - startSessionDateLong;
+        }
+    }
+
+    public boolean getIsEnd(){
+        return isEnd;
     }
 
 }

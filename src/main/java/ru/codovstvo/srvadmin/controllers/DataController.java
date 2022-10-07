@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.codovstvo.srvadmin.entitys.UserData;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
-import ru.codovstvo.srvadmin.repo.UserDataRepo;
-import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.CryptoService;
 import ru.codovstvo.srvadmin.services.DataService;
 import ru.codovstvo.srvadmin.services.UserService;
@@ -30,12 +27,6 @@ public class DataController {
 
     @Autowired
     DataService dataService;
-
-    @Autowired
-    UserDataRepo userDataRepo;
-
-    @Autowired
-    UserEntityRepo userEntityRepo;
 
     @Autowired
     CryptoService cryptoService;

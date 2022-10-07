@@ -23,14 +23,17 @@ public class SessionEndController {
     @Autowired
     SessionsRepo sessionsRepo;
 
-    @Scheduled(initialDelay = 10000, fixedDelay = 10000)
+    @Autowired
+    UserService userService;
+
+    @Scheduled(initialDelay = 10000, fixedDelay = 10000) // каждую минуту 100000
     public void AutoSessionEnd() {
         List<UserEntity> list = userEntityRepo.findAllByActive(true);
         Date date = new Date();
         long thisDate = date.getTime();
 
         for(UserEntity user : list){
-            if (thisDate - user.getLastActivity() > 10000l)
+            if (thisDate - user.getLastActivity() > 30000l) //больше 5 минут назад 300000
             {
                 Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
                 if (session != null)
@@ -38,14 +41,13 @@ public class SessionEndController {
                     session.endSession();
                     sessionsRepo.save(session);
                     user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
-                    System.out.println("сессия завершена id: " + user.getPlatformUserId());
+                    System.out.println("Сессия завершена id: " + user.getPlatformUserId());
                 }
                 else
                 {
                     System.out.println("Сессия не была создана но пользователь значится активным. Так бывает у админов: id - " + user.getPlatformUserId());
                 }
                 
-
                 user.setActive(false);
                 userEntityRepo.save(user);
             }

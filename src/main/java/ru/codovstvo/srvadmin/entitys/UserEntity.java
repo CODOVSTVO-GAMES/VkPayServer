@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
@@ -28,9 +26,12 @@ public class UserEntity {
 
     private long playTime;
 
+    private Boolean active;
+
     private long lastActivity;
 
-    private Boolean active;
+    @OneToMany
+    private Set<Sessions1>  sessions;
 
     @OneToMany
     private Set<UserData> userData;
@@ -47,6 +48,7 @@ public class UserEntity {
     public UserEntity(String platformUserId){
         this.platformUserId = platformUserId;
     }
+    
 
     public void setLastActivityInThisTime(){
         Date date = new Date();
@@ -56,5 +58,14 @@ public class UserEntity {
     public void cleanUserData(){
         userData = new HashSet<>();
     }
+
+    public void addSessionCount(){
+        sessionCounter = sessionCounter + 1;
+    }
+
+    public void updatePlayTime(long sessionPlaytime){
+        playTime = playTime + sessionPlaytime;
+    }
+    
 
 }

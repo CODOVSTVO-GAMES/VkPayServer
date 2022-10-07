@@ -19,6 +19,7 @@ import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.CryptoService;
+import ru.codovstvo.srvadmin.services.EventService;
 import ru.codovstvo.srvadmin.services.SecureVkApiService;
 import ru.codovstvo.srvadmin.services.UserService;
 import ru.codovstvo.srvadmin.services.VersionService;
@@ -47,7 +48,7 @@ public class EventsController {
     VersionService versionService;
 
     @Autowired
-    EventRepo eventRepo;
+    EventService eventService;
 
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
@@ -81,24 +82,11 @@ public class EventsController {
 
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
 
-        eventRepo.save(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime));
+        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime));
 
         if (type.equals("start")){
-            if(user.getActive()) { //если сессия прошлая сессия не завершена, он ее завершит и начнет новую
-                Sessions1 s = sessionsRepo.findByUserEntityAndNumberSession(user, session);
-                if(s != null){
-                    s.endSession();
-                    sessionsRepo.save(s);
-                    user.setPlayTime(user.getPlayTime() + s.getSessionLeght());
-                }
-                user.setActive(false);
-                userEntityRepo.save(user);
-            }
-
-            user.setSessionCounter(user.getSessionCounter() + 1);
-            user.setActive(true);
-            userEntityRepo.save(user);
-            sessionsRepo.save(new Sessions1(user, session));
+            userService.forceCloseSessionIfUserActive(user);
+            userService.activateUser(user);
         }
 
         //переработать
