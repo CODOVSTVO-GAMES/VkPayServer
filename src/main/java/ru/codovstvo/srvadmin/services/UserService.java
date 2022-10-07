@@ -146,4 +146,9 @@ public class UserService {
             return createNewSession(user);
         }
     }
+
+    public long getTimeFromStart(UserEntity user){
+        Sessions1 session = getLastOrCreateSession(user);
+        return user.getPlayTime() + session.getTimeFromStartSession();
+    }
 }

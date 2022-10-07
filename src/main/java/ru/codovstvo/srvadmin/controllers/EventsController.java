@@ -87,7 +87,9 @@ public class EventsController {
             userService.activateUser(user);
         }
 
-        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, userService.getLastOrCreateSession(user)));
+        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, 
+                                                userService.getLastOrCreateSession(user), 
+                                                userService.getTimeFromStart(user)));
 
         //переработать
         try{

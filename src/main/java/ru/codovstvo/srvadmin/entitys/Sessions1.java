@@ -90,4 +90,9 @@ public class Sessions1 {
         return isEnd;
     }
 
+    public long getTimeFromStartSession(){
+        Date date = new Date();
+        return date.getTime() - startSessionDateLong;
+    }
+
 }

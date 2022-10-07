@@ -44,9 +44,11 @@ public class EventEntity {
 
     private String loadTime;
 
+    private long timeFromStart;
+
     public EventEntity(){}
 
-    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime, Sessions1 session) {
+    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime, Sessions1 session, long timeFromStart) {
         this.userEntity = user;
         this.version = version;
         this.platform = platform;
@@ -56,6 +58,7 @@ public class EventEntity {
         this.referrer = referrer;
         this.loadTime = loadTime;
         this.session1 = session;
+        this.timeFromStart = timeFromStart;
         
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
