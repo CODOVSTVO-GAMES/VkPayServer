@@ -35,7 +35,9 @@ public class UserService {
     public UserEntity createOrFindUser(String userIdentifier){
         Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
         if (users.size() == 0){
-            return new UserEntity(userIdentifier);
+            UserEntity userEntity = new UserEntity(userIdentifier);
+            userEntityRepo.save(userEntity);
+            return userEntity;
         }
         else if(users.size() == 1){
             return users.iterator().next();
