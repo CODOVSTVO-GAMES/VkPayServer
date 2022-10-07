@@ -82,12 +82,12 @@ public class EventsController {
 
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
 
-        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime));
-
         if (type.equals("start")){
             userService.forceCloseSessionIfUserActive(user);
             userService.activateUser(user);
         }
+
+        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, userService.getLastOrCreateSession(user)));
 
         //переработать
         try{

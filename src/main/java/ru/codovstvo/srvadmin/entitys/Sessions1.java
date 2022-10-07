@@ -4,11 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -42,6 +43,9 @@ public class Sessions1 {
     private boolean isEnd;
 
     private boolean isForseEnd;
+
+    @OneToMany
+    private Set<EventEntity> events;
 
     public Sessions1(){}
 

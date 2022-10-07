@@ -25,6 +25,9 @@ public class EventEntity {
     @ManyToOne
     private Version version;
 
+    @ManyToOne
+    private Sessions1 session1;
+
     private String platform;
 
     private String deviceType;
@@ -43,7 +46,7 @@ public class EventEntity {
 
     public EventEntity(){}
 
-    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime) {
+    public EventEntity(UserEntity user, Version version, String platform, String deviceType, String eventName, String language, String referrer, String loadTime, Sessions1 session) {
         this.userEntity = user;
         this.version = version;
         this.platform = platform;
@@ -52,6 +55,7 @@ public class EventEntity {
         this.language = language;
         this.referrer = referrer;
         this.loadTime = loadTime;
+        this.session1 = session;
         
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
