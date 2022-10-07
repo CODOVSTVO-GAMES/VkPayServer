@@ -92,12 +92,13 @@ public class EventsController {
                     user.setPlayTime(user.getPlayTime() + s.getSessionLeght());
                 }
                 user.setActive(false);
+                userEntityRepo.save(user);
             }
 
             user.setSessionCounter(user.getSessionCounter() + 1);
             user.setActive(true);
+            userEntityRepo.save(user);
             sessionsRepo.save(new Sessions1(user, session));
-
         }
 
         //переработать
