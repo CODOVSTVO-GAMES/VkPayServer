@@ -43,12 +43,14 @@ public class UserEntity {
 
     public UserEntity(int platformUserId){
         this.platformUserId = Integer.toString(platformUserId);
+        this.setActive(false);
     }
 
     public UserEntity(String platformUserId){
         this.platformUserId = platformUserId;
+        this.setActive(false);
     }
-    
+
 
     public void setLastActivityInThisTime(){
         Date date = new Date();
