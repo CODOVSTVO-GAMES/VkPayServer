@@ -33,20 +33,38 @@ public class UserService {
     SessionsRepo sessionsRepo;
 
     public UserEntity createOrFindUser(String userIdentifier){
-        List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
-        if (users.isEmpty()){
-            UserEntity user = new UserEntity(userIdentifier);
-            userEntityRepo.save(user);
-            System.out.println("Создан новый пользователь id: " + user.getId());
-            return user;
+        Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
+        if (users.size() == 0){
+            return new UserEntity(userIdentifier);
         }
+        else if(users.size() == 1){
+            return users.iterator().next();
+        }
+        else{
+            UserEntity buffer = null;
+            for(UserEntity user : users){
+                if(buffer == null || user.getLastActivity() > buffer.getLastActivity()){
+                    buffer = user;
+                }
+            }
+            return buffer;
+        }
+
+        
+        // List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
+        // if (users.isEmpty()){
+        //     UserEntity user = new UserEntity(userIdentifier);
+        //     userEntityRepo.save(user);
+        //     System.out.println("Создан новый пользователь id: " + user.getId());
+        //     return user;
+        // }
 
         // for(UserEntity user : users){ //удалит повторки юзеров втупую . Не лучший вариант. Все будет работать хорошо если нигде в системе не создастся два пользователя с одинаковым платформ айди
         //     if(user == users.get(0)) continue; 
         //     userEntityRepo.delete(user);
         //     //залогировать
         // }
-        return users.get(0);
+        // return users.get(0);
     }
 
     public UserEntity createOrFindUser(int userIdentifier){
@@ -54,7 +72,7 @@ public class UserService {
     }
 
     public UserEntity findOrNullUser(String userIdentifier){
-        List<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
+        Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
         if (users.isEmpty()){
             return null;
         }
@@ -64,7 +82,7 @@ public class UserService {
         //     userEntityRepo.delete(user);
         //     //залогировать
         // }
-        return users.get(0);
+        return users.iterator().next();
     }
 
     public UserEntity findOrNullUser(int userIdentifier){
