@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Date;
 
-import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
@@ -28,6 +27,7 @@ public class SessionEndController {
 
     @Scheduled(initialDelay = 10000, fixedDelay = 60000) // каждую минуту 60000
     public void AutoSessionEnd() {
+        System.out.println("Запущено удаление сессий");
         List<UserEntity> list = userEntityRepo.findAllByActive(true);
         Date date = new Date();
         long thisDate = date.getTime();
@@ -36,22 +36,6 @@ public class SessionEndController {
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
-
-                // Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
-                // if (session != null)
-                // {
-                //     session.endSession();
-                //     sessionsRepo.save(session);
-                //     user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
-                //     System.out.println("Сессия завершена id: " + user.getPlatformUserId());
-                // }
-                // else
-                // {
-                //     System.out.println("Сессия не была создана но пользователь значится активным. Так бывает у админов: id - " + user.getPlatformUserId());
-                // }
-                
-                // user.setActive(false);
-                // userEntityRepo.save(user);
             }
         }
     }
