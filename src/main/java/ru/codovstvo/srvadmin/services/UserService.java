@@ -95,13 +95,19 @@ public class UserService {
     }
 
     public void deactivateUser(UserEntity user){
-        Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
-        session.endSession();
-        sessionsRepo.save(session);
-        user.setLastActivityInThisTime();
+        Set<Sessions1> sessions = sessionsRepo.findAllByUserEntity(user);
+
+        for (Sessions1 session : sessions){
+            if(!session.getIsEnd()){
+                session.endSession();
+                sessionsRepo.save(session);
+                user.setLastActivityInThisTime();
+                user.updatePlayTime(session.getSessionLeght());
+            }
+        }
         user.setActive(false);
-        user.updatePlayTime(session.getSessionLeght());
         userEntityRepo.save(user);
+        System.out.println("Сессия завершена id: " + user.getPlatformUserId());
     }
 
     private Sessions1 createNewSession(UserEntity user){

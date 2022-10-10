@@ -35,21 +35,23 @@ public class SessionEndController {
         for(UserEntity user : list){
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
-                Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
-                if (session != null)
-                {
-                    session.endSession();
-                    sessionsRepo.save(session);
-                    user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
-                    System.out.println("Сессия завершена id: " + user.getPlatformUserId());
-                }
-                else
-                {
-                    System.out.println("Сессия не была создана но пользователь значится активным. Так бывает у админов: id - " + user.getPlatformUserId());
-                }
+                userService.deactivateUser(user);
+
+                // Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
+                // if (session != null)
+                // {
+                //     session.endSession();
+                //     sessionsRepo.save(session);
+                //     user.setPlayTime(user.getPlayTime() + session.getSessionLeght());
+                //     System.out.println("Сессия завершена id: " + user.getPlatformUserId());
+                // }
+                // else
+                // {
+                //     System.out.println("Сессия не была создана но пользователь значится активным. Так бывает у админов: id - " + user.getPlatformUserId());
+                // }
                 
-                user.setActive(false);
-                userEntityRepo.save(user);
+                // user.setActive(false);
+                // userEntityRepo.save(user);
             }
         }
     }
