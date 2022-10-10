@@ -2,7 +2,6 @@ package ru.codovstvo.srvadmin.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
-import ru.codovstvo.srvadmin.entitys.UserData;
-import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;

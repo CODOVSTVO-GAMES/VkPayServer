@@ -1,5 +1,7 @@
 package ru.codovstvo.srvadmin.entitys;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,16 +41,24 @@ public class UserEntity {
     @OneToMany
     private Set<EventEntity> events;
 
+    private String referer;
+
+    private LocalDate registrationDate;
+
     public UserEntity(){}
 
     public UserEntity(int platformUserId){
         this.platformUserId = Integer.toString(platformUserId);
         this.setActive(false);
+
+        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
     }
 
     public UserEntity(String platformUserId){
         this.platformUserId = platformUserId;
         this.setActive(false);
+
+        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
     }
 
 

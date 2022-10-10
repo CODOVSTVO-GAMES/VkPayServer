@@ -26,14 +26,14 @@ public class SessionEndController {
     @Autowired
     UserService userService;
 
-    @Scheduled(initialDelay = 10000, fixedDelay = 100000) // каждую минуту 100000
+    @Scheduled(initialDelay = 10000, fixedDelay = 60000) // каждую минуту 60000
     public void AutoSessionEnd() {
         List<UserEntity> list = userEntityRepo.findAllByActive(true);
         Date date = new Date();
         long thisDate = date.getTime();
 
         for(UserEntity user : list){
-            if (thisDate - user.getLastActivity() > 300000l) //больше 5 минут назад 300000
+            if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 Sessions1 session = sessionsRepo.findByUserEntityAndNumberSession(user, user.getSessionCounter());
                 if (session != null)

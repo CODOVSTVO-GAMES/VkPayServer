@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
-import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.entitys.Version;
-import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.CryptoService;
@@ -85,11 +83,17 @@ public class EventsController {
         if (type.equals("start")){
             userService.forceCloseSessionIfUserActive(user);
             userService.activateUser(user);
+
+            if(user.getSessionCounter() == 1){
+                user.setReferer(referrer);
+                userEntityRepo.save(user);
+            }
         }
 
         eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, 
                                                 userService.getLastOrCreateSession(user), 
                                                 userService.getTimeFromStart(user)));
+
 
         //переработать
         try{
