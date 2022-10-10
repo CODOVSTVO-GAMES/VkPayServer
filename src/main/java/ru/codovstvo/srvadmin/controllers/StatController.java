@@ -81,8 +81,7 @@ public class StatController {
                                                                 "dialogue_marya_close_3","quest_done_0",
                                                                 "level_up_2","quest_open_1",
                                                                 "2_apple_harvested","dialogue_marya_close_4",
-                                                                "dialogue_marya_close_5", //"first_click_in_marya",
-                                                                // "click_exchange","click_speedup",
+                                                                "dialogue_marya_close_5",
                                                                 "quest_done_1", "dialogue_marya_close_6",
                                                                 "open_map_2", "quest_open_2", "quest_open_17", 
                                                                 "dialogue_mc_close_0", "dialogue_cat_close_0",
@@ -100,7 +99,6 @@ public class StatController {
                                                                 "dialogue_cat_close_3", "dialogue_mc_close_1", 
                                                                 "quest_done_5", "quest_open_7",
                                                                 "quest_open_8", 
-                                                                // "second_click_in_root",
                                                                 "quest_open_3", "quest_open_4", "dialogue_cat_close_4", 
                                                                 "quest_open_6", "quest_done_3", 
                                                                 "quest_open_9", "dialogue_mc_close_6", 
@@ -111,7 +109,11 @@ public class StatController {
                                                                 "quest_done_4",
                                                                 "level_up_6", "level_up_7",
                                                                 "open_map_6", "open_map_7",
-                                                                "quest_done_6"
+                                                                "quest_done_6", "first-drop-apples",
+                                                                "first-exchange", "first-key-collect", 
+                                                                "first-cutting-of-the-root", "first-merge-logs",
+                                                                "second-cutting-of-the-root", "first-delete-root",
+                                                                "first-open-chestS", "second-open-chestS"
                                                                 ));
 
         Map responce = new HashMap<String, Long>();
