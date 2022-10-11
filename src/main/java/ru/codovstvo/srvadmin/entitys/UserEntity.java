@@ -45,6 +45,8 @@ public class UserEntity {
 
     private LocalDate registrationDate;
 
+    private int adsCounter;
+
     public UserEntity(){}
 
     public UserEntity(int platformUserId){
@@ -81,5 +83,7 @@ public class UserEntity {
         playTime = playTime + sessionPlaytime;
     }
     
-
+    public void addAdsCount(){
+        adsCounter = adsCounter + 1;
+    }
 }

@@ -27,6 +27,9 @@ import ru.codovstvo.srvadmin.services.VersionService;
 @RequestMapping(value = "back/events")
 public class EventsController {
 
+    String[] eventsAds = {"ads_merge_item", "shopCrystal_open_ads_1-3", "shopEnergy_open_ads_5", 
+                            "shopFruit_x2", "shopResources_x2", "shopWorker_open_worker"};
+
     @Autowired
     CryptoService cryptoService;
 
@@ -99,6 +102,13 @@ public class EventsController {
                                                 userService.getLastOrCreateSession(user), 
                                                 userService.getTimeFromStart(user)));
 
+        for (int i = 0; i < eventsAds.length; i++) {
+            if(eventsAds[i].equals(event)){
+                user.addAdsCount();
+                userEntityRepo.save(user);
+                break;
+            }
+        }
 
         //переработать
         try{
