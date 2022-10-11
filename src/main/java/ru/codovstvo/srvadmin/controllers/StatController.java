@@ -113,7 +113,13 @@ public class StatController {
                                                                 "first-exchange", "first-key-collect", 
                                                                 "first-cutting-of-the-root", "first-merge-logs",
                                                                 "second-cutting-of-the-root", "first-delete-root",
-                                                                "first-open-chestS", "second-open-chestS"
+                                                                "first-open-chestS", "second-open-chestS",
+                                                                "dialogue_mi_close_0", "dialogue_mi_close_1",
+                                                                "dialogue_mi_close_2",
+                                                                "dialogue_mi_close_3",
+                                                                "dialogue_mi_close_4",
+                                                                "dialogue_mi_close_5",
+                                                                "dialogue_mi_close_6"
                                                                 ));
 
         Map responce = new HashMap<String, Long>();

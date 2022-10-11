@@ -85,8 +85,10 @@ public class EventsController {
             userService.activateUser(user);
 
             if(user.getSessionCounter() == 1){
-                user.setReferer(referrer);
-                userEntityRepo.save(user);
+                if(user.getReferer().equals("no_referrer")){
+                    user.setReferer(referrer);
+                    userEntityRepo.save(user);
+                }
                 eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, "first_load", lang, referrer, loadTime, 
                                                 userService.getLastOrCreateSession(user), 
                                                 userService.getTimeFromStart(user)));

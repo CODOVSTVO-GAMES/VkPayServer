@@ -52,6 +52,7 @@ public class UserEntity {
         this.setActive(false);
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+        this.referer = "no_referrer";
     }
 
     public UserEntity(String platformUserId){
@@ -59,6 +60,7 @@ public class UserEntity {
         this.setActive(false);
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+        this.referer = "no_referrer";
     }
 
 
