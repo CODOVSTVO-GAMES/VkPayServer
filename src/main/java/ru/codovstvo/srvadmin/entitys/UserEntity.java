@@ -48,8 +48,7 @@ public class UserEntity {
 
     private LocalDate registrationDate;
 
-    @Nullable
-    private int adsCounter;
+    private Integer adsCounter;
 
     public UserEntity(){}
 
