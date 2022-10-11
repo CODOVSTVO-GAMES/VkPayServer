@@ -89,6 +89,7 @@ public class UserEntity {
     }
     
     public void addAdsCount(){
+        if(adsCounter == null){adsCounter = 0;}
         adsCounter = adsCounter + 1;
     }
 }
