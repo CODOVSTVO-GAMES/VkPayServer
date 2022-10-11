@@ -9,6 +9,9 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.springframework.lang.Nullable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -45,6 +48,7 @@ public class UserEntity {
 
     private LocalDate registrationDate;
 
+    @Nullable
     private int adsCounter;
 
     public UserEntity(){}
@@ -55,6 +59,7 @@ public class UserEntity {
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
+        this.adsCounter = 0;
     }
 
     public UserEntity(String platformUserId){
@@ -63,6 +68,7 @@ public class UserEntity {
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
+        this.adsCounter = 0;
     }
 
 
