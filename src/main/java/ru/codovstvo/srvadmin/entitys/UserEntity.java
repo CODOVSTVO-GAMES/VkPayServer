@@ -54,7 +54,28 @@ public class UserEntity {
 
     private String deviseType;
 
-    public UserEntity(){}
+    public UserEntity(int platformUserId){
+        this.platformUserId = Integer.toString(platformUserId);
+        this.setActive(false);
+
+        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+        this.referer = "no_referrer";
+        this.adsCounter = 0;
+
+    }
+
+    public UserEntity(String platformUserId){
+        this.platformUserId = platformUserId;
+        this.setActive(false);
+
+        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+        this.referer = "no_referrer";
+        this.adsCounter = 0;
+    }
+
+    public UserEntity(){
+
+    }
 
     public UserEntity(int platformUserId, String platform, String deviceType){
         this.platformUserId = Integer.toString(platformUserId);

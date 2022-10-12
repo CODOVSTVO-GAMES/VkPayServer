@@ -1,7 +1,5 @@
 package ru.codovstvo.srvadmin.services;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
-import ru.codovstvo.srvadmin.repo.VersionRepo;
 
 @Transactional
 @Service
