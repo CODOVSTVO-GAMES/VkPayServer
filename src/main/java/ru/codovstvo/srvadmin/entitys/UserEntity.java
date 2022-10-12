@@ -77,31 +77,6 @@ public class UserEntity {
 
     }
 
-    // public UserEntity(int platformUserId, String platform, String deviceType){
-    //     this.platformUserId = Integer.toString(platformUserId);
-    //     this.setActive(false);
-
-    //     this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
-    //     this.referer = "no_referrer";
-    //     this.adsCounter = 0;
-
-    //     this.platform = platform;
-    //     this.deviseType = deviceType;
-    // }
-
-    // public UserEntity(String platformUserId, String platform, String deviceType){
-    //     this.platformUserId = platformUserId;
-    //     this.setActive(false);
-
-    //     this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
-    //     this.referer = "no_referrer";
-    //     this.adsCounter = 0;
-
-    //     this.platform = platform;
-    //     this.deviseType = deviceType;
-    // }
-
-
     public void setLastActivityInThisTime(){
         Date date = new Date();
         this.lastActivity = date.getTime();
@@ -122,6 +97,12 @@ public class UserEntity {
     public void addAdsCount(){
         if(adsCounter == null){adsCounter = 0;}
         adsCounter = adsCounter + 1;
+    }
+
+    public void setFirstPlatform(String newPlatform){
+        if (platform == null){
+            platform = newPlatform;
+        }
     }
     
     public void updateDeviseType(String newDeviseType){
