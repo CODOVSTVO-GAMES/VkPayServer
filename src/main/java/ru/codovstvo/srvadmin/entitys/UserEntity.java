@@ -116,7 +116,7 @@ public class UserEntity {
                     break;
                 }
             }
-            deviseType = "&" + newDeviseType;
+            deviseType = deviseType +"&" + newDeviseType;
         }
         else {
             if(!newDeviseType.equals(deviseType)){
