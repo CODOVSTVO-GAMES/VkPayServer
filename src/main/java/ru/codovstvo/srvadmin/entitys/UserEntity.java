@@ -113,7 +113,7 @@ public class UserEntity {
             
             for(int i = 0; i < types.length; i++){
                 if (types[i].equals(newDeviseType)){
-                    break;
+                    return;
                 }
             }
             deviseType = deviseType +"&" + newDeviseType;
