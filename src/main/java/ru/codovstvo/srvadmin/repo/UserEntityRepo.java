@@ -11,4 +11,6 @@ public interface UserEntityRepo extends CrudRepository<UserEntity, Long> {
     UserEntity findByPlatformUserId(String platformUserId);
     Set<UserEntity> findAllByPlatformUserId(String platformUserId);
     List<UserEntity> findAllByActive(Boolean active);
+
+    Set<UserEntity> findAllBySessionCounter(int sessionCounter);
 }

@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
+import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
@@ -73,7 +75,7 @@ public class StatController {
     }
     
     @GetMapping("funnel") //первая версия воронки обучения, не актуальна
-    public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version){
+    public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version, @RequestParam(name = "sessions", required = false, defaultValue = "0") Integer sessionCounter){
         Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load","started_game",
                                                                 "dialogue_marya_close_0","merge_marya",
                                                                 "dialogue_marya_close_1","merge_stebel",
@@ -123,16 +125,32 @@ public class StatController {
                                                                 ));
 
         Map responce = new HashMap<String, Long>();
-        
-        if (version.equals("")){
-            for(Object object : eventsName){
-                String event = (String) object;
-                responce.put(event, eventRepo.countByEventName(event));
+
+        if (sessionCounter == 0){
+            if (version.equals("")){
+                for(Object object : eventsName){
+                    String event = (String) object;
+                    responce.put(event, eventRepo.countByEventName(event));
+                }
+            } else {
+                for(Object object : eventsName){
+                    String event = (String) object;
+                    responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                }
             }
-        } else if (!version.equals("")){
-            for(Object object : eventsName){
+        } else {
+            Set<UserEntity> users = userEntityRepo.findAllBySessionCounter(sessionCounter);
+            
+            for (Object object : eventsName){
                 String event = (String) object;
-                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                int eventCounter = 0;
+                for (UserEntity user : users){
+                    Optional<EventEntity> e = eventRepo.findByUserEntityAndEventName(user, event);
+                    if (e.isPresent()){
+                        eventCounter += 1;
+                    }
+                }
+                responce.put(event, eventCounter);
             }
         }
 
