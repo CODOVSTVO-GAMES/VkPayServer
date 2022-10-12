@@ -84,14 +84,18 @@ public class EventsController {
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
 
         if (type.equals("start")){
+            user.updateDeviseType(deviceType);
+
             userService.forceCloseSessionIfUserActive(user);
             userService.activateUser(user);
 
             if(user.getSessionCounter() == 1){
                 if(user.getReferer().equals("no_referrer")){
                     user.setReferer(referrer);
-                    userEntityRepo.save(user);
                 }
+                user.setPlatform(platform);
+                userEntityRepo.save(user);
+
                 eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, "first_load", lang, referrer, loadTime, 
                                                 userService.getLastOrCreateSession(user), 
                                                 userService.getTimeFromStart(user)));

@@ -50,24 +50,34 @@ public class UserEntity {
 
     private Integer adsCounter;
 
+    private String platform;
+
+    private String deviseType;
+
     public UserEntity(){}
 
-    public UserEntity(int platformUserId){
+    public UserEntity(int platformUserId, String platform, String deviceType){
         this.platformUserId = Integer.toString(platformUserId);
         this.setActive(false);
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
+
+        this.platform = platform;
+        this.deviseType = deviceType;
     }
 
-    public UserEntity(String platformUserId){
+    public UserEntity(String platformUserId, String platform, String deviceType){
         this.platformUserId = platformUserId;
         this.setActive(false);
 
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
+
+        this.platform = platform;
+        this.deviseType = deviceType;
     }
 
 
@@ -91,5 +101,23 @@ public class UserEntity {
     public void addAdsCount(){
         if(adsCounter == null){adsCounter = 0;}
         adsCounter = adsCounter + 1;
+    }
+    
+    public void updateDeviseType(String newDeviseType){
+        if(deviseType.contains("&")){
+            String[] types = deviseType.split("&");
+            
+            for(int i = 0; i < types.length; i++){
+                if (types[i].equals(newDeviseType)){
+                    break;
+                }
+            }
+            deviseType = "&" + newDeviseType;
+        }
+        else {
+            if(!newDeviseType.equals(deviseType)){
+                deviseType = "&" + newDeviseType;
+            }
+        }
     }
 }
