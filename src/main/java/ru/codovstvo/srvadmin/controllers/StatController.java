@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,9 +147,13 @@ public class StatController {
                 String event = (String) object;
                 int eventCounter = 0;
                 for (UserEntity user : users){
-                    Optional<EventEntity> e = eventRepo.findByUserEntityAndEventName(user, event);
-                    if (e.isPresent()){
-                        eventCounter += 1;
+                    try{
+                        Optional<EventEntity> e = eventRepo.findByUserEntityAndEventName(user, event);
+                        if (e.isPresent()){
+                            eventCounter += 1;
+                        }
+                    }catch (NonUniqueResultException e){
+                        System.out.println("несколько таких ивентов, кажется зацепили админа " + user.getPlatformUserId() + "   event name " + event);
                     }
                 }
                 responce.put(event, eventCounter);
