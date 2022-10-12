@@ -77,29 +77,29 @@ public class UserEntity {
 
     }
 
-    public UserEntity(int platformUserId, String platform, String deviceType){
-        this.platformUserId = Integer.toString(platformUserId);
-        this.setActive(false);
+    // public UserEntity(int platformUserId, String platform, String deviceType){
+    //     this.platformUserId = Integer.toString(platformUserId);
+    //     this.setActive(false);
 
-        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
-        this.referer = "no_referrer";
-        this.adsCounter = 0;
+    //     this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+    //     this.referer = "no_referrer";
+    //     this.adsCounter = 0;
 
-        this.platform = platform;
-        this.deviseType = deviceType;
-    }
+    //     this.platform = platform;
+    //     this.deviseType = deviceType;
+    // }
 
-    public UserEntity(String platformUserId, String platform, String deviceType){
-        this.platformUserId = platformUserId;
-        this.setActive(false);
+    // public UserEntity(String platformUserId, String platform, String deviceType){
+    //     this.platformUserId = platformUserId;
+    //     this.setActive(false);
 
-        this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
-        this.referer = "no_referrer";
-        this.adsCounter = 0;
+    //     this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
+    //     this.referer = "no_referrer";
+    //     this.adsCounter = 0;
 
-        this.platform = platform;
-        this.deviseType = deviceType;
-    }
+    //     this.platform = platform;
+    //     this.deviseType = deviceType;
+    // }
 
 
     public void setLastActivityInThisTime(){
