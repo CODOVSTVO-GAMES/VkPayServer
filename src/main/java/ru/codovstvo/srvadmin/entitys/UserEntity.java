@@ -120,7 +120,7 @@ public class UserEntity {
         }
         else {
             if(!newDeviseType.equals(deviseType)){
-                deviseType = "&" + newDeviseType;
+                deviseType = deviseType +"&" + newDeviseType;
             }
         }
     }
