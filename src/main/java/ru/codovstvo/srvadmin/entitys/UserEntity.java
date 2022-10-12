@@ -125,7 +125,9 @@ public class UserEntity {
     }
     
     public void updateDeviseType(String newDeviseType){
-        if(!deviseType.isEmpty() || deviseType.contains("&")){
+        if(deviseType == null){
+            deviseType = newDeviseType;
+        } else if(deviseType.contains("&")){
             String[] types = deviseType.split("&");
             
             for(int i = 0; i < types.length; i++){
