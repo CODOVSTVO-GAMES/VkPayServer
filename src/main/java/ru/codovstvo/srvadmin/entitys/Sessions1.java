@@ -68,8 +68,7 @@ public class Sessions1 {
             this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
             this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
 
-            Date date = new Date();
-            this.sessionLeght = date.getTime() - startSessionDateLong;
+            this.sessionLeght = userEntity.getLastActivity() - startSessionDateLong;
         }
 
     }
@@ -81,8 +80,7 @@ public class Sessions1 {
             this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
             this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
 
-            Date date = new Date();
-            this.sessionLeght = date.getTime() - startSessionDateLong;
+            this.sessionLeght = userEntity.getLastActivity() - startSessionDateLong;
         }
     }
 
