@@ -163,22 +163,22 @@ public class StatController {
                 }
             }
             else {
-                Set<UserEntity> users = userEntityRepo.findAllBySessionCounterAndDeviceType(sessionCounter, deviseType);
+                // Set<UserEntity> users = userEntityRepo.findAllBySessionCounterAndDeviceType(sessionCounter, deviseType);
                 
-                for (Object object : eventsName){
-                    String event = (String) object;
-                    int eventCounter = 0;
-                    for (UserEntity user : users){
-                        Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
-                        for(EventEntity ev : userEvents){
-                            if(event.equals(ev.getEventName())){
-                                eventCounter += 1;
-                                break;
-                            }
-                        }
-                    }
-                    responce.put(event, eventCounter);
-                }
+                // for (Object object : eventsName){
+                //     String event = (String) object;
+                //     int eventCounter = 0;
+                //     for (UserEntity user : users){
+                //         Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
+                //         for(EventEntity ev : userEvents){
+                //             if(event.equals(ev.getEventName())){
+                //                 eventCounter += 1;
+                //                 break;
+                //             }
+                //         }
+                //     }
+                //     responce.put(event, eventCounter);
+                // }
             }
         }
 
