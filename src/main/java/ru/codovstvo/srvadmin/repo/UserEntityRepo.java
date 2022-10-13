@@ -13,4 +13,6 @@ public interface UserEntityRepo extends CrudRepository<UserEntity, Long> {
     List<UserEntity> findAllByActive(Boolean active);
 
     Set<UserEntity> findAllBySessionCounter(int sessionCounter);
+
+    Set<UserEntity> findAllBySessionCounterAndDeviceType(int sessionCounter, String deviceType);
 }

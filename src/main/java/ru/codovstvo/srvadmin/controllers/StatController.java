@@ -75,7 +75,10 @@ public class StatController {
     }
     
     @GetMapping("funnel") //первая версия воронки обучения, не актуальна
-    public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version, @RequestParam(name = "sessions", required = false, defaultValue = "0") Integer sessionCounter){
+    public Map getFunnelStartEvents(@RequestParam(name = "version", required=false, defaultValue="") String version,
+                                    @RequestParam(name = "sessions", required = false, defaultValue = "0") Integer sessionCounter,
+                                    @RequestParam(name = "devicetype", required = false, defaultValue = "") String deviseType
+                                    ){
         Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load","started_game",
                                                                 "dialogue_marya_close_0","merge_marya",
                                                                 "dialogue_marya_close_1","merge_stebel",
@@ -139,21 +142,43 @@ public class StatController {
                 }
             }
         } else {
-            Set<UserEntity> users = userEntityRepo.findAllBySessionCounter(sessionCounter);
+
             
-            for (Object object : eventsName){
-                String event = (String) object;
-                int eventCounter = 0;
-                for (UserEntity user : users){
-                    Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
-                    for(EventEntity ev : userEvents){
-                        if(event.equals(ev.getEventName())){
-                            eventCounter += 1;
-                            break;
+            if (deviseType.equals("")){
+                Set<UserEntity> users = userEntityRepo.findAllBySessionCounter(sessionCounter);
+                
+                for (Object object : eventsName){
+                    String event = (String) object;
+                    int eventCounter = 0;
+                    for (UserEntity user : users){
+                        Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
+                        for(EventEntity ev : userEvents){
+                            if(event.equals(ev.getEventName())){
+                                eventCounter += 1;
+                                break;
+                            }
                         }
                     }
+                    responce.put(event, eventCounter);
                 }
-                responce.put(event, eventCounter);
+            }
+            else {
+                Set<UserEntity> users = userEntityRepo.findAllBySessionCounterAndDeviceType(sessionCounter, deviseType);
+                
+                for (Object object : eventsName){
+                    String event = (String) object;
+                    int eventCounter = 0;
+                    for (UserEntity user : users){
+                        Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
+                        for(EventEntity ev : userEvents){
+                            if(event.equals(ev.getEventName())){
+                                eventCounter += 1;
+                                break;
+                            }
+                        }
+                    }
+                    responce.put(event, eventCounter);
+                }
             }
         }
 
