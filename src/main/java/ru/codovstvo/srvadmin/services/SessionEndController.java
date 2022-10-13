@@ -29,7 +29,7 @@ public class SessionEndController {
     @Autowired
     EventRepo eventRepo;
 
-    @Scheduled(initialDelay = 600000, fixedDelay = 6000000) // каждую минуту 60000
+    @Scheduled(initialDelay = 60000, fixedDelay = 600000) // каждую минуту 60000
     public void AutoSessionEnd() {
         System.out.println("Запущено удаление сессий");
         List<UserEntity> list = userEntityRepo.findAllByActive(true);
