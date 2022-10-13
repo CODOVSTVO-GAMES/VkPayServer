@@ -8,11 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.persistence.NonUniqueResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -111,8 +109,8 @@ public class StatController {
                                                                 "quest_open_14", "quest_open_16", 
                                                                 "quest_open_15", "level_up_5", 
                                                                 "quest_done_4",
-                                                                "level_up_6", "level_up_7",
-                                                                "open_map_6", "open_map_7",
+                                                                "level_up_6", "level_up_7", "level_up_8",  "level_up_9",  "level_up_10",
+                                                                "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10",
                                                                 "quest_done_6", "first-drop-apples",
                                                                 "first-exchange", "first-key-collect", 
                                                                 "first-cutting-of-the-root", "first-merge-logs",
