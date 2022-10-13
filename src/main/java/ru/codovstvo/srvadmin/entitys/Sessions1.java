@@ -61,26 +61,26 @@ public class Sessions1 {
         this.isForseEnd = false;
     }
 
-    public void endSession()
+    public void endSession(long lastActivity)
     {
         if(!isEnd){
             this.isEnd = true;
             this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
             this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
 
-            this.sessionLeght = userEntity.getLastActivity() - startSessionDateLong;
+            this.sessionLeght = lastActivity - startSessionDateLong;
         }
 
     }
 
-    public void forseEnd(){
+    public void forseEnd(long lastActivity){
         if(!isEnd){
             this.isEnd = true;
             this.isForseEnd = true;
             this.endSessionDate = LocalDate.now(ZoneId.of("GMT+03:00"));
             this.endSessionTime = LocalTime.now(ZoneId.of("GMT+03:00"));
 
-            this.sessionLeght = userEntity.getLastActivity() - startSessionDateLong;
+            this.sessionLeght = lastActivity - startSessionDateLong;
         }
     }
 

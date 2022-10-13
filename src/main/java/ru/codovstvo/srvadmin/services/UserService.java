@@ -96,9 +96,8 @@ public class UserService {
 
         for (Sessions1 session : sessions){
             if(!session.getIsEnd()){
-                session.endSession();
+                session.endSession(user.getLastActivity());
                 sessionsRepo.save(session);
-                user.setLastActivityInThisTime();
                 user.updatePlayTime(session.getSessionLeght());
             }
         }
@@ -138,7 +137,7 @@ public class UserService {
             for(Sessions1 s : userSession){
                 if(!s.getIsEnd()){
                     if(s != session){
-                        s.forseEnd();
+                        s.forseEnd(user.getLastActivity());
                         sessionsRepo.save(s);
                     }
                 }
