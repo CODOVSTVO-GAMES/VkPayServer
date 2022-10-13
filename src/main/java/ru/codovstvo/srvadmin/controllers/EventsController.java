@@ -87,7 +87,7 @@ public class EventsController {
             user.updateDeviseType(deviceType);
             user.setFirstPlatform(platform);
 
-            userService.forceCloseSessionIfUserActive(user);
+            // userService.forceCloseSessionIfUserActive(user);
             userService.activateUser(user);
 
             if(user.getSessionCounter() == 1){

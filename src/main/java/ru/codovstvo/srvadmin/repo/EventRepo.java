@@ -14,6 +14,8 @@ public interface EventRepo extends CrudRepository<EventEntity, Long> {
 
     Optional<EventEntity> findByUserEntityAndEventName(UserEntity userEntity, String eventName);
 
+    Set<EventEntity> findAllByUserEntity(UserEntity userEntity);
+
     Set<EventEntity> findAllByEventName(String eventName);
     Set<EventEntity> findAllByEventNameAndVersion(String eventName, String version);
     void deleteAllByUserEntity(UserEntity userEntity);

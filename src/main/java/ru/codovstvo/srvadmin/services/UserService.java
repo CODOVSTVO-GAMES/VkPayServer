@@ -67,22 +67,22 @@ public class UserService {
     }
 
 
-    public void forceCloseSessionIfUserActive(UserEntity user){ //если сессия прошлая не завершена, он ее завершит
-        if (user.getActive()){
-            Set<Sessions1> userSession = sessionsRepo.findAllByUserEntity(user);
-            for (Sessions1 s : userSession){
-                if(!s.getIsEnd()){
-                    s.forseEnd();
-                    sessionsRepo.save(s);
-                    user.updatePlayTime(s.getSessionLeght());
-                    userEntityRepo.save(user);
-                }
-            }
-            user.setLastActivityInThisTime();
-            user.setActive(false);
-            userEntityRepo.save(user);
-        }
-    }
+    // public void forceCloseSessionIfUserActive(UserEntity user){ //если сессия прошлая не завершена, он ее завершит
+    //     if (user.getActive()){
+    //         Set<Sessions1> userSession = sessionsRepo.findAllByUserEntity(user);
+    //         for (Sessions1 s : userSession){
+    //             if(!s.getIsEnd()){
+    //                 s.forseEnd();
+    //                 sessionsRepo.save(s);
+    //                 user.updatePlayTime(s.getSessionLeght());
+    //                 userEntityRepo.save(user);
+    //             }
+    //         }
+    //         user.setLastActivityInThisTime();
+    //         user.setActive(false);
+    //         userEntityRepo.save(user);
+    //     }
+    // }
 
     public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
         getLastOrCreateSession(user);

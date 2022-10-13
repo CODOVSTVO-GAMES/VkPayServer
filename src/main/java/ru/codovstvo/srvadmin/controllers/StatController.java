@@ -147,7 +147,7 @@ public class StatController {
                 String event = (String) object;
                 int eventCounter = 0;
                 for (UserEntity user : users){
-                    Set<EventEntity> userEvents =  user.getEvents();
+                    Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
                     System.out.println(userEvents.size());
                     for(EventEntity ev : userEvents){
                         if(event.equals(ev.getEventName())){
