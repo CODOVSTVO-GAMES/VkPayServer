@@ -148,8 +148,9 @@ public class StatController {
                 int eventCounter = 0;
                 for (UserEntity user : users){
                     Set<EventEntity> userEvents =  user.getEvents();
+                    System.out.println(userEvents.size());
                     for(EventEntity ev : userEvents){
-                        if(ev.getEventName().equals(event)){
+                        if(event.equals(ev.getEventName())){
                             eventCounter += 1;
                             break;
                         }
