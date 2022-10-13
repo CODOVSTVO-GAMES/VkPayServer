@@ -147,13 +147,12 @@ public class StatController {
                 String event = (String) object;
                 int eventCounter = 0;
                 for (UserEntity user : users){
-                    try{
-                        Optional<EventEntity> e = eventRepo.findByUserEntityAndEventName(user, event);
-                        if (e.isPresent()){
+                    Set<EventEntity> userEvents =  user.getEvents();
+                    for(EventEntity ev : userEvents){
+                        if(ev.getEventName().equals(event)){
                             eventCounter += 1;
+                            break;
                         }
-                    }catch (NonUniqueResultException e){
-                        System.out.println("несколько таких ивентов, кажется зацепили админа " + user.getPlatformUserId() + "   event name " + event);
                     }
                 }
                 responce.put(event, eventCounter);
