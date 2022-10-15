@@ -8,4 +8,5 @@ import ru.codovstvo.srvadmin.entitys.Version;
 
 public interface VersionRepo extends CrudRepository<Version, Long> {
     List<Version> findAllByVersionIdentifierAndPlatform(String versionIdentifier, String platform);
+    Version findByVersionIdentifierAndPlatform(String versionIdentifier, String platform);
 }

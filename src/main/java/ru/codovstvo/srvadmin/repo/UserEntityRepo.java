@@ -1,5 +1,6 @@
 package ru.codovstvo.srvadmin.repo;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ public interface UserEntityRepo extends CrudRepository<UserEntity, Long> {
     List<UserEntity> findAllByActive(Boolean active);
 
     Set<UserEntity> findAllBySessionCounter(int sessionCounter);
+    Set<UserEntity> findAllBySessionCounterAndRegistrationDateGreaterThanEqual(int sessionCounter, LocalDate registrationDate);
 
     // Set<UserEntity> findAllBySessionCounterAndDeviceType(int sessionCounter, String deviceType);
 }

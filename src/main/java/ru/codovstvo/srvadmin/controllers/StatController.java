@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
+import ru.codovstvo.srvadmin.entitys.Version;
 import ru.codovstvo.srvadmin.repo.EventRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
+import ru.codovstvo.srvadmin.repo.VersionRepo;
 import ru.codovstvo.srvadmin.services.UserService;
 
 @RestController
@@ -40,6 +42,9 @@ public class StatController {
     
     @Autowired
     UserDataRepo userDataRepo;
+
+    @Autowired
+    VersionRepo versionRepo;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -142,43 +147,45 @@ public class StatController {
                 }
             }
         } else {
-
-            
             if (deviseType.equals("")){
-                Set<UserEntity> users = userEntityRepo.findAllBySessionCounter(sessionCounter);
-                
-                for (Object object : eventsName){
-                    String event = (String) object;
-                    int eventCounter = 0;
-                    for (UserEntity user : users){
-                        Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
-                        for(EventEntity ev : userEvents){
-                            if(event.equals(ev.getEventName())){
-                                eventCounter += 1;
-                                break;
+                if (version.equals("")){
+                    Set<UserEntity> users = userEntityRepo.findAllBySessionCounter(sessionCounter);
+                    for (Object object : eventsName){
+                        String event = (String) object;
+                        int eventCounter = 0;
+                        
+                        for (UserEntity user : users){
+                            Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
+                            for(EventEntity ev : userEvents){
+                                if(event.equals(ev.getEventName())){
+                                    eventCounter += 1;
+                                    break;
+                                }
                             }
                         }
+                        responce.put(event, eventCounter);
                     }
-                    responce.put(event, eventCounter);
+                } else {
+                    Version vers = versionRepo.findByVersionIdentifierAndPlatform(version, "vk");
+
+                    Set<UserEntity> users = userEntityRepo.findAllBySessionCounterAndRegistrationDateGreaterThanEqual(sessionCounter, vers.getStartDate());
+                    for (Object object : eventsName){
+                        String event = (String) object;
+                        int eventCounter = 0;
+                        
+                        for (UserEntity user : users){
+                            Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
+                            for(EventEntity ev : userEvents){
+                                if(event.equals(ev.getEventName())){
+                                    eventCounter += 1;
+                                    break;
+                                }
+                            }
+                        }
+                        responce.put(event, eventCounter);
+                    }
+
                 }
-            }
-            else {
-                // Set<UserEntity> users = userEntityRepo.findAllBySessionCounterAndDeviceType(sessionCounter, deviseType);
-                
-                // for (Object object : eventsName){
-                //     String event = (String) object;
-                //     int eventCounter = 0;
-                //     for (UserEntity user : users){
-                //         Set<EventEntity> userEvents =  eventRepo.findAllByUserEntity(user);
-                //         for(EventEntity ev : userEvents){
-                //             if(event.equals(ev.getEventName())){
-                //                 eventCounter += 1;
-                //                 break;
-                //             }
-                //         }
-                //     }
-                //     responce.put(event, eventCounter);
-                // }
             }
         }
 

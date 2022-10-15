@@ -23,7 +23,6 @@ public class Version {
 
     private String platform;
 
-
     private LocalTime startTime;
 
     private LocalDate startDate;
