@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
@@ -40,13 +41,13 @@ public class UserService {
             return users.iterator().next();
         }
         else{
-            UserEntity buffer = null;
+            UserEntity lastActiveUser = null;
             for(UserEntity user : users){
-                if(buffer == null || user.getLastActivity() > buffer.getLastActivity()){
-                    buffer = user;
+                if(lastActiveUser == null || user.getLastActivity() > lastActiveUser.getLastActivity()){
+                    lastActiveUser = user;
                 }
             }
-            return buffer;
+            return lastActiveUser;
         }
     }
 
@@ -65,24 +66,6 @@ public class UserService {
     public UserEntity findOrNullUser(int userIdentifier){
         return findOrNullUser(Integer.toString(userIdentifier));
     }
-
-
-    // public void forceCloseSessionIfUserActive(UserEntity user){ //если сессия прошлая не завершена, он ее завершит
-    //     if (user.getActive()){
-    //         Set<Sessions1> userSession = sessionsRepo.findAllByUserEntity(user);
-    //         for (Sessions1 s : userSession){
-    //             if(!s.getIsEnd()){
-    //                 s.forseEnd();
-    //                 sessionsRepo.save(s);
-    //                 user.updatePlayTime(s.getSessionLeght());
-    //                 userEntityRepo.save(user);
-    //             }
-    //         }
-    //         user.setLastActivityInThisTime();
-    //         user.setActive(false);
-    //         userEntityRepo.save(user);
-    //     }
-    // }
 
     public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
         getLastOrCreateSession(user);

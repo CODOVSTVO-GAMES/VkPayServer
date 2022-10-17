@@ -83,9 +83,9 @@ public class EventsController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        UserEntity user = userService.createOrFindUser(userId);
-
         Version vestionInstanse = versionService.createOrFindVersion(version, platform);
+
+        UserEntity user = userService.createOrFindUser(userId);
 
         if (type.equals("start")){
             user.updateDeviseType(deviceType);
@@ -99,10 +99,6 @@ public class EventsController {
                     user.setReferer(referrer);
                     userEntityRepo.save(user);
                 }
-
-                eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, "first_load", lang, referrer, loadTime, 
-                                                userService.getLastOrCreateSession(user), 
-                                                userService.getTimeFromStart(user)));
             }
         }
 
