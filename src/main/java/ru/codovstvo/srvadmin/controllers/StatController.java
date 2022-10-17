@@ -184,7 +184,7 @@ public class StatController {
                                 }
                             }
                         }
-                        responce.put(event, eventCounter * 4);
+                        responce.put(event, eventCounter * 4 - 4);
                     }
 
                 }
