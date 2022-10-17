@@ -145,7 +145,7 @@ public class StatController {
                 
                 for(Object object : eventsName){
                     String event = (String) object;
-                    responce.put(event, eventRepo.countByEventNameAndVersion(event, v) * 4);
+                    responce.put(event, eventRepo.countByEventNameAndVersion(event, v));
                 }
             }
         } else {
@@ -184,7 +184,7 @@ public class StatController {
                                 }
                             }
                         }
-                        responce.put(event, eventCounter);
+                        responce.put(event, eventCounter * 4);
                     }
 
                 }
