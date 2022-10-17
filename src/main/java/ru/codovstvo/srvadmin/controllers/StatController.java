@@ -141,9 +141,11 @@ public class StatController {
                     responce.put(event, eventRepo.countByEventName(event));
                 }
             } else {
+                Version v = versionRepo.findByVersionIdentifierAndPlatform(version, "vk");
+                
                 for(Object object : eventsName){
                     String event = (String) object;
-                    responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                    responce.put(event, eventRepo.countByEventNameAndVersion(event, v));
                 }
             }
         } else {
@@ -191,29 +193,6 @@ public class StatController {
 
         return sortByValue(responce);
     }
-    
-    @GetMapping("startfunnel")
-    public Map getStartFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_load", "spawn-marya", "merge-appleTree-1", "merge-appleTree-2", "merge-appleTree-3",
-                                                                        "first-exchange", "first-key-collect", "first-cutting-of-the-root", "first-merge-logs", "second-cutting-of-the-root", 
-                                                                        "first-delete-root", "first-open-chestS", "second-open-chestS", "first-drop-apples"
-                                                                )); 
-
-        Map responce = new HashMap<String, Long>();
-        
-        if (version.equals("")){
-            for(Object object : eventsName){
-                String event = (String) object;
-                responce.put(event, eventRepo.countByEventName(event));
-            }
-        } else if (!version.equals("")){
-            for(Object object : eventsName){
-                String event = (String) object;
-                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
-            }
-        }
-        return sortByValue(responce);
-    }
 
     @GetMapping("levelfunnel")
     public Map getLevelFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
@@ -229,9 +208,11 @@ public class StatController {
                 responce.put(event, eventRepo.countByEventName(event));
             }
         } else if (!version.equals("")){
+            Version v = versionRepo.findByVersionIdentifierAndPlatform(version, "vk");
+
             for(Object object : eventsName){
                 String event = (String) object;
-                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, v));
             }
         }
         return sortByValue(responce);
@@ -253,9 +234,11 @@ public class StatController {
                 responce.put(event, eventRepo.countByEventName(event));
             }
         } else if (!version.equals("")){
+            Version v = versionRepo.findByVersionIdentifierAndPlatform(version, "vk");
+
             for(Object object : eventsName){
                 String event = (String) object;
-                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, v));
             }
         }
         return sortByValue(responce);
@@ -275,9 +258,11 @@ public class StatController {
                 responce.put(event, eventRepo.countByEventName(event));
             }
         } else if (!version.equals("")){
+            Version v = versionRepo.findByVersionIdentifierAndPlatform(version, "vk");
+
             for(Object object : eventsName){
                 String event = (String) object;
-                responce.put(event, eventRepo.countByEventNameAndVersion(event, version));
+                responce.put(event, eventRepo.countByEventNameAndVersion(event, v));
             }
         }
         return sortByValue(responce);

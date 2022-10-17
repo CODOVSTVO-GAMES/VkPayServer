@@ -30,6 +30,10 @@ public class EventsController {
     String[] eventsAds = {"ads_merge_item", "shopCrystal_open_ads_1-3", "shopEnergy_open_ads_5", 
                             "shopFruit_x2", "shopResources_x2", "shopWorker_open_worker"};
 
+    String[] rewardEventAds = {"shopEnergy_reward_ads_5", "shopEnergy_reward_ads_30", "ads_merge_item", 
+                                "shopCrystal_reward_1", "shopFruit_x2_reward", "shopResources_x2_reward", 
+                                "shopWorker_reward_worker"};
+
     @Autowired
     CryptoService cryptoService;
 
@@ -107,7 +111,7 @@ public class EventsController {
                                                 userService.getTimeFromStart(user)));
 
         for (int i = 0; i < eventsAds.length; i++) {
-            if(eventsAds[i].equals(event)){
+            if(rewardEventAds[i].equals(event)){
                 user.addAdsCount();
                 userEntityRepo.save(user);
                 break;

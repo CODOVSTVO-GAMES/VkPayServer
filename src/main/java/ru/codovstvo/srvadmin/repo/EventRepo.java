@@ -6,10 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
+import ru.codovstvo.srvadmin.entitys.Version;
 
 public interface EventRepo extends CrudRepository<EventEntity, Long> {
     long countByEventName(String eventName);
-    long countByEventNameAndVersion(String eventName, String version);
+    long countByEventNameAndVersion(String eventName, Version version);
 
     Set<EventEntity> findAllByUserEntity(UserEntity userEntity);
 
