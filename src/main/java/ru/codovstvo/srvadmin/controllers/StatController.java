@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
+import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.entitys.Version;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.repo.VersionRepo;
@@ -45,6 +47,9 @@ public class StatController {
 
     @Autowired
     VersionRepo versionRepo;
+
+    @Autowired
+    SessionsRepo sessionsRepo;
 
     @GetMapping("averageLoadTime")
     public long getAverageLoadime(@RequestParam(name = "place", required=false, defaultValue = "") String place,
@@ -129,7 +134,9 @@ public class StatController {
                                                                 "dialogue_mi_close_3",
                                                                 "dialogue_mi_close_4",
                                                                 "dialogue_mi_close_5",
-                                                                "dialogue_mi_close_6"
+                                                                "dialogue_mi_close_6",
+                                                                "spawn_fisherwoman",
+                                                                "spawn_fourth_character"
                                                                 ));
 
         Map responce = new HashMap<String, Long>();
@@ -268,6 +275,21 @@ public class StatController {
         return sortByValue(responce);
     }
 
+    @GetMapping("sessionfunnel")
+    public Map getSessionsLeght(){
+        Map responce = new HashMap<String, Long>();
+        for(int i = 1; i < 100; i++){
+            Set<Sessions1> sessions = sessionsRepo.findAllByNumberSession(i);
+            Long buffer = 0l;
+            for(Sessions1 s : sessions){
+                if(s.getSessionLeght() == 0) continue;
+                buffer = buffer + s.getSessionLeght();
+            }
+            responce.put(i + " длинна: " + (buffer / sessions.size()), sessions.size());
+        }
+        return responce;
+    }
+
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
         list.sort(Entry.comparingByValue());
@@ -289,3 +311,4 @@ public class StatController {
         return reversedResult;
     }
 }
+
