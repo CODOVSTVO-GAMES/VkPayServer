@@ -285,9 +285,9 @@ public class StatController {
                 if(s.getSessionLeght() == 0) continue;
                 buffer = buffer + s.getSessionLeght();
             }
-            responce.put(i + " длинна: " + (buffer / sessions.size()), sessions.size());
+            responce.put(i + " длинна: " + (buffer / sessions.size() / 100000l) + " минут", sessions.size());
         }
-        return responce;
+        return sortByValue(responce);
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
