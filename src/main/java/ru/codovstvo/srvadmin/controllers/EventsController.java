@@ -58,7 +58,7 @@ public class EventsController {
     @PostMapping
     public ResponseEntity newEvent(@RequestParam String hash,
                                     @RequestParam String type,
-                                    @RequestParam int userId,
+                                    @RequestParam String userId,
                                     @RequestParam String version,
                                     @RequestParam String platform,
                                     @RequestParam String deviceType,

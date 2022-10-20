@@ -62,17 +62,16 @@ public class DataController {
 
         Map<String, String> parameters =  dataService.requestBodyParser(requestBody);
 
-        int userId = Integer.parseInt(parameters.get("userId"));
         String hash = parameters.get("hash");
 
         if (cryptoService.encodeHmac256(parameters.get("userId")).equals(hash)){
-            UserEntity user = userService.createOrFindUser(userId);
+            UserEntity user = userService.createOrFindUser(parameters.get("userId"));
             dataService.deleteUserData(user);
         }
     }
 
     @GetMapping("get")
-    public String getData(@RequestParam int userId, @RequestParam String key){
+    public String getData(@RequestParam String userId, @RequestParam String key){
         UserEntity user = userService.findOrNullUser(userId);
         if (user == null){
             return new String();

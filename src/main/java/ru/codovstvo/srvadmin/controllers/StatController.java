@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.EventEntity;
-import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.entitys.Version;
 import ru.codovstvo.srvadmin.repo.EventRepo;
@@ -275,20 +274,20 @@ public class StatController {
         return sortByValue(responce);
     }
 
-    @GetMapping("sessionfunnel")
-    public Map getSessionsLeght(){
-        Map responce = new HashMap<String, Long>();
-        for(int i = 1; i < 100; i++){
-            Set<Sessions1> sessions = sessionsRepo.findAllByNumberSession(i);
-            Long buffer = 0l;
-            for(Sessions1 s : sessions){
-                if(s.getSessionLeght() == 0) continue;
-                buffer = buffer + s.getSessionLeght();
-            }
-            responce.put(i + " длинна: " + (buffer / sessions.size() / 100000l) + " минут", sessions.size());
-        }
-        return sortByValue(responce);
-    }
+    // @GetMapping("sessionfunnel")
+    // public Map getSessionsLeght(){
+    //     Map responce = new HashMap<String, Long>();
+    //     for(int i = 1; i < 100; i++){
+    //         Set<Sessions1> sessions = sessionsRepo.findAllByNumberSession(i);
+    //         Long buffer = 0l;
+    //         for(Sessions1 s : sessions){
+    //             if(s.getSessionLeght() == 0) continue;
+    //             buffer = buffer + s.getSessionLeght();
+    //         }
+    //         responce.put(i + " длинна: " + (buffer / sessions.size() / 100000l) + " минут", sessions.size());
+    //     }
+    //     return sortByValue(responce);
+    // }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Entry<K, V>> list = new ArrayList<>(map.entrySet());

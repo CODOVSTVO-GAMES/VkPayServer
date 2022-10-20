@@ -51,9 +51,9 @@ public class UserService {
         }
     }
 
-    public UserEntity createOrFindUser(int userIdentifier){
-        return createOrFindUser(Integer.toString(userIdentifier));
-    }
+    // public UserEntity createOrFindUser(int userIdentifier){
+    //     return createOrFindUser(Integer.toString(userIdentifier));
+    // }
 
     public UserEntity findOrNullUser(String userIdentifier){ // можно лучше
         Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
@@ -63,9 +63,9 @@ public class UserService {
         return users.iterator().next();
     }
 
-    public UserEntity findOrNullUser(int userIdentifier){
-        return findOrNullUser(Integer.toString(userIdentifier));
-    }
+    // public UserEntity findOrNullUser(int userIdentifier){
+    //     return findOrNullUser(Integer.toString(userIdentifier));
+    // }
 
     public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
         getLastOrCreateSession(user);
