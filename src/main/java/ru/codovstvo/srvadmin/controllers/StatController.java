@@ -309,11 +309,5 @@ public class StatController {
 
         return reversedResult;
     }
-
-    @GetMapping(value="/allusers")
-    public Iterable<UserEntity> getdsdsadasd() {
-        Iterable<UserEntity> users = userEntityRepo.findAll();
-        return users;
-    }
 }
 
