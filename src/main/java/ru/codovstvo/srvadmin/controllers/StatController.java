@@ -309,5 +309,11 @@ public class StatController {
 
         return reversedResult;
     }
+
+    @GetMapping(value="/allevents")
+    public Iterable<EventEntity> getAllEvents() {
+        Iterable<EventEntity> events = eventRepo.findAll();
+        return events;
+    }
 }
 
