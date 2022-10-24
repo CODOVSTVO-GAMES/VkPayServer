@@ -310,10 +310,10 @@ public class StatController {
         return reversedResult;
     }
 
-    @GetMapping(value="/allevents")
-    public Iterable<EventEntity> getAllEvents() {
-        Iterable<EventEntity> events = eventRepo.findAll();
-        return events;
+    @GetMapping(value="/allusers")
+    public Iterable<UserEntity> getdsdsadasd() {
+        Iterable<UserEntity> users = userEntityRepo.findAll();
+        return users;
     }
 }
 
