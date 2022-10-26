@@ -135,7 +135,10 @@ public class StatController {
                                                                 "dialogue_mi_close_5",
                                                                 "dialogue_mi_close_6",
                                                                 "spawn_fisherwoman",
-                                                                "spawn_fourth_character"
+                                                                "spawn_fourth_character", 
+                                                                "learn_modal_close", 
+                                                                "spawn-marya"
+
                                                                 ));
 
         Map responce = new HashMap<String, Long>();

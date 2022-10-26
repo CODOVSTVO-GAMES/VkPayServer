@@ -32,7 +32,15 @@ public class EventsController {
 
     String[] rewardEventAds = {"shopEnergy_reward_ads_5", "shopEnergy_reward_ads_30", "ads_merge_item", 
                                 "shopCrystal_reward_1", "shopFruit_x2_reward", "shopResources_x2_reward", 
-                                "shopWorker_reward_worker"};
+                                "shopWorker_reward_worker",
+                            
+                                "shopCrystal_1-3_r_reward", "shopCrystal_1-3_ads_reward",
+                                "shopEnergy_5_r_reward", "shopEnergy_5_ads_reward",
+                                "shop_worker_r_reward", "shop_worker_ads_reward",
+                                "television_r_reward", "television_ads_reward",
+                                "merge_item_r_reward", "merge_item_ads_reward",
+                                "shopEnergy_30_r_reward", "shopEnergy_30_ads_reward",
+                                "shopCrystal_reward_1-3", ""};
 
     @Autowired
     CryptoService cryptoService;
