@@ -114,7 +114,7 @@ public class EventsController {
                                                 userService.getLastOrCreateSession(user), 
                                                 userService.getTimeFromStart(user)));
 
-        for (int i = 0; i < eventsAds.length; i++) {
+        for (int i = 0; i < rewardEventAds.length; i++) {
             if(rewardEventAds[i].equals(event)){
                 user.addAdsCount();
                 userEntityRepo.save(user);

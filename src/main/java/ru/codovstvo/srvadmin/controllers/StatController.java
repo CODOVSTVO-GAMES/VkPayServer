@@ -119,7 +119,9 @@ public class StatController {
                                                                 "quest_done_7", "dialogue_cat_close_5", 
                                                                 "quest_open_10", "quest_done_9", 
                                                                 "quest_open_14", "quest_open_16", 
-                                                                "quest_open_15", "level_up_5", 
+                                                                "quest_open_15", "level_up_5",
+                                                                "quest_open_18", "quest_open_19","quest_open_20","quest_open_21","quest_open_22","quest_open_123",
+                                                                "quest_done_18", "quest_done_19","quest_done_20","quest_done_21","quest_done_22","quest_done_123",
                                                                 "quest_done_4",
                                                                 "level_up_6", "level_up_7", "level_up_8",  "level_up_9",  "level_up_10",
                                                                 "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10",
@@ -136,8 +138,7 @@ public class StatController {
                                                                 "dialogue_mi_close_6",
                                                                 "spawn_fisherwoman",
                                                                 "spawn_fourth_character", 
-                                                                "learn_modal_close", 
-                                                                "spawn-marya"
+                                                                "learn_modal_close"
 
                                                                 ));
 
