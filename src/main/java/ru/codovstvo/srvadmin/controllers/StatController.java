@@ -88,7 +88,7 @@ public class StatController {
                                     @RequestParam(name = "sessions", required = false, defaultValue = "0") Integer sessionCounter,
                                     @RequestParam(name = "devicetype", required = false, defaultValue = "") String deviseType
                                     ){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("started_game",
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList(
                                                                 "dialogue_marya_close_0","merge_marya",
                                                                 "dialogue_marya_close_1","merge_stebel",
                                                                 "dialogue_marya_close_2","merge_bloom_tree",
@@ -119,9 +119,10 @@ public class StatController {
                                                                 "quest_done_7", "dialogue_cat_close_5", 
                                                                 "quest_open_10", "quest_done_9", 
                                                                 "quest_open_14", "quest_open_16", 
-                                                                "quest_open_15", "level_up_5",
-                                                                "quest_open_18", "quest_open_19","quest_open_20","quest_open_21","quest_open_22","quest_open_123",
-                                                                "quest_done_18", "quest_done_19","quest_done_20","quest_done_21","quest_done_22","quest_done_123",
+                                                                "quest_open_15", "level_up_5", "quest_done_16", "quest_done_15", "quest_done_14","quest_done_13",
+                                                                "quest_open_13", "quest_open_12", "quest_done_12", "quest_done_11", "quest_open_11", "quest_done_10",
+                                                                "quest_open_18", "quest_open_19","quest_open_20","quest_open_21","quest_open_22","quest_open_23",
+                                                                "quest_done_18", "quest_done_19","quest_done_20","quest_done_21","quest_done_22","quest_done_23",
                                                                 "quest_done_4",
                                                                 "level_up_6", "level_up_7", "level_up_8",  "level_up_9",  "level_up_10",
                                                                 "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10",
@@ -138,7 +139,7 @@ public class StatController {
                                                                 "dialogue_mi_close_6",
                                                                 "spawn_fisherwoman",
                                                                 "spawn_fourth_character", 
-                                                                "learn_modal_close"
+                                                                "learn_modal_close", "first_items_spawn"
 
                                                                 ));
 
@@ -206,7 +207,7 @@ public class StatController {
 
     @GetMapping("levelfunnel")
     public Map getLevelFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("level_up_2", "level_up_3","level_up_4","level_up_5",
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_items_spawn", "level_up_2", "level_up_3","level_up_4","level_up_5",
                                                                     "level_up_6", "level_up_7", "level_up_8","level_up_9","level_up_10"
                                                                 )); 
 
@@ -230,7 +231,7 @@ public class StatController {
 
     @GetMapping("questfunnel")
     public Map getQuestsDoneFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("quest_done_0", "quest_done_1", "quest_done_2", "quest_done_3", "quest_done_4", 
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList("first_items_spawn", "quest_done_0", "quest_done_1", "quest_done_2", "quest_done_3", "quest_done_4", 
                                                                     "quest_done_5", "quest_done_6", "quest_done_7", "quest_done_8", "quest_done_9",
                                                                     "quest_done_10", "quest_done_11", "quest_done_12", "quest_done_13", "quest_done_14",
                                                                     "quest_done_15", "quest_done_16", "quest_done_17", "quest_done_18", "quest_done_19"   
@@ -256,7 +257,7 @@ public class StatController {
 
     @GetMapping("terrfunnel")
     public Map getTerritoryasOpenFunnel(@RequestParam(name = "version", required=false, defaultValue="") String version){
-        Set eventsName =  new LinkedHashSet<String>(Arrays.asList( "open_map_2", "open_map_3", "open_map_4", "open_map_5",
+        Set eventsName =  new LinkedHashSet<String>(Arrays.asList( "first_items_spawn","open_map_2", "open_map_3", "open_map_4", "open_map_5",
                                                                         "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10"
                                                                 )); 
 
