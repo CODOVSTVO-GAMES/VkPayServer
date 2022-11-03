@@ -46,7 +46,7 @@ public class SessionEndController {
 
     @Scheduled(initialDelay = 600000, fixedDelay = 6000000)
     public void AutoAdminLogsDelete(){
-        int[] admins = new int[] { 77517618, 81313640, 36733860, 141398825 };
+        int[] admins = new int[] { 77517618, 81313640, 36733860, 141398825, 186475046, 532515793, 19346574 };
         System.out.println("Запущено удаление логов админов");
 
         for(int i = 0; i < admins.length; i++){
