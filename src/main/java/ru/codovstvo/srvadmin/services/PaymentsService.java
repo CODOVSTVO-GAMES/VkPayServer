@@ -46,11 +46,6 @@ public class PaymentsService {
             response.put("discount", item.getDiscount());
             response.put("item_id", item.getItemId());
             response.put("expiration", 0);
-            System.out.println(item.getTitle());
-            System.out.println(item.getPrice());
-            System.out.println(item.getPhotoUrl());
-            System.out.println(item.getDiscount());
-            System.out.println(item.getItemId());
             return response(response);
         } catch (Exception e) {
             System.out.println("error&&&&&&&&");
