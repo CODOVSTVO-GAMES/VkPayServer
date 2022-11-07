@@ -40,7 +40,7 @@ public class EventsController {
                                 "television_r_reward", "television_ads_reward",
                                 "merge_item_r_reward", "merge_item_ads_reward",
                                 "shopEnergy_30_r_reward", "shopEnergy_30_ads_reward",
-                                "shopCrystal_reward_1-3", ""};
+                                "shopCrystal_reward_1-3"};
 
     @Autowired
     CryptoService cryptoService;
