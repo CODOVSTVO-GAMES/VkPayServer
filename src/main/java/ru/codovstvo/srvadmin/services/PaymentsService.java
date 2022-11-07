@@ -28,12 +28,6 @@ public class PaymentsService {
     public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
         Order order = null;
         
-        System.out.println(itemTitle);
-        System.out.println(appId);
-        System.out.println(orderVkId);
-        System.out.println(userId);
-        System.out.println(receiverId);
-        
         try {
             Item item = itemRepo.findByTitle(itemTitle);
             order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED, item.getPrice());
@@ -48,7 +42,6 @@ public class PaymentsService {
             response.put("expiration", 0);
             return response(response);
         } catch (Exception e) {
-            System.out.println("error&&&&&&&&");
             order = orderRepo.findByOrderVkId(orderVkId);
             order.setOrderStatus(OrderStatus.ERROR);
             orderRepo.save(order);

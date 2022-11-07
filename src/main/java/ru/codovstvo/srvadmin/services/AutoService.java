@@ -15,7 +15,7 @@ import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
 @Transactional
 @Service
-public class SessionEndController {
+public class AutoService {
 
     @Autowired
     UserEntityRepo userEntityRepo;
