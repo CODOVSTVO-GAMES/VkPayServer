@@ -45,20 +45,13 @@ public class DataService {
                     data.setData(value);
                     userDataRepo.save(data);
                     System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
-                } else if (data.getTitle().equals("S0")){
-                    data.setData(value);
-                    userDataRepo.save(data);
-                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
-                } else {
-                    userDataRepo.delete(data);
-                    System.out.println("сохранение по ключу удалено id: " + user.getPlatformUserId() + " | key : "  + key);
+                    return;
                 }
             }
-        } else {
-            System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
-            UserData data = new UserData(user, key, value);
-            userDataRepo.save(data);
-        }
+        } 
+        System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
+        UserData data = new UserData(user, key, value);
+        userDataRepo.save(data);
 
     }
 
