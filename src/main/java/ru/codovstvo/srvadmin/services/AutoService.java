@@ -70,7 +70,7 @@ public class AutoService {
         }
     }
 
-    @Scheduled(initialDelay = 100, fixedDelay = 3600000)
+    @Scheduled(initialDelay = 1000, fixedDelay = 3600000)
     public void SendNotifications() throws Exception {
         System.out.println("Запущена отправка сообщений");
 
@@ -81,13 +81,13 @@ public class AutoService {
 
         List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
         for(NotificationsBuffer unit : units){
-            if(thisDate - unit.getUserEntity().getLastActivity() > 100l){ //10800000l
+            if(thisDate - unit.getUserEntity().getLastActivity() > 10800000l){ //10800000l - 3 часа
                 for(String not : notifications){
                     if (not.equals(unit.getUserEntity().getLastNotification())){
                         continue;
                     }
                     secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
-                    
+
                     unit.getUserEntity().setLastNotification(not);
                     userEntityRepo.save(unit.getUserEntity());
                 }
