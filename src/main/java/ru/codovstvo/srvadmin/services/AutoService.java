@@ -87,6 +87,9 @@ public class AutoService {
                         continue;
                     }
                     secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+                    
+                    unit.getUserEntity().setLastNotification(not);
+                    userEntityRepo.save(unit.getUserEntity());
                 }
             }
         }

@@ -63,8 +63,6 @@ public class UserEntity {
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
-        this.lastNotification = "";
-
     }
 
     public UserEntity(String platformUserId){
@@ -74,7 +72,6 @@ public class UserEntity {
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
-        this.lastNotification = "";
     }
 
     public UserEntity(){}
