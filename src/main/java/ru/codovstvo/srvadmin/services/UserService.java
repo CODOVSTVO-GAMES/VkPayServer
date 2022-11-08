@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.codovstvo.srvadmin.entitys.EventEntity;
 import ru.codovstvo.srvadmin.entitys.Sessions1;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.repo.NotificationBufferRepo;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserDataRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
@@ -29,6 +29,9 @@ public class UserService {
 
     @Autowired
     SessionsRepo sessionsRepo;
+
+    @Autowired
+    NotificationBufferRepo notificationBufferRepo;
 
     public UserEntity createOrFindUser(String userIdentifier){
         Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
@@ -51,10 +54,6 @@ public class UserService {
         }
     }
 
-    // public UserEntity createOrFindUser(int userIdentifier){
-    //     return createOrFindUser(Integer.toString(userIdentifier));
-    // }
-
     public UserEntity findOrNullUser(String userIdentifier){ // можно лучше
         Set<UserEntity> users = userEntityRepo.findAllByPlatformUserId(userIdentifier);
         if (users.isEmpty()){
@@ -63,15 +62,12 @@ public class UserService {
         return users.iterator().next();
     }
 
-    // public UserEntity findOrNullUser(int userIdentifier){
-    //     return findOrNullUser(Integer.toString(userIdentifier));
-    // }
-
     public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
         getLastOrCreateSession(user);
         user.setActive(true);
         user.setLastActivityInThisTime();
         userEntityRepo.save(user);
+        notificationBufferRepo.deleteAllByUserEntity(user);
     }
 
     public void deactivateUser(UserEntity user){
