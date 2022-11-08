@@ -38,7 +38,7 @@ public class AutoService {
     @Autowired
     NotificationBufferRepo notificationBufferRepo;
 
-    @Scheduled(initialDelay = 20000, fixedDelay = 120000) // каждую минуту 60000
+    @Scheduled(initialDelay = 20000, fixedDelay = 240000) // каждую минуту 60000
     public void AutoSessionEnd() {
         System.out.println("Запущено удаление сессий");
         List<UserEntity> list = userEntityRepo.findAllByActive(true);

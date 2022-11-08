@@ -42,7 +42,7 @@ public class SecureVkApiService {
 
         ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
         
-        vk.secure().sendSMSNotification(actor, Integer.parseInt(userId), message).execute();
+        vk.secure().sendNotification(actor, message).userId(Integer.parseInt(userId)).execute();
     }
 
     public void sendWallPost(Long userId, int level){
