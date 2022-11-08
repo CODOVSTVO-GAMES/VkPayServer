@@ -36,16 +36,15 @@ public class SecureVkApiService {
         } catch(Exception e){System.out.println("Знакомство с иваном уже было");}
     }
 
-    // public void sendNotification(String userId, String message) throws ApiException, ClientException {
-    //     HttpTransportClient httpClient = new HttpTransportClient();
-    //     VkApiClient vk = new VkApiClient(httpClient);
+    public void sendNotification(String userId, String message) throws ApiException, ClientException {
+        HttpTransportClient httpClient = new HttpTransportClient();
+        VkApiClient vk = new VkApiClient(httpClient);
 
-    //     ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
+        ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
         
-    //     vk.secure().sendNotification(actor, message).execute();
-    // }
+        vk.secure().sendNotification(actor, message).execute();
+    }
 
-    // public void sendWallPost(Long userId, int level){
-        
-    // }
+    public void sendWallPost(Long userId, int level){
+    }
 }

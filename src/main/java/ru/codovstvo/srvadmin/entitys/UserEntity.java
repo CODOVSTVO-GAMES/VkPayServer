@@ -54,6 +54,8 @@ public class UserEntity {
 
     private String deviseType;
 
+    private String lastNotification;
+
     public UserEntity(int platformUserId){
         this.platformUserId = Integer.toString(platformUserId);
         this.setActive(false);
@@ -61,6 +63,7 @@ public class UserEntity {
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
+        this.lastNotification = "";
 
     }
 
@@ -71,11 +74,10 @@ public class UserEntity {
         this.registrationDate = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.referer = "no_referrer";
         this.adsCounter = 0;
+        this.lastNotification = "";
     }
 
-    public UserEntity(){
-
-    }
+    public UserEntity(){}
 
     public void setLastActivityInThisTime(){
         Date date = new Date();

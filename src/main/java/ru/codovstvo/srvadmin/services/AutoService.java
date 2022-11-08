@@ -6,16 +6,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Date;
 
+import ru.codovstvo.srvadmin.entitys.NotificationsBuffer;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.repo.EventRepo;
+import ru.codovstvo.srvadmin.repo.NotificationBufferRepo;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
 @Transactional
 @Service
 public class AutoService {
+
+    @Autowired
+    SecureVkApiService secureVkApiService;    
 
     @Autowired
     UserEntityRepo userEntityRepo;
@@ -29,7 +35,10 @@ public class AutoService {
     @Autowired
     EventRepo eventRepo;
 
-    @Scheduled(initialDelay = 100, fixedDelay = 600000) // каждую минуту 60000
+    @Autowired
+    NotificationBufferRepo notificationBufferRepo;
+
+    @Scheduled(initialDelay = 20000, fixedDelay = 600000) // каждую минуту 60000
     public void AutoSessionEnd() {
         System.out.println("Запущено удаление сессий");
         List<UserEntity> list = userEntityRepo.findAllByActive(true);
@@ -40,6 +49,7 @@ public class AutoService {
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
+                notificationBufferRepo.save(new NotificationsBuffer(user));
             }
         }
     }
@@ -53,10 +63,32 @@ public class AutoService {
             try{
                 eventRepo.deleteAllByUserEntity(userEntityRepo.findByPlatformUserId(Integer.toString(admins[i])));
             }catch (Exception e) {
-                System.out.println("Юзеров несколько. После перезахода ошибка исчезнет. Второго юзера система удалит сама");
+                System.out.println("Юзеров несколько. После перезахода ошибка исчезнет. Второго юзера система удалит");
             }
             
 
+        }
+    }
+
+    @Scheduled(initialDelay = 100, fixedDelay = 3600000)
+    public void SendNotifications() throws Exception {
+        System.out.println("Запущена отправка сообщений");
+
+        String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты" };
+
+        Date date = new Date();
+        long thisDate = date.getTime();
+
+        List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
+        for(NotificationsBuffer unit : units){
+            if(thisDate - unit.getUserEntity().getLastActivity() > 100l){ //10800000l
+                for(String not : notifications){
+                    if (not.equals(unit.getUserEntity().getLastNotification())){
+                        continue;
+                    }
+                    secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+                }
+            }
         }
     }
     
