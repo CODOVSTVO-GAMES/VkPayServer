@@ -86,7 +86,9 @@ public class AutoService {
                     if (not.equals(unit.getUserEntity().getLastNotification())){
                         continue;
                     }
-                    secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+                    try{
+                        secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+                    }catch (Exception e){System.out.println("Сообщение крашнулось");}
 
                     unit.getUserEntity().setLastNotification(not);
                     userEntityRepo.save(unit.getUserEntity());
