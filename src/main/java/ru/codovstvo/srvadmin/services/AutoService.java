@@ -91,6 +91,11 @@ public class AutoService {
                     
                     try{
                         secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+                        try {
+                            Thread.sleep(1 * 1000);
+                        } catch (InterruptedException ie) {
+                            Thread.currentThread().interrupt();
+                        }
                     }catch (Exception e){System.out.println("Сообщение крашнулось");}
 
                     unit.getUserEntity().setLastNotification(not);
