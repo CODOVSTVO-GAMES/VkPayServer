@@ -94,6 +94,7 @@ public class AutoService {
                     unit.getUserEntity().setLastNotification(not);
                     userEntityRepo.save(unit.getUserEntity());
                     notificationBufferRepo.delete(unit);
+                    System.out.println("Конец");
                 }
             }
         }

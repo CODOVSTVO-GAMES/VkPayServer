@@ -16,7 +16,7 @@ public class NotificationsBuffer {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private UserEntity userEntity;
 
     public NotificationsBuffer(UserEntity user){
