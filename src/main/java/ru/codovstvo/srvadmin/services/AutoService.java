@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.Date;
 
 import ru.codovstvo.srvadmin.entitys.NotificationsBuffer;
@@ -18,7 +19,7 @@ import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 
 
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional
 @Service
 public class AutoService {
 
@@ -81,6 +82,8 @@ public class AutoService {
         Date date = new Date();
         long thisDate = date.getTime();
 
+        List<NotificationsBuffer> activeUnits = new ArrayList<NotificationsBuffer>();
+
         List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
         for(NotificationsBuffer unit : units){
             if(thisDate - unit.getUserEntity().getLastActivity() > 10800000l){ //10800000l - 3 часа
@@ -93,18 +96,22 @@ public class AutoService {
                         secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
                     }catch (Exception e){System.out.println("Сообщение крашнулось");}
                     try {
-                        Thread.sleep(1 * 1000);
+                        Thread.sleep(1 * 500);
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                     }
 
                     unit.getUserEntity().setLastNotification(not);
                     userEntityRepo.save(unit.getUserEntity());
-                    notificationBufferRepo.delete(unit);
+                    activeUnits.add(unit);
+                    // notificationBufferRepo.delete(unit);
                     System.out.println("Конец");
                 }
             }
         }
+
+        notificationBufferRepo.deleteAll(activeUnits);
+        System.out.println("activeunits");
     }
     
 }
