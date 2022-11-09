@@ -73,45 +73,45 @@ public class AutoService {
         }
     }
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 3600000)
-    public void SendNotifications() throws Exception {
-        System.out.println("Запущена отправка сообщений");
+    // @Scheduled(initialDelay = 1000, fixedDelay = 3600000)
+    // public void SendNotifications() throws Exception {
+    //     System.out.println("Запущена отправка сообщений");
 
-        String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты" };
+    //     String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты" };
 
-        Date date = new Date();
-        long thisDate = date.getTime();
+    //     Date date = new Date();
+    //     long thisDate = date.getTime();
 
-        List<NotificationsBuffer> activeUnits = new ArrayList<NotificationsBuffer>();
+    //     List<NotificationsBuffer> activeUnits = new ArrayList<NotificationsBuffer>();
 
-        List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
-        for(NotificationsBuffer unit : units){
-            if(thisDate - unit.getUserEntity().getLastActivity() > 10800000l){ //10800000l - 3 часа
-                for(String not : notifications){
-                    if (not.equals(unit.getUserEntity().getLastNotification())){
-                        continue;
-                    }
+    //     List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
+    //     for(NotificationsBuffer unit : units){
+    //         if(thisDate - unit.getUserEntity().getLastActivity() > 10800000l){ //10800000l - 3 часа
+    //             for(String not : notifications){
+    //                 if (not.equals(unit.getUserEntity().getLastNotification())){
+    //                     continue;
+    //                 }
                     
-                    try{
-                        secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
-                    }catch (Exception e){System.out.println("Сообщение крашнулось");}
-                    try {
-                        Thread.sleep(1 * 500);
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                    }
+    //                 try{
+    //                     secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
+    //                 }catch (Exception e){System.out.println("Сообщение крашнулось");}
+    //                 try {
+    //                     Thread.sleep(1 * 500);
+    //                 } catch (InterruptedException ie) {
+    //                     Thread.currentThread().interrupt();
+    //                 }
 
-                    unit.getUserEntity().setLastNotification(not);
-                    userEntityRepo.save(unit.getUserEntity());
-                    activeUnits.add(unit);
-                    // notificationBufferRepo.delete(unit);
-                    System.out.println("Конец");
-                }
-            }
-        }
+    //                 unit.getUserEntity().setLastNotification(not);
+    //                 userEntityRepo.save(unit.getUserEntity());
+    //                 activeUnits.add(unit);
+    //                 // notificationBufferRepo.delete(unit);
+    //                 System.out.println("Конец");
+    //             }
+    //         }
+    //     }
 
-        notificationBufferRepo.deleteAll(activeUnits);
-        System.out.println("activeunits");
-    }
+    //     notificationBufferRepo.deleteAll(activeUnits);
+    //     System.out.println("activeunits");
+    // }
     
 }
