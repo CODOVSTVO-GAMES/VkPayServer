@@ -1,6 +1,7 @@
 package ru.codovstvo.srvadmin.entitys;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class NotificationsBuffer {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity userEntity;
 
     public NotificationsBuffer(UserEntity user){

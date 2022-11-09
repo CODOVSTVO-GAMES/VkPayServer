@@ -86,6 +86,7 @@ public class AutoService {
                     if (not.equals(unit.getUserEntity().getLastNotification())){
                         continue;
                     }
+                    
                     try{
                         secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
                     }catch (Exception e){System.out.println("Сообщение крашнулось");}
