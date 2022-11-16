@@ -127,10 +127,15 @@ public class EventsController {
             if (event.contains("level_up")) {
                 String level = event.replace("level_up_", "");
                 secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
-
             }
             else if (event.contains("quest_done_4")) {
                 secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
+            }
+            else if (event.contains("spawn_fisherwoman")) {
+                secureVkApiService.sendProgressMission(4, userId); // познакомиться с Сашей Рыбачкой
+            }
+            else if (event.contains("quest_done_15")) {
+                secureVkApiService.sendProgressMission(4, userId); // заколдовал сундук
             }
 
         }catch(Exception e){System.out.println("Ошибка отправки сообщения вк");}

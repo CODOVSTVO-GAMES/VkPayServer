@@ -96,7 +96,7 @@ public class StatController {
                                                                 "level_up_2","quest_open_1",
                                                                 "2_apple_harvested","dialogue_marya_close_4",
                                                                 "dialogue_marya_close_5",
-                                                                "quest_done_1", "dialogue_marya_close_6","dialogue_marya_close_7", "dialogue_marya_close_8", "dialogue_marya_close_9", 
+                                                                "quest_done_1", "dialogue_marya_close_6","dialogue_marya_close_7", "dialogue_marya_close_8",
                                                                 "dialogue_marya_close_10","dialogue_marya_close_11","dialogue_marya_close_12","dialogue_marya_close_13","dialogue_marya_close_14",
                                                                 "dialogue_marya_close_15","dialogue_marya_close_16","dialogue_marya_close_17","dialogue_marya_close_18","dialogue_marya_close_19","dialogue_marya_close_20",
                                                                 "open_map_2", "quest_open_2", "quest_open_17", 

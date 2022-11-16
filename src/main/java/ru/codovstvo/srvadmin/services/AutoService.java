@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import ru.codovstvo.srvadmin.entitys.NotificationsBuffer;
 import ru.codovstvo.srvadmin.entitys.UserEntity;
@@ -73,45 +73,55 @@ public class AutoService {
         }
     }
 
-    // @Scheduled(initialDelay = 1000, fixedDelay = 3600000)
-    // public void SendNotifications() throws Exception {
-    //     System.out.println("Запущена отправка сообщений");
+    @Scheduled(initialDelay = 1000, fixedDelay = 3600000) // 5 часов 18000000
+    public void SendNotifications() throws Exception {
+        System.out.println("Запущена отправка сообщений");
 
-    //     String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты" };
+        String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты", "Обновлены бонусные сундуки" };
 
-    //     Date date = new Date();
-    //     long thisDate = date.getTime();
+        //найти всех кто не заходил больше 5 часов
+        //взять рандомное сообщение их кучи и найти всех кому не отправляли его в один сет
+        //удалить всех этих людей из бд
+        //отправить всем им уведомления
+        //записать всем им отправленые уведы в юзера
+        //взять следующий месендж
 
-    //     List<NotificationsBuffer> activeUnits = new ArrayList<NotificationsBuffer>();
+        Date date = new Date();
+        long thisDate = date.getTime();
 
-    //     List<NotificationsBuffer> units =  notificationBufferRepo.findAll();
-    //     for(NotificationsBuffer unit : units){
-    //         if(thisDate - unit.getUserEntity().getLastActivity() > 10800000l){ //10800000l - 3 часа
-    //             for(String not : notifications){
-    //                 if (not.equals(unit.getUserEntity().getLastNotification())){
-    //                     continue;
-    //                 }
-                    
-    //                 try{
-    //                     secureVkApiService.sendNotification(unit.getUserEntity().getPlatformUserId(), not);
-    //                 }catch (Exception e){System.out.println("Сообщение крашнулось");}
-    //                 try {
-    //                     Thread.sleep(1 * 500);
-    //                 } catch (InterruptedException ie) {
-    //                     Thread.currentThread().interrupt();
-    //                 }
+        Map<String, String[]> queueMap = new HashMap<>();
 
-    //                 unit.getUserEntity().setLastNotification(not);
-    //                 userEntityRepo.save(unit.getUserEntity());
-    //                 activeUnits.add(unit);
-    //                 // notificationBufferRepo.delete(unit);
-    //                 System.out.println("Конец");
-    //             }
-    //         }
-    //     }
+        
+        List<NotificationsBuffer> queueUsersUnits = notificationBufferRepo.findAll();
 
-    //     notificationBufferRepo.deleteAll(activeUnits);
-    //     System.out.println("activeunits");
-    // }
+        for(NotificationsBuffer unit : queueUsersUnits) {
+            if (thisDate - unit.getUserEntity().getLastActivity() < 120000l){
+                queueUsersUnits.remove(unit);
+            }
+        }
+
+        for(String notification : notifications) {
+            String[] queueForSendNotification = new String[queueUsersUnits.size()];
+            int i = 0;
+            
+            for(NotificationsBuffer unit : queueUsersUnits) {
+                if (!notification.equals(unit.getUserEntity().getLastNotification())){
+                    queueForSendNotification[i] = unit.getUserEntity().getPlatformUserId();
+                    i++;
+                    queueUsersUnits.remove(unit);
+                    notificationBufferRepo.delete(unit);
+
+                    unit.getUserEntity().setLastNotification(notification);
+                    userEntityRepo.save(unit.getUserEntity());
+                }
+            }
+            queueMap.put(notification, queueForSendNotification);
+        }
+
+        for (Map.Entry<String, String[]> entry : queueMap.entrySet()) {
+            secureVkApiService.sendNotification(entry.getValue(), entry.getKey());
+            System.out.println("Отправлено уведомление: " + entry.getKey() + " Игрокам: " + entry.getValue().toString());
+        }    
+    }
     
 }
