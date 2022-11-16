@@ -110,6 +110,7 @@ public class AutoService {
                 }
             }
             System.out.println("Игроков на отправку сообщения " + notification + " ---- " + queueForSendNotification.size());
+            if(queueForSendNotification.isEmpty()) { continue; };
             System.out.println(queueForSendNotification.get(1).getUserEntity().getPlatformUserId());
             for (NotificationsBuffer unit : queueForSendNotification) {
                 // unit.getUserEntity().setLastNotification(notification);
@@ -123,7 +124,6 @@ public class AutoService {
 
         for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMap.entrySet()) {
             System.out.println("Долетело " + entry.getValue().size());
-            if(entry.getValue().isEmpty()) { continue; }
             String[] ids = new String[entry.getValue().size()];
 
             for (int i = 0; i < entry.getValue().size(); i++) {
