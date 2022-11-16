@@ -106,6 +106,7 @@ public class AutoService {
             
             for(NotificationsBuffer unit : queueUsersUnits) {
                 if (!notification.equals(unit.getUserEntity().getLastNotification())){
+                    if(unit.getUserEntity().getPlatformUserId().equals("")) { continue; }
                     queueForSendNotification.add(unit);
                 }
             }

@@ -56,7 +56,7 @@ public class SecureVkApiService {
         Integer[] ids = new Integer[userIds.length];
 
         for(int i = 0; i < userIds.length; i++){
-            System.out.println("---" + ids[i]);
+            System.out.println("---" + userIds[i]);
             ids[i] = Integer.parseInt(userIds[i]);
         }
         
