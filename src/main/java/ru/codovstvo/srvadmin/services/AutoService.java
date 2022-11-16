@@ -91,14 +91,15 @@ public class AutoService {
 
         Map<String, List<NotificationsBuffer>> queueMap = new HashMap<>();
 
-        
         List<NotificationsBuffer> queueUsersUnits = notificationBufferRepo.findAll();
+        System.out.println("Игроков в бд " + queueUsersUnits.size());
 
         for(NotificationsBuffer unit : queueUsersUnits) {
             if (thisDate - unit.getUserEntity().getLastActivity() < 120000l){
                 queueUsersUnits.remove(unit);
             }
         }
+        System.out.println("Игроков которых нубыло больше 2 минут " + queueUsersUnits.size());
 
         for(String notification : notifications) {
             List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
@@ -108,12 +109,13 @@ public class AutoService {
                     queueForSendNotification.add(unit);
                 }
             }
+            System.out.println("Игроков на отправку сообщения " + notification + " ---- " + queueForSendNotification.size());
             
             for (NotificationsBuffer unit : queueForSendNotification) {
-                queueUsersUnits.remove(unit);
-                notificationBufferRepo.delete(unit);
                 unit.getUserEntity().setLastNotification(notification);
                 userEntityRepo.save(unit.getUserEntity());
+                notificationBufferRepo.delete(unit);
+                queueUsersUnits.remove(unit);
             }
 
             queueMap.put(notification, queueForSendNotification);
