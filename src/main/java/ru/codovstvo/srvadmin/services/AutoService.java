@@ -122,6 +122,8 @@ public class AutoService {
         }
 
         for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMap.entrySet()) {
+            System.out.println("Долетело " + entry.getValue().size());
+            if(entry.getValue().isEmpty()) { continue; }
             String[] ids = new String[entry.getValue().size()];
 
             for (int i = 0; i < entry.getValue().size(); i++) {
