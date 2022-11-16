@@ -99,7 +99,7 @@ public class AutoService {
                 queueUsersUnits.remove(unit);
             }
         }
-        System.out.println("Игроков которых нубыло больше 2 минут " + queueUsersUnits.size());
+        System.out.println("Игроков которых небыло больше 2 минут " + queueUsersUnits.size());
 
         for(String notification : notifications) {
             List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
@@ -109,14 +109,12 @@ public class AutoService {
                     queueForSendNotification.add(unit);
                 }
             }
+
             System.out.println("Игроков на отправку сообщения " + notification + " ---- " + queueForSendNotification.size());
             if(queueForSendNotification.isEmpty()) { continue; };
-            System.out.println(queueForSendNotification.get(0).getUserEntity().getPlatformUserId());
+
             for (NotificationsBuffer unit : queueForSendNotification) {
                 System.out.println(unit.getUserEntity().getPlatformUserId());
-                // unit.getUserEntity().setLastNotification(notification);
-                // userEntityRepo.save(unit.getUserEntity());
-                // notificationBufferRepo.delete(unit);
                 queueUsersUnits.remove(unit);
             }
 
