@@ -123,11 +123,12 @@ public class AutoService {
             String[] ids = new String[entry.getValue().size()];
 
             for (int i = 0; i < entry.getValue().size(); i++) {
-                ids[i] = entry.getValue().get(i).getUserEntity().getPlatformUserId();
+                String id = entry.getValue().get(i).getUserEntity().getPlatformUserId();
+                ids[i] = id;
             }
 
             secureVkApiService.sendNotification(ids, entry.getKey());
-            System.out.println("Отправлено уведомление: " + entry.getKey() + " Игрокам: " + entry.getValue().toString());
+            System.out.println("Отправлено уведомление: " + entry.getKey() + "-------Игрокам: " + ids.toString());
         }    
     }
     
