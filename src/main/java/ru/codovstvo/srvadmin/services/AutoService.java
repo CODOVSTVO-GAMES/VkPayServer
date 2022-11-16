@@ -111,8 +111,9 @@ public class AutoService {
             }
             System.out.println("Игроков на отправку сообщения " + notification + " ---- " + queueForSendNotification.size());
             if(queueForSendNotification.isEmpty()) { continue; };
-            System.out.println(queueForSendNotification.get(1).getUserEntity().getPlatformUserId());
+            System.out.println(queueForSendNotification.get(0).getUserEntity().getPlatformUserId());
             for (NotificationsBuffer unit : queueForSendNotification) {
+                System.out.println(unit.getUserEntity().getPlatformUserId());
                 // unit.getUserEntity().setLastNotification(notification);
                 // userEntityRepo.save(unit.getUserEntity());
                 // notificationBufferRepo.delete(unit);
