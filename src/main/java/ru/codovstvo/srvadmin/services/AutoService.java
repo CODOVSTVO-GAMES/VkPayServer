@@ -52,6 +52,7 @@ public class AutoService {
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
+                if(user.getPlatformUserId().equals("")) { continue; }
                 notificationBufferRepo.save(new NotificationsBuffer(user));
             }
         }
@@ -75,16 +76,9 @@ public class AutoService {
 
     @Scheduled(initialDelay = 1000, fixedDelay = 3600000) // 5 часов 18000000
     public void SendNotifications() throws Exception {
-        System.out.println("Запущена отправка сообщений");
+        System.out.println("Запущена отправка уведомлений через 5 часов бездействия");
 
         String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты", "Обновлены бонусные сундуки" };
-
-        //найти всех кто не заходил больше 5 часов
-        //взять рандомное сообщение их кучи и найти всех кому не отправляли его в один сет
-        //удалить всех этих людей из бд
-        //отправить всем им уведомления
-        //записать всем им отправленые уведы в юзера
-        //взять следующий месендж
 
         Date date = new Date();
         long thisDate = date.getTime();
@@ -95,11 +89,11 @@ public class AutoService {
         System.out.println("Игроков в бд " + queueUsersUnits.size());
 
         for(NotificationsBuffer unit : queueUsersUnits) {
-            if (thisDate - unit.getUserEntity().getLastActivity() < 120000l){
+            if (thisDate - unit.getUserEntity().getLastActivity() < 18000000l){
                 queueUsersUnits.remove(unit);
             }
         }
-        System.out.println("Игроков которых небыло больше 2 минут " + queueUsersUnits.size());
+        System.out.println("Игроков которых небыло больше 5 часов минут " + queueUsersUnits.size());
 
         for(String notification : notifications) {
             List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
@@ -115,7 +109,6 @@ public class AutoService {
             if(queueForSendNotification.isEmpty()) { continue; };
 
             for (NotificationsBuffer unit : queueForSendNotification) {
-                System.out.println(unit.getUserEntity().getPlatformUserId());
                 queueUsersUnits.remove(unit);
             }
 
@@ -137,7 +130,7 @@ public class AutoService {
 
             secureVkApiService.sendNotification(ids, entry.getKey());
 
-            System.out.println("Отправлено уведомление: " + entry.getKey() + "-------Игрокам: " + ids.toString());
+            System.out.println("Отправлено уведомление: " + entry.getKey());
         }    
     }
     
