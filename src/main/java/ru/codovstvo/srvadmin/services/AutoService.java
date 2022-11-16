@@ -93,7 +93,9 @@ public class AutoService {
                 queueUsersUnits.remove(unit);
             }
         }
+
         System.out.println("Игроков которых небыло больше 5 часов минут " + queueUsersUnits.size());
+        if(queueUsersUnits.size() == 0) { return; }
 
         for(String notification : notifications) {
             List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
