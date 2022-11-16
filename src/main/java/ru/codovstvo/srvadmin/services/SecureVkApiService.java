@@ -54,8 +54,9 @@ public class SecureVkApiService {
         ServiceActor actor = new ServiceActor(8180902, "3diesn7ViJiMazGJa7my", "c7c21837c7c21837c7c21837fbc7becc91cc7c2c7c21837a534417df3e7eab26d5a63cf");
 
         Integer[] ids = new Integer[userIds.length];
-        
+
         for(int i = 0; i < userIds.length; i++){
+            System.out.println("---" + ids[i]);
             ids[i] = Integer.parseInt(userIds[i]);
         }
         
