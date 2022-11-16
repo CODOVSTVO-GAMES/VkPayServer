@@ -107,16 +107,16 @@ public class AutoService {
             for(NotificationsBuffer unit : queueUsersUnits) {
                 if (!notification.equals(unit.getUserEntity().getLastNotification())){
                     queueForSendNotification.add(unit);
-                    queueUsersUnits.remove(unit);
                 }
             }
             System.out.println("Игроков на отправку сообщения " + notification + " ---- " + queueForSendNotification.size());
             System.out.println(queueForSendNotification.get(0).getUserEntity().getPlatformUserId());
-            // for (NotificationsBuffer unit : queueForSendNotification) {
-            //     // unit.getUserEntity().setLastNotification(notification);
-            //     // userEntityRepo.save(unit.getUserEntity());
-            //     // notificationBufferRepo.delete(unit);
-            // }
+            for (NotificationsBuffer unit : queueForSendNotification) {
+                // unit.getUserEntity().setLastNotification(notification);
+                // userEntityRepo.save(unit.getUserEntity());
+                // notificationBufferRepo.delete(unit);
+                queueUsersUnits.remove(unit);
+            }
 
             queueMap.put(notification, queueForSendNotification);
         }
@@ -132,7 +132,7 @@ public class AutoService {
 
                 entry.getValue().get(i).getUserEntity().setLastNotification(entry.getKey());
                 userEntityRepo.save(entry.getValue().get(i).getUserEntity());
-                notificationBufferRepo.delete(entry.getValue().get(i));
+                notificationBufferRepo.delete(unit);
             }
 
             secureVkApiService.sendNotification(ids, entry.getKey());
