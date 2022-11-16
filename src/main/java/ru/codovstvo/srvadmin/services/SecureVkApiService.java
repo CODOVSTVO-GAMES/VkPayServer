@@ -1,5 +1,7 @@
 package ru.codovstvo.srvadmin.services;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +55,10 @@ public class SecureVkApiService {
 
         Integer[] ids = new Integer[userIds.length];
         for(int i = 0; i < userIds.length; i++){
+            if(userIds[i].isEmpty() || userIds[i].equals("")){
+                Arrays.copyOfRange(ids, 0, i);
+                break;
+            }
             ids[i] = Integer.parseInt(userIds[i]);
         }
         
