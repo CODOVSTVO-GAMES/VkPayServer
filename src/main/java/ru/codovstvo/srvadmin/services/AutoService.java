@@ -132,7 +132,7 @@ public class AutoService {
 
                 entry.getValue().get(i).getUserEntity().setLastNotification(entry.getKey());
                 userEntityRepo.save(entry.getValue().get(i).getUserEntity());
-                notificationBufferRepo.delete(unit);
+                notificationBufferRepo.delete(entry.getValue().get(i));
             }
 
             secureVkApiService.sendNotification(ids, entry.getKey());
