@@ -89,7 +89,7 @@ public class AutoService {
         Date date = new Date();
         long thisDate = date.getTime();
 
-        Map<String, String[]> queueMap = new HashMap<>();
+        Map<String, List<NotificationsBuffer>> queueMap = new HashMap<>();
 
         
         List<NotificationsBuffer> queueUsersUnits = notificationBufferRepo.findAll();
@@ -101,25 +101,32 @@ public class AutoService {
         }
 
         for(String notification : notifications) {
-            String[] queueForSendNotification = new String[queueUsersUnits.size()];
-            int i = 0;
+            List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
             
             for(NotificationsBuffer unit : queueUsersUnits) {
                 if (!notification.equals(unit.getUserEntity().getLastNotification())){
-                    queueForSendNotification[i] = unit.getUserEntity().getPlatformUserId();
-                    i++;
-                    queueUsersUnits.remove(unit);
-                    notificationBufferRepo.delete(unit);
-
-                    unit.getUserEntity().setLastNotification(notification);
-                    userEntityRepo.save(unit.getUserEntity());
+                    queueForSendNotification.add(unit);
                 }
             }
+            
+            for (NotificationsBuffer unit : queueForSendNotification) {
+                queueUsersUnits.remove(unit);
+                notificationBufferRepo.delete(unit);
+                unit.getUserEntity().setLastNotification(notification);
+                userEntityRepo.save(unit.getUserEntity());
+            }
+
             queueMap.put(notification, queueForSendNotification);
         }
 
-        for (Map.Entry<String, String[]> entry : queueMap.entrySet()) {
-            secureVkApiService.sendNotification(entry.getValue(), entry.getKey());
+        for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMap.entrySet()) {
+            String[] ids = new String[entry.getValue().size()];
+
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                ids[i] = entry.getValue().get(i).getUserEntity().getPlatformUserId();
+            }
+
+            secureVkApiService.sendNotification(ids, entry.getKey());
             System.out.println("Отправлено уведомление: " + entry.getKey() + " Игрокам: " + entry.getValue().toString());
         }    
     }
