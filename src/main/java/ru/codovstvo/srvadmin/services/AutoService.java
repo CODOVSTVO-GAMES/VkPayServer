@@ -91,7 +91,7 @@ public class AutoService {
         System.out.println("Игроков в бд " + queueUsersUnits.size());
 
         for(NotificationsBuffer unit : queueUsersUnits) {
-            System.out.println(unit.getUserEntity().getPlatformUserId());
+            System.out.println(unit.getUserEntity().getId());
             if (thisDate - unit.getUserEntity().getLastActivity() < 18000000l){
                 queueUsersUnits.remove(unit);
             }
