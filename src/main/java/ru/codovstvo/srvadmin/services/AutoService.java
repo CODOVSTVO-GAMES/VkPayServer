@@ -93,7 +93,9 @@ public class AutoService {
         for(NotificationsBuffer unit : queueUsersUnits) {
             System.out.println(unit.getUserEntity().getId());
             if (thisDate - unit.getUserEntity().getLastActivity() < 18000000l){
+                System.out.println("д1fdfsd");
                 queueUsersUnits.remove(unit);
+                System.out.println("д");
             }
         }
 
