@@ -78,10 +78,6 @@ public class AutoService {
 
         String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты", "Обновлены бонусные сундуки" };
 
-        // запросить рандомную строку
-        // проверить есть ли во внутреннем массиве
-        // положить во внутренний массив
-
         Date date = new Date();
         long thisDate = date.getTime();
 
@@ -95,15 +91,6 @@ public class AutoService {
                 queueUsersUnits.remove(queueUsersUnits.get(i));
             }
         }
-
-        // for(NotificationsBuffer unit : queueUsersUnits) {
-        //     System.out.println(unit.getUserEntity().getId());
-        //     if (thisDate - unit.getUserEntity().getLastActivity() < 18000000l){
-        //         System.out.println("д1fdfsd");
-        //         queueUsersUnits.remove(unit);
-        //         System.out.println("д");
-        //     }
-        // }
 
         System.out.println("Игроков которых небыло больше 5 часов: " + queueUsersUnits.size());
         if(queueUsersUnits.size() == 0) { return; }
