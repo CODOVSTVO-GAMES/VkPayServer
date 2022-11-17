@@ -52,7 +52,7 @@ public class AutoService {
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
-                if(user.getPlatformUserId().equals("")) { continue; }
+                if(user.getId() == 55190l) { continue; }
                 notificationBufferRepo.save(new NotificationsBuffer(user));
             }
         }
@@ -69,16 +69,18 @@ public class AutoService {
             }catch (Exception e) {
                 System.out.println("Юзеров несколько. После перезахода ошибка исчезнет. Второго юзера система удалит");
             }
-            
-
         }
     }
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 3600000) // 5 часов 18000000
+    @Scheduled(initialDelay = 10000, fixedDelay = 3600000) // 5 часов 18000000
     public void SendNotifications() throws Exception {
         System.out.println("Запущена отправка уведомлений через 5 часов бездействия");
 
         String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты", "Обновлены бонусные сундуки" };
+
+        // запросить рандомную строку
+        // проверить есть ли во внутреннем массиве
+        // положить во внутренний массив
 
         Date date = new Date();
         long thisDate = date.getTime();
@@ -94,7 +96,7 @@ public class AutoService {
             }
         }
 
-        System.out.println("Игроков которых небыло больше 5 часов минут " + queueUsersUnits.size());
+        System.out.println("Игроков которых небыло больше 5 часов: " + queueUsersUnits.size());
         if(queueUsersUnits.size() == 0) { return; }
 
         for(String notification : notifications) {
@@ -135,5 +137,4 @@ public class AutoService {
             System.out.println("Отправлено уведомление: " + entry.getKey());
         }    
     }
-    
 }
