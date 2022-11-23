@@ -21,9 +21,6 @@ public class VkController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    UserEntity userEntity;
-
     @PostMapping
     public Object VkNotification(@RequestParam String notification_type,
                                 @RequestParam Long app_id,
