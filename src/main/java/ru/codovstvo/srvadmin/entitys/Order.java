@@ -45,9 +45,10 @@ public class Order {
     private LocalTime localTime;
 
     private LocalDate date;
+    
+    private long timeFromStart;
 
-
-    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus, int priceValue) {
+    public Order(Long orderVkId, Long appId, Item item, Long userId, Long receiverId, OrderStatus orderStatus, int priceValue, long timeFromStart) {
         this.orderVkId  = orderVkId;
         this.appId = appId;
         this.item = item;
@@ -57,6 +58,8 @@ public class Order {
         this.localTime = LocalTime.now(ZoneId.of("GMT+03:00"));
         this.date = LocalDate.now(ZoneId.of("GMT+03:00"));
         this.priceValue = priceValue;
+        this.timeFromStart = timeFromStart;
+        
     }
 
     public Order() {}

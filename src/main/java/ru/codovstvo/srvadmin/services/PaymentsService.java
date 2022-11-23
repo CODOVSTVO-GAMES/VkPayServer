@@ -25,12 +25,12 @@ public class PaymentsService {
     @Autowired
     private OrderRepo orderRepo;
 
-    public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId) {
+    public Object orderInit(String itemTitle, Long appId, Long orderVkId, Long userId, Long receiverId, long timeFromStart) {
         Order order = null;
         
         try {
             Item item = itemRepo.findByTitle(itemTitle);
-            order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED, item.getPrice());
+            order = new Order(orderVkId, appId, item, userId, receiverId, OrderStatus.INITIALIZED, item.getPrice(), timeFromStart);
             orderRepo.save(order);
 
             Map response = new HashMap<>();

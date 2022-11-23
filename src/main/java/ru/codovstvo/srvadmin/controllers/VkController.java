@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.services.PaymentsService;
+import ru.codovstvo.srvadmin.services.UserService;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,6 +17,12 @@ public class VkController {
 
     @Autowired
     private PaymentsService paymentsService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserEntity userEntity;
 
     @PostMapping
     public Object VkNotification(@RequestParam String notification_type,
@@ -35,13 +43,19 @@ public class VkController {
                                 @RequestParam(name = "item_discount", required=false) Long item_discount
                                 ) {
         if (notification_type.equals("get_item_test")) {
-            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
+            String userId = user_id.toString();
+            UserEntity user = userService.createOrFindUser(userId);
+
+            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id, userService.getTimeFromStart(user));
 
         } else if(notification_type.equals("order_status_change_test")) {
             return paymentsService.OrderExecuted(order_Vk_id, vkDate);
 
         } else if (notification_type.equals("get_item")) {
-            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id);
+            String userId = user_id.toString();
+            UserEntity user = userService.createOrFindUser(userId);
+
+            return paymentsService.orderInit(item, app_id, order_Vk_id, user_id, receiver_id, userService.getTimeFromStart(user));
 
         } else if(notification_type.equals("order_status_change")) {
             return paymentsService.OrderExecuted(order_Vk_id, vkDate);

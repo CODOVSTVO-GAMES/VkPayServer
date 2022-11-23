@@ -126,7 +126,6 @@ public class StatController {
                                                                 "quest_open_13", "quest_open_12", "quest_done_12", "quest_done_11", "quest_open_11", "quest_done_10",
                                                                 "quest_open_18", "quest_open_19","quest_open_20","quest_open_21","quest_open_22","quest_open_23",
                                                                 "quest_done_18", "quest_done_19","quest_done_20","quest_done_21","quest_done_22","quest_done_23",
-                                                                "quest_done_4",
                                                                 "level_up_6", "level_up_7", "level_up_8",  "level_up_9",  "level_up_10",
                                                                 "open_map_6", "open_map_7", "open_map_8", "open_map_9", "open_map_10",
                                                                 "quest_done_6", "first-drop-apples",
