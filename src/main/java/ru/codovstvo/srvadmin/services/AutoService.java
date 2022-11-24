@@ -139,8 +139,7 @@ public class AutoService {
     }
 
     private String getRandomNotification(String[] notifications){
-
-        int rand = (int) Math.random() * notifications.length;
+        int rand = (int) (Math.random() * notifications.length);
         return notifications[rand];
     }
 }
