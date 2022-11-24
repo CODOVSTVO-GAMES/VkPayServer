@@ -5,6 +5,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vk.api.sdk.actions.Donut;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ public class AutoService {
     public void SendNotifications() throws Exception {
         System.out.println("Запущена отправка уведомлений через 5 часов бездействия");
 
-        String[] notifications = new String[] { "Энергия восстановлена", "Пора собирать фрукты", "Обновлены бонусные сундуки" };
+        String[] notifications = new String[] { "Энергия восстановлена. Впереди много дел!", "Соберем фрукты и продолжим исследовать лес!", "Обновлены бонусные сундуки, пора их собрать!", "Продолжи исследовать лес и узнавать его тайны!" };
 
         Date date = new Date();
         long thisDate = date.getTime();
@@ -95,7 +97,9 @@ public class AutoService {
         System.out.println("Игроков которых небыло больше 5 часов: " + queueUsersUnits.size());
         if(queueUsersUnits.size() == 0) { return; }
 
-        for(String notification : notifications) {
+        for(int i = 0; i < notifications.length; i++) {
+            String notification = getRandomNotification(notifications);
+        // for(String notification : notifications) {
             List<NotificationsBuffer> queueForSendNotification = new ArrayList<>();
             
             for(NotificationsBuffer unit : queueUsersUnits) {
@@ -132,5 +136,11 @@ public class AutoService {
 
             System.out.println("Отправлено уведомление: " + entry.getKey());
         }    
+    }
+
+    private String getRandomNotification(String[] notifications){
+
+        int rand = (int) Math.random() * notifications.length;
+        return notifications[rand];
     }
 }
