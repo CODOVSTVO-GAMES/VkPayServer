@@ -1,6 +1,5 @@
 package ru.codovstvo.srvadmin.controllers;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.codovstvo.srvadmin.entitys.UserEntity;
 import ru.codovstvo.srvadmin.services.CryptoService;
 import ru.codovstvo.srvadmin.services.DataService;
 import ru.codovstvo.srvadmin.services.UserService;
 
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Transactional
 @RestController
@@ -35,7 +36,7 @@ public class DataController {
     UserService userService;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
+    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody, @RequestHeader Map<String, String> headers) throws Exception {
 
         if (!cryptoService.encodeHmac256(requestBody).equals(hash)){// если хеш неверный
             System.out.println("неверный хеш дата контроллер");
@@ -53,6 +54,7 @@ public class DataController {
         dataService.saveData(user, key, data);
 
         userService.activateUser(user);
+        System.out.println(headers.get("Referer"));
 
         return new ResponseEntity(HttpStatus.OK);
     }

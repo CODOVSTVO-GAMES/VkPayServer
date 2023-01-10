@@ -141,7 +141,7 @@ public class StatController {
                                                                 "dialogue_mi_close_6",
                                                                 "spawn_fisherwoman",
                                                                 "spawn_fourth_character", 
-                                                                "learn_modal_close", "first_items_spawn", "spawn_ivan"
+                                                                "learn_modal_close", "first_items_spawn", "spawn_ivan", "spawn_blacksmith_character"
 
                                                                 ));
 
