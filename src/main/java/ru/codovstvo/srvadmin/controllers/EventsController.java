@@ -80,7 +80,7 @@ public class EventsController {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session; //"&platform=vk"
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
         }
         else if(type.equals("ordinary")){
             parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;

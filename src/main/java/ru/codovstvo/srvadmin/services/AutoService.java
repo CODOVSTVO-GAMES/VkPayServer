@@ -55,6 +55,7 @@ public class AutoService {
             {
                 userService.deactivateUser(user);
                 if(user.getId() == 55190l) { continue; }
+                if(user.getPlatform().equals("OK") || user.getPlatform().equals("ok")) { continue; }
                 notificationBufferRepo.save(new NotificationsBuffer(user));
             }
         }
