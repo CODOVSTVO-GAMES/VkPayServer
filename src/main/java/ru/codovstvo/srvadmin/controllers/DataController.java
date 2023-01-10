@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +35,7 @@ public class DataController {
     UserService userService;
     
     @PostMapping("set")
-    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody, @RequestHeader Map<String, String> headers) throws Exception {
+    public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
 
         if (!cryptoService.encodeHmac256(requestBody).equals(hash)){// если хеш неверный
             System.out.println("неверный хеш дата контроллер");
@@ -54,7 +53,6 @@ public class DataController {
         dataService.saveData(user, key, data);
 
         userService.activateUser(user);
-        System.out.println(headers.get("Referer"));
 
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -99,14 +99,11 @@ public class EventsController {
             user.updateDeviseType(deviceType);
             user.setFirstPlatform(platform);
 
-            // userService.forceCloseSessionIfUserActive(user);
             userService.activateUser(user);
 
-            if(user.getSessionCounter() == 1){
-                if(user.getReferer().equals("no_referrer")){
-                    user.setReferer(referrer);
-                    userEntityRepo.save(user);
-                }
+            if(user.getReferer().equals("no_referrer")){
+                user.setReferer(referrer);
+                userEntityRepo.save(user);
             }
         }
 
