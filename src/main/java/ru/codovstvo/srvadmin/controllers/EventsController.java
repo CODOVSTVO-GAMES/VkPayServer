@@ -80,10 +80,10 @@ public class EventsController {
         String parameters = new String();
 
         if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session; //"&platform=vk"
         }
         else if(type.equals("ordinary")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=vk" + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
+            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
         }
 
         if (!cryptoService.encodeHmac256(parameters).equals(hash)){ // если хеш неверный
