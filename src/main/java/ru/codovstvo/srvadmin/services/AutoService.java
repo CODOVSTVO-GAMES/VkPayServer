@@ -54,8 +54,7 @@ public class AutoService {
             if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
-                if(user.getId() == 55190l) { continue; }
-                if(user.getPlatform().equals("OK") || user.getPlatform().equals("ok")) { continue; }
+                if(user.getPlatform().equals("ok")) { continue; }
                 notificationBufferRepo.save(new NotificationsBuffer(user));
             }
         }
