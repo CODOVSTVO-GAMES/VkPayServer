@@ -96,6 +96,7 @@ public class AutoService {
 
         System.out.println("Игроков которых небыло больше 5 часов: " + queueUsersUnits.size());
         if(queueUsersUnits.size() == 0) { return; }
+        int maxNumberUsers = 0;
 
         for(int i = 0; i < notifications.length; i++) {
             String notification = getRandomNotification(notifications);
@@ -117,6 +118,8 @@ public class AutoService {
             }
 
             queueMap.put(notification, queueForSendNotification);
+            maxNumberUsers += 1;
+            if (maxNumberUsers >= 199) { break; }
         }
 
         for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMap.entrySet()) {
