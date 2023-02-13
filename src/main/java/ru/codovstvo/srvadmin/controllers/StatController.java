@@ -143,7 +143,7 @@ public class StatController {
                                                                 "spawn_fourth_character", 
                                                                 "learn_modal_close", "first_items_spawn", "spawn_ivan", "spawn_blacksmith_character",
 
-                                                                "dialogue_mi_close_0","dialogue_mi_close_1","dialogue_mi_close_2","dialogue_mi_close_3","dialogue_mi_close_4","dialogue_mi_close_5","dialogue_mi_close_6","dialogue_mi_close_7","dialogue_mi_close_8","dialogue_mi_close_9","dialogue_mi_close_10","dialogue_mi_close_11"
+                                                                "dialogue_mci_close_0","dialogue_mci_close_1","dialogue_mci_close_2","dialogue_mci_close_3","dialogue_mci_close_4","dialogue_mci_close_5","dialogue_mci_close_6","dialogue_mci_close_7","dialogue_mci_close_8","dialogue_mci_close_9","dialogue_mci_close_10","dialogue_mci_close_11"
                                                                 
 
                                                                 ));
