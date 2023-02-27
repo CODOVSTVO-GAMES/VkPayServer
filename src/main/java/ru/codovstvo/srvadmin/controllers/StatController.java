@@ -33,7 +33,7 @@ import ru.codovstvo.srvadmin.services.UserService;
 public class StatController {
 
     @Autowired
-    private EventRepo eventRepo;
+    EventRepo eventRepo;
 
     @Autowired
     UserService userService;
