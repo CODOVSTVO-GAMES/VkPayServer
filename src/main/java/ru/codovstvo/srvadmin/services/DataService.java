@@ -49,7 +49,7 @@ public class DataService {
                 }
             }
         } 
-        System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
+        // System.out.println("сохранения нет id:" + user.getPlatformUserId() + " | key : "  + key);
         UserData data = new UserData(user, key, value);
         userDataRepo.save(data);
 
@@ -70,7 +70,7 @@ public class DataService {
     public void deleteUserData(UserEntity user){
         userDataRepo.deleteAllByUserEntity(user);
 
-        System.out.println("Данные удалены id: " + user.getPlatformUserId());
+        // System.out.println("Данные удалены id: " + user.getPlatformUserId());
     }
 
 }

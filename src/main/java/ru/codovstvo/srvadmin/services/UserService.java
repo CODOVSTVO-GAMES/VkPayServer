@@ -82,7 +82,6 @@ public class UserService {
         }
         user.setActive(false);
         userEntityRepo.save(user);
-        System.out.println("Сессия завершена id: " + user.getPlatformUserId());
     }
 
     private Sessions1 createNewSession(UserEntity user){
@@ -92,7 +91,6 @@ public class UserService {
         Sessions1 session = new Sessions1(user, user.getSessionCounter());
         sessionsRepo.save(session);
         userEntityRepo.save(user);
-        System.out.println("Создана новая сессия " + user.getPlatformUserId() +" " + user.getSessionCounter());
         return session;
     }
 
