@@ -90,6 +90,7 @@ public class AutoService {
         okService.sendNotification("hwllo", 589505462218l);
     }
 
+
     @Scheduled(initialDelay = 10000l, fixedDelay = 600000) // 5 часов 18000000
     public void SendNotifications() throws Exception {
         System.out.println("Запущена отправка уведомлений через 5 часов бездействия");
@@ -115,7 +116,7 @@ public class AutoService {
 
         //написать метод отправки в одноклы
 
-
+        System.out.println("отправить вк");
         for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMapVK.entrySet()) {
             System.out.println("Долетело " + entry.getValue().size());
             
@@ -124,8 +125,20 @@ public class AutoService {
             secureVkApiService.sendNotification(ids, entry.getKey());
 
             System.out.println("Отправлено уведомление: " + entry.getKey());
-        }    
+        }  
+        
+        System.out.println("отправить ок");
+        for (Map.Entry<String, List<NotificationsBuffer>> entry : queueMapOK.entrySet()) {
+            System.out.println("Долетело " + entry.getValue().size());
+            
+            String[] ids = parseId(entry.getValue(), entry.getKey());
 
+            for(String userId : ids){
+                okService.sendNotification(entry.getKey(), userId);
+            }
+
+            System.out.println("Отправлено уведомление: " + entry.getKey());
+        }  
 
     }
     
@@ -169,7 +182,7 @@ public class AutoService {
         List<NotificationsBuffer> NBByPlatform = new ArrayList<>();
         for (NotificationsBuffer not : allQueueNotificationUsers){
             UserEntity user = not.getUserEntity();
-            if (user.getPlatform() == platform){
+            if (user.getPlatform().equals(platform)){
                 NBByPlatform.add(not);
             }
         }
