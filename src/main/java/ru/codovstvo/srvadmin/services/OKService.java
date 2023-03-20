@@ -19,28 +19,31 @@ public class OKService {
     CryptoService cryptoService;
 
     private final String OKDOMEN = "https://api.ok.ru/fb.do?";
+
+    public void sendNotification(String textNotification, Long userId){
+        sendNotification(textNotification, userId.toString());
+    }
+
+    public void sendNotification(String textNotification, Integer userId){
+        sendNotification(textNotification, userId.toString());
+    }
     
-    public void sendNotification(){
+    public void sendNotification(String textNotification, String userId){
         String staticParams = "application_key=CLBMKLKGDIHBABABA&format=json&mark=simpl&method=notifications.sendSimple";
-        String userId = "&uid=580946266481";
-        String textNotification = "&text=HelloWorld";
+        String user = "&uid=" + userId;
+        String text = "&text=" + textNotification;
         String secret = "FF11CBFD2AB27E5ABD7BC18D";
         String sig = "";
 
-        String sigBuilder = (staticParams + textNotification + userId + secret).replace("&", "").replace("?", "");
+        String sigBuilder = (staticParams + text + user + secret).replace("&", "").replace("?", "");
         try{
             sig = "&sig=" + cryptoService.getMd5Hash(sigBuilder);
         }catch (NoSuchAlgorithmException e){
-            System.out.println("Бобик сдох");
+            System.out.println("ошибка NoSuchAlgorithmException");
         }
         
-        
-        System.out.println(sig);
-
-        System.out.println(OKDOMEN + staticParams + textNotification + userId + sig);
-        
         try{
-            URL url = new URL(OKDOMEN + staticParams + textNotification + userId + sig);
+            URL url = new URL(OKDOMEN + staticParams + text + user + sig);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
