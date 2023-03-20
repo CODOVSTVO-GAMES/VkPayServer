@@ -1,38 +1,38 @@
-package ru.codovstvo.srvadmin.entitys;
+// package ru.codovstvo.srvadmin.entitys;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
 
-import org.springframework.lang.Nullable;
+// import org.springframework.lang.Nullable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+// import javax.persistence.GeneratedValue;
+// import javax.persistence.GenerationType;
 
-import lombok.Data;
+// import lombok.Data;
 
-@Data
-@Entity
-public class Item {
+// @Data
+// @Entity
+// public class Item {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long itemId;
+//     @Id
+//     @GeneratedValue(strategy=GenerationType.AUTO)
+//     private long itemId;
 
-    @Nullable
-    private String title;
+//     @Nullable
+//     private String title;
 
-    @Nullable
-    private String photoUrl;
+//     @Nullable
+//     private String photoUrl;
 
-    @Nullable
-    private int price;
+//     @Nullable
+//     private int price;
 
-    @Nullable
-    private int discount;
+//     @Nullable
+//     private int discount;
 
-    @Nullable
-    private int appId;
+//     @Nullable
+//     private int appId;
     
-    public Item() {}
+//     public Item() {}
 
-}
+// }
