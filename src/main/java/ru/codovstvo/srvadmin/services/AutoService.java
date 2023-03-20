@@ -133,8 +133,13 @@ public class AutoService {
             
             String[] ids = parseId(entry.getValue(), entry.getKey());
 
-            for(String userId : ids){
+            if (ids.length != 0){
+                            for(String userId : ids){
                 okService.sendNotification(entry.getKey(), userId);
+                }
+            }
+            else{
+                System.out.println("Список пустой");
             }
 
             System.out.println("Отправлено уведомление: " + entry.getKey());
