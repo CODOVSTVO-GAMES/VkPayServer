@@ -27,8 +27,9 @@ public class OKService {
         String secret = "FF11CBFD2AB27E5ABD7BC18D";
         String sig = "";
 
-        String sigBuilder = staticParams + textNotification + userId + secret;
+        String sigBuilder = (staticParams + textNotification + userId + secret).replace("&", "").replace("?", "");
         try{
+            System.out.println(cryptoService.getMd5Hash(sigBuilder));
             sig = "&sig=" + cryptoService.getMd5Hash(sigBuilder);
         }catch (NoSuchAlgorithmException e){
             System.out.println("Бобик сдох");

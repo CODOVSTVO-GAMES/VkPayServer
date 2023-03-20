@@ -28,6 +28,6 @@ public class CryptoService {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(inputString.getBytes());
         byte[] digest = md.digest();
-        return DatatypeConverter.printHexBinary(digest).toUpperCase();
+        return DatatypeConverter.printHexBinary(digest).toLowerCase();
     }
 }
