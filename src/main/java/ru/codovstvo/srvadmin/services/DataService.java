@@ -44,7 +44,7 @@ public class DataService {
                 if (data.getTitle().equals(key)){
                     data.setData(value);
                     userDataRepo.save(data);
-                    System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
+                    // System.out.println("сохранение обновлено id: " + user.getPlatformUserId() + " | key : "  + key);
                     return;
                 }
             }
