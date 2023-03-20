@@ -87,7 +87,7 @@ public class AutoService {
 
     @Scheduled(initialDelay = 500, fixedDelay = 6000000)// не тестировал сборку 03.03.2023
     public void Test(){
-        okService.sendNotification("Адай араба", 580946266481l);
+        okService.sendNotification("Адай араба", "589505462218");
     }
 
     @Scheduled(initialDelay = 10000l, fixedDelay = 600000) // 5 часов 18000000
