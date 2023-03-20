@@ -44,14 +44,16 @@ public class OKService {
             System.out.println("ошибка NoSuchAlgorithmException");
         }
         
+        
         try{
             URL url = new URL(OKDOMEN + staticParams + text + user + sig);
+            System.out.println(url.toString());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-            wr.writeUTF("");
+            // wr.writeUTF("");
             wr.close();
 
             int resCode = connection.getResponseCode();

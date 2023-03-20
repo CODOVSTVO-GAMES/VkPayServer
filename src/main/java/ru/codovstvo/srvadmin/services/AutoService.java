@@ -63,7 +63,7 @@ public class AutoService {
         long thisDate = date.getTime();
 
         for(UserEntity user : list){
-            if (thisDate - user.getLastActivity() > 60000l) //больше 1 минуты назад 60000
+            if (thisDate - user.getLastActivity() > 120000l) //больше 1 минуты назад 60000
             {
                 userService.deactivateUser(user);
                 if(user.getPlatform() == null || user.getPlatform().equals("yandex")) { continue; }
