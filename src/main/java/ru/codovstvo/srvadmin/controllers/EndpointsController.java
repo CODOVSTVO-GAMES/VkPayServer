@@ -20,34 +20,34 @@ import org.springframework.transaction.annotation.Transactional;
 @RequestMapping(value = "back/data")
 public class EndpointsController {
 
-    @Autowired
-    UserEntityRepo userEntityRepo;
+    // @Autowired
+    // UserEntityRepo userEntityRepo;
 
-    @Autowired
-    SessionsRepo sessionsRepo;
+    // @Autowired
+    // SessionsRepo sessionsRepo;
     
-    @Autowired
-    EventRepo eventRepo;
+    // @Autowired
+    // EventRepo eventRepo;
 
-    @Autowired
-    VersionRepo versionRepo;
+    // @Autowired
+    // VersionRepo versionRepo;
     
-    @GetMapping(value="/allusers")
-    public Iterable<UserEntity> getUsers() {
-        Iterable<UserEntity> users = userEntityRepo.findAll();
-        return users;
-    }
+    // @GetMapping(value="/allusers")
+    // public Iterable<UserEntity> getUsers() {
+    //     Iterable<UserEntity> users = userEntityRepo.findAll();
+    //     return users;
+    // }
 
-    @GetMapping(value="/allevents")
-    public Iterable<EventEntity> getEvents() {
-        Iterable<EventEntity> events = eventRepo.findAll();
-        return events;
-    }
+    // @GetMapping(value="/allevents")
+    // public Iterable<EventEntity> getEvents() {
+    //     Iterable<EventEntity> events = eventRepo.findAll();
+    //     return events;
+    // }
 
-    @GetMapping(value="/allversions")
-    public Iterable<Version> getVersions() {
-        Iterable<Version> versions = versionRepo.findAll();
-        return versions;
-    }
+    // @GetMapping(value="/allversions")
+    // public Iterable<Version> getVersions() {
+    //     Iterable<Version> versions = versionRepo.findAll();
+    //     return versions;
+    // }
     
 }

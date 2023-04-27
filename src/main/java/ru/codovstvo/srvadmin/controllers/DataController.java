@@ -52,7 +52,7 @@ public class DataController {
 
         dataService.saveData(user, key, data);
 
-        userService.activateUser(user);
+        // userService.activateUser(user);
 
         return new ResponseEntity(HttpStatus.OK);
     }

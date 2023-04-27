@@ -18,7 +18,7 @@ import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.CryptoService;
 import ru.codovstvo.srvadmin.services.EventService;
-import ru.codovstvo.srvadmin.services.SecureVkApiService;
+// import ru.codovstvo.srvadmin.services.SecureVkApiService;
 import ru.codovstvo.srvadmin.services.UserService;
 import ru.codovstvo.srvadmin.services.VersionService;
 
@@ -45,8 +45,8 @@ public class EventsController {
     @Autowired
     CryptoService cryptoService;
 
-    @Autowired
-    SecureVkApiService secureVkApiService;
+    // @Autowired
+    // SecureVkApiService secureVkApiService;
 
     @Autowired
     UserEntityRepo userEntityRepo;
@@ -99,7 +99,7 @@ public class EventsController {
             user.updateDeviseType(deviceType);
             user.setFirstPlatform(platform);
 
-            userService.activateUser(user);
+            // userService.activateUser(user);
 
             if(user.getReferer().equals("no_referrer")){
                 user.setReferer(referrer);
@@ -108,8 +108,8 @@ public class EventsController {
         }
 
         eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, 
-                                                userService.getLastOrCreateSession(user), 
-                                                userService.getTimeFromStart(user)));
+                                                null, 
+                                                12345l));
 
         for (int i = 0; i < rewardEventAds.length; i++) {
             if(rewardEventAds[i].equals(event)){
@@ -119,24 +119,24 @@ public class EventsController {
             }
         }
 
-        //переработать
-        try{
-            if (event.contains("level_up")) {
-                String level = event.replace("level_up_", "");
-                secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
-            }
-            else if (event.contains("quest_done_4")) {
-                secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
-            }
-            else if (event.contains("spawn_fisherwoman")) {
-                secureVkApiService.sendProgressMission(4, userId); // познакомиться с Сашей Рыбачкой
-            }
-            else if (event.contains("quest_done_15")) {
-                secureVkApiService.sendProgressMission(4, userId); // заколдовал сундук
-            }
+        // //переработать
+        // try{
+        //     if (event.contains("level_up")) {
+        //         String level = event.replace("level_up_", "");
+        //         secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
+        //     }
+        //     else if (event.contains("quest_done_4")) {
+        //         secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
+        //     }
+        //     else if (event.contains("spawn_fisherwoman")) {
+        //         secureVkApiService.sendProgressMission(4, userId); // познакомиться с Сашей Рыбачкой
+        //     }
+        //     else if (event.contains("quest_done_15")) {
+        //         secureVkApiService.sendProgressMission(4, userId); // заколдовал сундук
+        //     }
 
-        }catch(Exception e){System.out.println("Ошибка отправки сообщения вк");}
-        //переработать
+        // }catch(Exception e){System.out.println("Ошибка отправки сообщения вк");}
+        // //переработать
 
         return new ResponseEntity(HttpStatus.OK);
     }

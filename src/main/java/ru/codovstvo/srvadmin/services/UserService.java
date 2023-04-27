@@ -62,72 +62,72 @@ public class UserService {
         return users.iterator().next();
     }
 
-    public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
-        getLastOrCreateSession(user);
-        user.setActive(true);
-        user.setLastActivityInThisTime();
-        userEntityRepo.save(user);
-        notificationBufferRepo.deleteAllByUserEntity(user);
-    }
+    // public void activateUser(UserEntity user){ //создаст или обновит сессию, пропишею юзеру последнюю активность и активирует его
+    //     getLastOrCreateSession(user);
+    //     user.setActive(true);
+    //     user.setLastActivityInThisTime();
+    //     userEntityRepo.save(user);
+    //     notificationBufferRepo.deleteAllByUserEntity(user);
+    // }
 
-    public void deactivateUser(UserEntity user){
-        Set<Sessions1> sessions = sessionsRepo.findAllByUserEntity(user);
+    // public void deactivateUser(UserEntity user){
+    //     Set<Sessions1> sessions = sessionsRepo.findAllByUserEntity(user);
 
-        for (Sessions1 session : sessions){
-            if(!session.getIsEnd()){
-                session.endSession(user.getLastActivity());
-                sessionsRepo.save(session);
-                user.updatePlayTime(session.getSessionLeght());
-            }
-        }
-        user.setActive(false);
-        userEntityRepo.save(user);
-    }
+    //     for (Sessions1 session : sessions){
+    //         if(!session.getIsEnd()){
+    //             session.endSession(user.getLastActivity());
+    //             sessionsRepo.save(session);
+    //             user.updatePlayTime(session.getSessionLeght());
+    //         }
+    //     }
+    //     user.setActive(false);
+    //     userEntityRepo.save(user);
+    // }
 
-    private Sessions1 createNewSession(UserEntity user){
-        user.addSessionCount();
-        user.setLastActivityInThisTime();
-        user.setActive(true);
-        Sessions1 session = new Sessions1(user, user.getSessionCounter());
-        sessionsRepo.save(session);
-        userEntityRepo.save(user);
-        return session;
-    }
+    // private Sessions1 createNewSession(UserEntity user){
+    //     user.addSessionCount();
+    //     user.setLastActivityInThisTime();
+    //     user.setActive(true);
+    //     Sessions1 session = new Sessions1(user, user.getSessionCounter());
+    //     sessionsRepo.save(session);
+    //     userEntityRepo.save(user);
+    //     return session;
+    // }
 
-    public Sessions1 getLastOrCreateSession(UserEntity user){
-        if (user.getActive()){ //найдет последнюю активную сессию и закроет остальные
-            Set<Sessions1> userSession = sessionsRepo.findAllByUserEntity(user);
-            Sessions1 session = null;
+    // public Sessions1 getLastOrCreateSession(UserEntity user){
+    //     if (user.getActive()){ //найдет последнюю активную сессию и закроет остальные
+    //         Set<Sessions1> userSession = sessionsRepo.findAllByUserEntity(user);
+    //         Sessions1 session = null;
             
-            for (Sessions1 s : userSession){
-                if(!s.getIsEnd()){
-                    if(session == null || s.getNumberSession() > session.getNumberSession()){ 
-                        session = s;
-                    }
-                }
-            }
+    //         for (Sessions1 s : userSession){
+    //             if(!s.getIsEnd()){
+    //                 if(session == null || s.getNumberSession() > session.getNumberSession()){ 
+    //                     session = s;
+    //                 }
+    //             }
+    //         }
 
-            if (session == null){
-                return createNewSession(user);
-            }
+    //         if (session == null){
+    //             return createNewSession(user);
+    //         }
 
-            for(Sessions1 s : userSession){
-                if(!s.getIsEnd()){
-                    if(s != session){
-                        s.forseEnd(user.getLastActivity());
-                        sessionsRepo.save(s);
-                    }
-                }
-            }
-            return session;
-        }
-        else{
-            return createNewSession(user);
-        }
-    }
+    //         for(Sessions1 s : userSession){
+    //             if(!s.getIsEnd()){
+    //                 if(s != session){
+    //                     s.forseEnd(user.getLastActivity());
+    //                     sessionsRepo.save(s);
+    //                 }
+    //             }
+    //         }
+    //         return session;
+    //     }
+    //     else{
+    //         return createNewSession(user);
+    //     }
+    // }
 
-    public long getTimeFromStart(UserEntity user){
-        Sessions1 session = getLastOrCreateSession(user);
-        return user.getPlayTime() + session.getTimeFromStartSession();
-    }
+    // public long getTimeFromStart(UserEntity user){
+    //     Sessions1 session = getLastOrCreateSession(user);
+    //     return user.getPlayTime() + session.getTimeFromStartSession();
+    // }
 }
