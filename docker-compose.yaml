@@ -10,29 +10,29 @@ services:
       - psqldb
     networks:
       - back
-  psqldb:
-    image: postgres:13
-    restart: always
-    volumes:
-      - ./db_data:/var/lib/postgresql
-    environment: 
-      POSTGRES_PASSWORD: example
-      POSTGRES_USER: keshox
-      POSTGRES_DB: spring
-    networks:
-      - back
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    logging:
-      driver: none
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.codovstvo
-      PGADMIN_DEFAULT_PASSWORD: egor
-    ports:
-      - "8013:80"
-    networks:
-      - back
+  # psqldb:
+  #   image: postgres:13
+  #   restart: always
+  #   volumes:
+  #     - ./db_data:/var/lib/postgresql
+  #   environment: 
+  #     POSTGRES_PASSWORD: example
+  #     POSTGRES_USER: keshox
+  #     POSTGRES_DB: spring
+  #   networks:
+  #     - back
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   restart: always
+  #   logging:
+  #     driver: none
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.codovstvo
+  #     PGADMIN_DEFAULT_PASSWORD: egor
+  #   ports:
+  #     - "8013:80"
+  #   networks:
+  #     - back
 
 networks:
   back:
