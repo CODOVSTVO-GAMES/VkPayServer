@@ -1,5 +1,8 @@
 package ru.codovstvo.srvadmin.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,6 @@ import ru.codovstvo.srvadmin.services.CryptoService;
 import ru.codovstvo.srvadmin.services.DataService;
 import ru.codovstvo.srvadmin.services.UserService;
 
-
-
 @Transactional
 @RestController
 @RequestMapping(value = "back/data")
@@ -30,23 +31,28 @@ public class DataController {
 
     @Autowired
     CryptoService cryptoService;
-    
+
     @Autowired
     UserService userService;
-    
+
     @PostMapping("set")
     public ResponseEntity setData(@RequestParam String hash, @RequestBody String requestBody) throws Exception {
 
-        if (!cryptoService.encodeHmac256(requestBody).equals(hash)){// если хеш неверный
+        if (!cryptoService.encodeHmac256(requestBody).equals(hash)) {// если хеш неверный
             System.out.println("неверный хеш дата контроллер");
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-            
-        Map<String, String> parameters =  dataService.requestBodyParser(requestBody);
-        
+
+        Map<String, String> parameters = dataService.requestBodyParser(requestBody);
+
         String userId = parameters.get("userId");
         String key = parameters.get("key");
         String data = parameters.get("value");
+        String platform = parameters.get("platform");
+
+        if (!isAllowPlatform(platform)) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
 
         UserEntity user = userService.createOrFindUser(userId);
 
@@ -57,23 +63,34 @@ public class DataController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    private boolean isAllowPlatform(String platform) {
+    List<String> allowPlatforms = Arrays.asList(
+        "unity", "none", "yandex", "vkGames", "crazyGames",
+        "gameDisribution", "gameMonetize", "ok", "smartMarket",
+        "gamePix", "poki", "vkPlay", "wgPlayground", "kongregate",
+        "playDeck", "custom", "beeline"
+    );
+
+        return allowPlatforms.contains(platform);
+    }
+
     @PostMapping("dellall")
     public void deleteData(@RequestBody String requestBody) throws Exception {
 
-        Map<String, String> parameters =  dataService.requestBodyParser(requestBody);
+        Map<String, String> parameters = dataService.requestBodyParser(requestBody);
 
         String hash = parameters.get("hash");
 
-        if (cryptoService.encodeHmac256(parameters.get("userId")).equals(hash)){
+        if (cryptoService.encodeHmac256(parameters.get("userId")).equals(hash)) {
             UserEntity user = userService.createOrFindUser(parameters.get("userId"));
             dataService.deleteUserData(user);
         }
     }
 
     @GetMapping("get")
-    public String getData(@RequestParam String userId, @RequestParam String key){
+    public String getData(@RequestParam String userId, @RequestParam String key) {
         UserEntity user = userService.findOrNullUser(userId);
-        if (user == null){
+        if (user == null) {
             return new String();
         }
         return dataService.GetDataByUserAndKey(user, key);
