@@ -64,12 +64,20 @@ public class DataController {
     }
 
     private boolean isAllowPlatform(String platform) {
-    List<String> allowPlatforms = Arrays.asList(
-        "unity", "none", "yandex", "vkGames", "crazyGames",
-        "gameDisribution", "gameMonetize", "ok", "smartMarket",
-        "gamePix", "poki", "vkPlay", "wgPlayground", "kongregate",
-        "playDeck", "custom", "beeline"
-    );
+        List<String> allowPlatforms = Arrays.asList(
+                "none",
+                "yandex",
+                "vkGames",
+                "crazyGames",
+                "gameDisribution",
+                "ok",
+                "vkPlay",
+                "playDeck",
+                "custom",
+                "beeline",
+                "telegram",
+                "partner"
+                );
 
         return allowPlatforms.contains(platform);
     }
