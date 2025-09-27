@@ -8,9 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
+@Getter()
+@Setter()
 public class UserData {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

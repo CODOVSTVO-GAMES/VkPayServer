@@ -3,17 +3,20 @@ package ru.codovstvo.srvadmin.controllers;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.codovstvo.srvadmin.entitys.EventEntity;
-import ru.codovstvo.srvadmin.entitys.UserEntity;
-import ru.codovstvo.srvadmin.entitys.Version;
+import org.springframework.web.client.HttpClientErrorException;
+import ru.codovstvo.srvadmin.dto.GamerDTO;
+import ru.codovstvo.srvadmin.entitys.*;
 import ru.codovstvo.srvadmin.repo.SessionsRepo;
 import ru.codovstvo.srvadmin.repo.UserEntityRepo;
 import ru.codovstvo.srvadmin.services.CryptoService;
@@ -27,118 +30,42 @@ import ru.codovstvo.srvadmin.services.VersionService;
 @RequestMapping(value = "back/events")
 public class EventsController {
 
-    String[] eventsAds = {"ads_merge_item", "shopCrystal_open_ads_1-3", "shopEnergy_open_ads_5", 
-                            "shopFruit_x2", "shopResources_x2", "shopWorker_open_worker"};
-
-    String[] rewardEventAds = {"shopEnergy_reward_ads_5", "shopEnergy_reward_ads_30", "ads_merge_item", 
-                                "shopCrystal_reward_1", "shopFruit_x2_reward", "shopResources_x2_reward", 
-                                "shopWorker_reward_worker",
-                            
-                                "shopCrystal_1-3_r_reward", "shopCrystal_1-3_ads_reward",
-                                "shopEnergy_5_r_reward", "shopEnergy_5_ads_reward",
-                                "shop_worker_r_reward", "shop_worker_ads_reward",
-                                "television_r_reward", "television_ads_reward",
-                                "merge_item_r_reward", "merge_item_ads_reward",
-                                "shopEnergy_30_r_reward", "shopEnergy_30_ads_reward",
-                                "shopCrystal_reward_1-3"};
-
     @Autowired
     CryptoService cryptoService;
-
-    // @Autowired
-    // SecureVkApiService secureVkApiService;
-
-    @Autowired
-    UserEntityRepo userEntityRepo;
-
-    @Autowired
-    SessionsRepo sessionsRepo;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    VersionService versionService;
 
     @Autowired
     EventService eventService;
 
-    @PostMapping
-    public ResponseEntity newEvent(@RequestParam String hash,
-                                    @RequestParam String type,
-                                    @RequestParam String userId,
-                                    @RequestParam String version,
-                                    @RequestParam String platform,
-                                    @RequestParam String deviceType,
-                                    @RequestParam String event,
-                                    @RequestParam(name = "lang", required=false, defaultValue="") String lang,
-                                    @RequestParam(name = "referrer", required=false, defaultValue="") String referrer,
-                                    @RequestParam(name = "loadtime", required=false, defaultValue="") String loadTime,
-                                    @RequestParam(name = "session", required=false, defaultValue="") int session,
-                                    @RequestParam Map<String, String> allParams
-                                ) throws Exception {
-        String parameters = new String();
-
-        if(type.equals("start")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&referrer=" + referrer + "&lang=" + lang + "&loadtime=" + loadTime + "&type=start" + "&session=" + session;
-        }
-        else if(type.equals("ordinary")){
-            parameters = "&userId=" + userId + "&version=" + version + "&platform=" + platform + "&deviceType=" + deviceType + "&event=" + event + "&type=ordinary" + "&session=" + session;
+    @GetMapping("plase")
+    public PlaceEntity getPlace(@RequestParam("hash") String hash, @RequestParam long userId) throws Exception {
+        if (!CryptoService.encodeHmac256(String.valueOf(userId)).equals(hash)) {// если хеш неверный
+            throw new RuntimeException("неверный хеш дата контроллер");
         }
 
-        if (!cryptoService.encodeHmac256(parameters).equals(hash)){ // если хеш неверный
-            System.out.println("неверный хеш евент контроллер");
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        //получаем всех пользаков в комнате
+        //сортируем как хотим
+        //отдаем
+        return new PlaceEntity();
+    }
+
+    @PostMapping("gamer")
+    public ResponseEntity setGamerInfo(@RequestParam("hash") String hash, @RequestBody GamerDTO gamer) throws Exception {
+        if (!CryptoService.encodeHmac256(gamer.toString()).equals(hash)) {// если хеш неверный
+            throw new RuntimeException("неверный хеш дата контроллер");
         }
 
-        Version vestionInstanse = versionService.createOrFindVersion(version, platform);
-
-        UserEntity user = userService.createOrFindUser(userId);
-
-        if (type.equals("start")){
-            user.updateDeviseType(deviceType);
-            user.setFirstPlatform(platform);
-
-            // userService.activateUser(user);
-
-            if(user.getReferer().equals("no_referrer")){
-                user.setReferer(referrer);
-                userEntityRepo.save(user);
-            }
-        }
-
-        eventService.newEvent(new EventEntity(user, vestionInstanse, platform, deviceType, event, lang, referrer, loadTime, 
-                                                null, 
-                                                12345l));
-
-        for (int i = 0; i < rewardEventAds.length; i++) {
-            if(rewardEventAds[i].equals(event)){
-                user.addAdsCount();
-                userEntityRepo.save(user);
-                break;
-            }
-        }
-
-        // //переработать
-        // try{
-        //     if (event.contains("level_up")) {
-        //         String level = event.replace("level_up_", "");
-        //         secureVkApiService.sendLevelUpEvent(Integer.parseInt(level), userId);
-        //     }
-        //     else if (event.contains("quest_done_4")) {
-        //         secureVkApiService.sendProgressMission(3, userId); // познакомиться с Иваном Царевичем
-        //     }
-        //     else if (event.contains("spawn_fisherwoman")) {
-        //         secureVkApiService.sendProgressMission(4, userId); // познакомиться с Сашей Рыбачкой
-        //     }
-        //     else if (event.contains("quest_done_15")) {
-        //         secureVkApiService.sendProgressMission(4, userId); // заколдовал сундук
-        //     }
-
-        // }catch(Exception e){System.out.println("Ошибка отправки сообщения вк");}
-        // //переработать
-
+        //сохраняем инфу о пользаке
+        eventService.saveGamer(gamer);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("gamer")
+    public GamerEntity getGamerInfo(@RequestParam("hash") String hash, @RequestParam long userId) throws Exception {
+        if (!CryptoService.encodeHmac256(String.valueOf(userId)).equals(hash)) {// если хеш неверный
+            throw new RuntimeException("неверный хеш дата контроллер");
+        }
+        //сохраняем инфу о пользаке
+        return eventService.getGamer(userId);
     }
 
 }
