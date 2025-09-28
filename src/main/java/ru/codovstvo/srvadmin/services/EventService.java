@@ -33,14 +33,12 @@ public class EventService {
         gamerRepo.save(gamer);
     }
 
-    @Scheduled
     public void generatePlace() {
         // получаем всех пользаков
         // сортируем в нужном порядке
         // сохраняем комнату
     }
     
-    @Scheduled
     public void deletePlaces() {
 
     }
