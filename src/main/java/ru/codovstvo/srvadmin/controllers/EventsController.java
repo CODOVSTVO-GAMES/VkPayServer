@@ -28,6 +28,11 @@ import ru.codovstvo.srvadmin.services.VersionService;
 @Transactional
 @RestController
 @RequestMapping(value = "back/events")
+@CrossOrigin(origins = {
+    "https://s3.gamepush.com",
+    "https://gamepush.com",
+    "http://localhost:*"
+})
 public class EventsController {
 
     @Autowired
@@ -60,21 +65,34 @@ public class EventsController {
     }
 
     @GetMapping("gamer")
-    public ResponseEntity<?> getGamerInfo(@RequestParam("hash") String hash, @RequestParam long userId) throws Exception {
+    public ResponseEntity<?> getGamerInfo(@RequestParam("hash") String hash, @RequestParam long userId) {
         try {
-            if (!CryptoService.encodeHmac256(String.valueOf(userId)).equals(hash)) {
+            System.out.println("GET /gamer request received - userId: " + userId + ", hash: " + hash);
+            
+            // Проверка хеша
+            String expectedHash = CryptoService.encodeHmac256(String.valueOf(userId));
+            System.out.println("Expected hash: " + expectedHash + ", received hash: " + hash);
+            
+            if (!expectedHash.equals(hash)) {
+                System.out.println("Hash mismatch!");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный хеш");
             }
             
+            // Получение данных
             GamerEntity gamer = eventService.getGamer(userId);
+            System.out.println("Gamer found: " + (gamer != null));
+            
             if (gamer == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Игрок не найден");
             }
             
             return ResponseEntity.ok(gamer);
+            
         } catch (Exception e) {
-            e.printStackTrace(); // Добавьте логирование
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутренняя ошибка сервера");
+            System.err.println("Error in GET /gamer: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Внутренняя ошибка сервера: " + e.getMessage());
         }
     }
 
