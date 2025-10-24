@@ -60,12 +60,22 @@ public class EventsController {
     }
 
     @GetMapping("gamer")
-    public GamerEntity getGamerInfo(@RequestParam("hash") String hash, @RequestParam long userId) throws Exception {
-        if (!CryptoService.encodeHmac256(String.valueOf(userId)).equals(hash)) {// если хеш неверный
-            throw new RuntimeException("неверный хеш дата контроллер");
+    public ResponseEntity<?> getGamerInfo(@RequestParam("hash") String hash, @RequestParam long userId) throws Exception {
+        try {
+            if (!CryptoService.encodeHmac256(String.valueOf(userId)).equals(hash)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный хеш");
+            }
+            
+            GamerEntity gamer = eventService.getGamer(userId);
+            if (gamer == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Игрок не найден");
+            }
+            
+            return ResponseEntity.ok(gamer);
+        } catch (Exception e) {
+            e.printStackTrace(); // Добавьте логирование
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутренняя ошибка сервера");
         }
-        //сохраняем инфу о пользаке
-        return eventService.getGamer(userId);
     }
 
 }
