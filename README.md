@@ -1,5 +1,7 @@
+# Windows
 .\mvnw clean install -DskipTests=true
 
+# Linux
 sudo mvn clean install -DskipTests=true -e
 
 docker-compose build
